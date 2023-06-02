@@ -47,7 +47,7 @@ export function Chart({ seriesConfigs, title, ...options }) {
 
   if (render) {
     return (
-      <Box mt={6} sx={{ height: 150 }}>
+      <Box mt={8} sx={{ height: 150 }}>
         <Typography variant="overline" display="block" gutterBottom>
           {title}
         </Typography>

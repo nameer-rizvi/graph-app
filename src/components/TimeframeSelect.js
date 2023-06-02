@@ -19,7 +19,8 @@ export function TimeframeSelect() {
     { label: "Week [2]", value: "week2" },
     { label: "Month", value: "month" },
     { label: "Quarter", value: "quarter" },
-    { label: "Year", value: "year" },
+    { label: "Year [1]", value: "year" },
+    { label: "Year [5]", value: "year5" },
   ];
 
   if (data.render && data.data?.symbol)
