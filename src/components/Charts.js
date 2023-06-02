@@ -3,9 +3,10 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Price vs. VWAP",
+      title: "Price vs. SMA(20) vs.VWAP",
       seriesConfigs: [
         ["priceLast", "Close Price", "#2196f3"],
+        ["sma20", "SMA(20)", "#009688"],
         ["vwap", "VWAP", "#ab47bc"],
       ],
     },
