@@ -21,7 +21,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     year: "P1Y",
   }[TIMEFRAME || "day"];
 
-  if (SYMBOL.toLowerCase().includes("btc")) {
+  if (
+    SYMBOL.toLowerCase().includes("btc") ||
+    SYMBOL.toLowerCase().includes("bitcoin")
+  ) {
     SYMBOL = "CRYPTOCURRENCY/US/CoinDesk/BTCUSD";
   } else if (SYMBOL.toLowerCase().includes("spy")) {
     SYMBOL = "FUND/US/ARCX/SPY";
