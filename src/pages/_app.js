@@ -6,6 +6,7 @@ import "../styles/globals.css";
 import { HTMLHead } from "../components";
 import { ThemeProvider, DataProvider } from "../providers";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Analytics } from "@vercel/analytics/react";
 
 const MyApp = ({ Component, pageProps }) => (
   <>
@@ -16,6 +17,7 @@ const MyApp = ({ Component, pageProps }) => (
         <Component {...pageProps} />
       </DataProvider>
     </ThemeProvider>
+    <Analytics />
   </>
 );
 
