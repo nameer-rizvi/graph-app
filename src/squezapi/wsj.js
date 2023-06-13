@@ -10,7 +10,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     month: "P1D",
     quarter: "P1D",
     year: "P1D",
-    year5: "P1D",
+    year5: "P7D",
   }[TIMEFRAME || "day"];
 
   const TIMEFRAME2 = {
