@@ -11,6 +11,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     quarter: "P1D",
     year: "P1D",
     year5: "P7D",
+    year10: "P1M",
   }[TIMEFRAME || "day"];
 
   const TIMEFRAME2 = {
@@ -21,6 +22,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     quarter: "P3M",
     year: "P1Y",
     year5: "P5Y",
+    year10: "P10Y",
   }[TIMEFRAME || "day"];
 
   if (

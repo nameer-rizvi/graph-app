@@ -21,6 +21,7 @@ export function TimeframeSelect() {
     { label: "Quarter", value: "quarter" },
     { label: "Year [1]", value: "year" },
     { label: "Year [5]", value: "year5" },
+    { label: "Year [10]", value: "year10" },
   ];
 
   if (data.render && data.data?.symbol)
