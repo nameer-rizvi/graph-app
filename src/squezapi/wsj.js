@@ -44,6 +44,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     SYMBOL = "FUND/US/XNAS/TLT";
   } else if (SYMBOL.toLowerCase().includes("hyg")) {
     SYMBOL = "FUND/US/ARCX/HYG";
+  } else if (SYMBOL.toLowerCase().includes("vglt")) {
+    SYMBOL = "FUND/US/XNAS/VGLT";
+  } else if (SYMBOL.toLowerCase().includes("vgit")) {
+    SYMBOL = "FUND/US/XNAS/VGIT";
+  } else if (SYMBOL.toLowerCase().includes("vgsh")) {
+    SYMBOL = "FUND/US/XNAS/VGSH";
   } else if (SYMBOL.toLowerCase().endsWith("qqq")) {
     SYMBOL = `FUND/US/XNAS/${SYMBOL}`;
   } else if (SYMBOL.toLowerCase().endsWith("uvxy")) {
