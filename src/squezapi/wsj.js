@@ -26,11 +26,26 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   const CODES = [
     [
       "ARCX",
-      ["SPY", "SPXL", "SOXL", "SOXS", "TMF", "HYG", "SCHD", "VTI", "VOO"],
+      [
+        "SPY",
+        "SPXL",
+        "SOXL",
+        "SOXS",
+        "TMF",
+        "HYG",
+        "SCHD",
+        "VTI",
+        "VOO",
+        "SPHY",
+        "VYM",
+        "VIG",
+        "SPHD",
+      ],
     ],
     ["BATS", ["UVXY"]],
     ["CoinDesk", ["BTC"]],
-    ["XNAS", ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH"]],
+    ["OOTC", ["BKHY"]],
+    ["XNAS", ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH", "ANGL"]],
     ["XNYS", ["BRK.A", "BRK.B"]],
   ];
 
