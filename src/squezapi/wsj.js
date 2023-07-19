@@ -3,6 +3,8 @@ const simpul = require("simpul");
 export async function wsj(SYMBOL, TIMEFRAME) {
   if (!SYMBOL?.trim()) throw new Error("Symbol is required");
 
+  SYMBOL = SYMBOL.toUpperCase().trim();
+
   const STEP = {
     day: "PT5M",
     week: "PT10M",
@@ -21,38 +23,26 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     year10: "P10Y",
   }[TIMEFRAME || "day"];
 
-  if (
-    SYMBOL.toLowerCase().includes("btc") ||
-    SYMBOL.toLowerCase().includes("bitcoin")
-  ) {
-    SYMBOL = "CRYPTOCURRENCY/US/CoinDesk/BTCUSD";
-  } else if (SYMBOL.toLowerCase().includes("spy")) {
-    SYMBOL = "FUND/US/ARCX/SPY";
-  } else if (SYMBOL.toLowerCase().includes("spxl")) {
-    SYMBOL = "FUND/US/ARCX/SPXL";
-  } else if (SYMBOL.toLowerCase().includes("soxl")) {
-    SYMBOL = "FUND/US/ARCX/SOXL";
-  } else if (SYMBOL.toLowerCase().includes("soxs")) {
-    SYMBOL = "FUND/US/ARCX/SOXS";
-  } else if (SYMBOL.toLowerCase().includes("tmf")) {
-    SYMBOL = "FUND/US/ARCX/TMF";
-  } else if (SYMBOL.toLowerCase().includes("tlt")) {
-    SYMBOL = "FUND/US/XNAS/TLT";
-  } else if (SYMBOL.toLowerCase().includes("hyg")) {
-    SYMBOL = "FUND/US/ARCX/HYG";
-  } else if (SYMBOL.toLowerCase().includes("vglt")) {
-    SYMBOL = "FUND/US/XNAS/VGLT";
-  } else if (SYMBOL.toLowerCase().includes("vgit")) {
-    SYMBOL = "FUND/US/XNAS/VGIT";
-  } else if (SYMBOL.toLowerCase().includes("vgsh")) {
-    SYMBOL = "FUND/US/XNAS/VGSH";
-  } else if (SYMBOL.toLowerCase().endsWith("qqq")) {
-    SYMBOL = `FUND/US/XNAS/${SYMBOL}`;
-  } else if (SYMBOL.toLowerCase().endsWith("uvxy")) {
-    SYMBOL = "FUND/US/BATS/UVXY";
-  } else if (!SYMBOL.includes("/")) {
-    SYMBOL = `STOCK/US//${SYMBOL}`;
-  }
+  const CODES = [
+    [
+      "ARCX",
+      ["SPY", "SPXL", "SOXL", "SOXS", "TMF", "HYG", "SCHD", "VTI", "VOO"],
+    ],
+    ["BATS", ["UVXY"]],
+    ["CoinDesk", ["BTC"]],
+    ["XNAS", ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH"]],
+    ["XNYS", ["BRK.A", "BRK.B"]],
+  ];
+
+  let CODE = CODES[CODES.findIndex((c) => c[1].includes(SYMBOL))]?.[0];
+
+  let SERIES_KEY = CODE
+    ? CODE === "CoinDesk"
+      ? `CRYPTOCURRENCY/US/CoinDesk/${SYMBOL}USD`
+      : CODE === "XNYS"
+      ? `STOCK/US/${CODE}/${SYMBOL}`
+      : `FUND/US/${CODE}/${SYMBOL}`
+    : `STOCK/US//${SYMBOL}`;
 
   const OPTION = {
     headers: {
@@ -83,7 +73,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
         WantPriorClose: true,
         Series: [
           {
-            Key: SYMBOL,
+            Key: SERIES_KEY,
             Dialect: "Charting",
             Kind: "Ticker",
             SeriesId: "s1",
