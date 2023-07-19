@@ -45,7 +45,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     ["BATS", ["UVXY"]],
     ["CoinDesk", ["BTC"]],
     ["OOTC", ["BKHY"]],
-    ["XNAS", ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH", "ANGL"]],
+    [
+      "XNAS",
+      ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH", "ANGL", "BKCH"],
+    ],
     ["XNYS", ["BRK.A", "BRK.B"]],
   ];
 
