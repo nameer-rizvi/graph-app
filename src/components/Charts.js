@@ -7,23 +7,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["priceLast", "Close Price", "#2196f3"],
         ["sma20", "SMA(20)", "#009688"],
-        ["vwap", "VWAP", "#ab47bc"],
-      ],
-    },
-    {
-      title: "VWAP Signal",
-      seriesConfigs: [["vwapSignal", "VWAP Signal", "#ab47bc"]],
-    },
-    {
-      title: "RSI",
-      seriesConfigs: [["rsi", "RSI", "#ff9800"]],
-    },
-    {
-      title: "MACD",
-      seriesConfigs: [
-        ["macd", "MACD", "#f06292"],
-        ["macdHist", "MACD Hist", "#e91e63"],
-        ["macdSignal", "MACD Signal", "#c2185b"],
+        ["vwap", "VWAP", "#9c27b0"],
       ],
     },
     {
@@ -31,29 +15,34 @@ export const Charts = () =>
       seriesConfigs: [["volume", "Volume", "#3f51b5"]],
     },
     {
-      title: "Candle Distribution",
-      seriesConfigs: [
-        ["candlesGreen", "Candles Green", "#4caf50"],
-        ["candlesRed", "Candles Red", "#f44336"],
-        ["candlesGray", "Candles Gray", "#9e9e9e"],
-      ],
+      title: "VWAP Signal",
+      seriesConfigs: [["vwapSignal", "VWAP Signal", "#8e24aa"]],
     },
     {
-      title: "Candle Volume Distribution",
-      seriesConfigs: [
-        ["candleVolumeGreen", "Candle Volume Green", "#4caf50"],
-        ["candleVolumeRed", "Candle Volume Red", "#f44336"],
-        ["candleVolumeGray", "Candle Volume Gray", "#9e9e9e"],
-      ],
+      title: "RSI",
+      seriesConfigs: [["rsi", "RSI", "#ff9800"]],
     },
     {
-      title: "Candle Volume Discrepancy (Green)",
+      title: "VWAP Value [SMA(5), /10k]",
+      seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
+    },
+    {
+      title: "Candle Distribution [SMA(50)]",
       seriesConfigs: [
-        [
-          "candleVolumeDiscrepancy",
-          "Candle Volume Discrepancy (Green)",
-          "#8bc34a",
-        ],
+        ["sma50ColorsGreen", "Candles Green", "#4caf50"],
+        ["sma50ColorsRed", "Candles Red", "#f44336"],
+        ["sma50ColorsGray", "Candles Gray", "#9e9e9e"],
+        ["sma50ColorVolumeGreen", "Candle Volume Green", "#81c784"],
+        ["sma50ColorVolumeRed", "Candle Volume Red", "#e57373"],
+        ["sma50ColorVolumeGray", "Candle Volume Gray", "#e0e0e0"],
       ],
     },
+    // {
+    //   title: "MACD",
+    //   seriesConfigs: [
+    //     ["macd", "MACD", "#ffffff"],
+    //     ["macdHist", "MACD Hist", "#ffffff"],
+    //     ["macdSignal", "MACD Signal", "#ffffff"],
+    //   ],
+    // },
   ].map((config) => <Chart key={config.title} {...config} />);
