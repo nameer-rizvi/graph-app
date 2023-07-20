@@ -1,4 +1,5 @@
 import { Chart } from "./Chart";
+import { DATA_VWAP_VALUE_ADJUSTMENT } from "../constant";
 
 export const Charts = () =>
   [
@@ -23,7 +24,7 @@ export const Charts = () =>
       seriesConfigs: [["rsi", "RSI", "#ff9800"]],
     },
     {
-      title: "VWAP Value [SMA(5), /10k]",
+      title: `VWAP Value [SMA(5), ${DATA_VWAP_VALUE_ADJUSTMENT.toLocaleString()}x]`,
       seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
     },
     {

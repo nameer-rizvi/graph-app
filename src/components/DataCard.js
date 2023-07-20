@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { DataContext } from "../context";
+import { DATA_VWAP_VALUE_ADJUSTMENT } from "../constant";
 import { Paper } from "./Paper";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
@@ -98,7 +99,10 @@ function DataCardVolume({ data = {} }) {
       : "";
 
     const volumeValue = data.vwapValue
-      ? `Notional Value ${simpul.numberstring(data.vwapValue, ["$"])}`
+      ? `Notional Value ${simpul.numberstring(
+          data.vwapValue * DATA_VWAP_VALUE_ADJUSTMENT,
+          ["$"]
+        )}`
       : "";
 
     let color;

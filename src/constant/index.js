@@ -6,5 +6,6 @@ export * from "./APP_ORIGIN";
 export * from "./APP_TWITTER_CARD";
 export * from "./APP_TYPE";
 export * from "./APP_VIEWPORT";
+export * from "./DATA_VWAP_VALUE_ADJUSTMENT";
 export * from "./SIDEBAR_WIDTH";
 export * from "./STYLE_THEMES";

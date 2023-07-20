@@ -1,0 +1,1 @@
+export const DATA_VWAP_VALUE_ADJUSTMENT = 1000000;
