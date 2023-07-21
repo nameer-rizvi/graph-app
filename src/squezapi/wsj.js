@@ -1,5 +1,4 @@
 const simpul = require("simpul");
-const { DATA_VWAP_VALUE_ADJUSTMENT } = require("../constant");
 
 export async function wsj(SYMBOL, TIMEFRAME) {
   if (!SYMBOL?.trim()) throw new Error("Symbol is required");
@@ -250,12 +249,11 @@ function assignVWAPData(candle, series, period) {
   if (period) {
     candle[`sma${period}Vwap`] = vwap;
     candle[`sma${period}VwapSignal`] = vwapSignal;
-    candle[`sma${period}VwapValue`] =
-      vwapValue / period / DATA_VWAP_VALUE_ADJUSTMENT;
+    candle[`sma${period}VwapValue`] = vwapValue / period;
   } else {
     candle.vwap = vwap;
     candle.vwapSignal = vwapSignal;
-    candle.vwapValue = vwapValue / DATA_VWAP_VALUE_ADJUSTMENT;
+    candle.vwapValue = vwapValue;
     candle.volumeTotal = v;
     candle.value = price * candle.volume;
   }
