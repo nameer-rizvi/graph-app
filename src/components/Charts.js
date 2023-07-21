@@ -19,15 +19,23 @@ export const Charts = () =>
       seriesConfigs: [["rsi", "RSI", "#ff9800"]],
     },
     {
-      title: "Volume SMA(5)",
+      title: "MACD",
+      seriesConfigs: [
+        ["macd", "MACD", "#c2185b"],
+        ["macdHist", "MACD Hist", "#d81b60"],
+        ["macdSignal", "MACD Signal", "#f06292"],
+      ],
+    },
+    {
+      title: "Volume",
       seriesConfigs: [["sma5Volume", "Volume", "#3f51b5"]],
     },
     {
-      title: `VWAP Value SMA(5)`,
+      title: "VWAP Value",
       seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
     },
     {
-      title: "Candle Distribution SMA(50)",
+      title: "Candle Distribution",
       seriesConfigs: [
         ["sma50ColorsGreen", "Candles Green", "#4caf50"],
         ["sma50ColorsRed", "Candles Red", "#f44336"],
@@ -37,12 +45,4 @@ export const Charts = () =>
         ["sma50ColorVolumeGray", "Candle Volume Gray", "#e0e0e0"],
       ],
     },
-    // {
-    //   title: "MACD",
-    //   seriesConfigs: [
-    //     ["macd", "MACD", "#ffffff"],
-    //     ["macdHist", "MACD Hist", "#ffffff"],
-    //     ["macdSignal", "MACD Signal", "#ffffff"],
-    //   ],
-    // },
   ].map((config) => <Chart key={config.title} {...config} />);
