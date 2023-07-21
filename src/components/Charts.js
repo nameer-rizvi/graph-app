@@ -12,10 +12,6 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Volume",
-      seriesConfigs: [["volume", "Volume", "#3f51b5"]],
-    },
-    {
       title: "VWAP Signal",
       seriesConfigs: [["vwapSignal", "VWAP Signal", "#8e24aa"]],
     },
@@ -24,11 +20,15 @@ export const Charts = () =>
       seriesConfigs: [["rsi", "RSI", "#ff9800"]],
     },
     {
-      title: `VWAP Value [SMA(5), ${DATA_VWAP_VALUE_ADJUSTMENT.toLocaleString()}x]`,
+      title: "Volume SMA(5)",
+      seriesConfigs: [["sma5Volume", "Volume", "#3f51b5"]],
+    },
+    {
+      title: `VWAP Value SMA(5) [${DATA_VWAP_VALUE_ADJUSTMENT.toLocaleString()}x]`,
       seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
     },
     {
-      title: "Candle Distribution [SMA(50)]",
+      title: "Candle Distribution SMA(50)",
       seriesConfigs: [
         ["sma50ColorsGreen", "Candles Green", "#4caf50"],
         ["sma50ColorsRed", "Candles Red", "#f44336"],
