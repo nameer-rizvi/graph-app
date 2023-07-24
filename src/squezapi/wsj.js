@@ -178,6 +178,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       assignColorData(candle, seriesSlice, period);
     }
 
+    if (!candle.vwap) {
+      assignSMA200SignalData(candle);
+    }
+
     assignTrendData(candle, series);
 
     assignPriceCrossoverData(candle, series);
@@ -415,6 +419,19 @@ function assignSMAData(candle, series, period) {
     let sma = simpul.math.mean(series.map((c) => c.volume));
     candle[`sma${period}Volume`] = sma;
   }
+}
+
+/*
+ *
+ * --> ASSIGN SMA200 SIGNAL DATA
+ *
+ */
+
+function assignSMA200SignalData(candle) {
+  // Placeholder for vwap, for BTC.
+  const price = (candle.priceHigh + candle.priceLow + candle.priceLast) / 3;
+  candle.vwap = candle.sma200;
+  candle.vwapSignal = -simpul.math.change.percent(price, candle.vwap);
 }
 
 /*
