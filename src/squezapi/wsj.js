@@ -150,7 +150,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.priceLast = json.Series[0].DataPoints[i][3];
 
-    candle.volume = json.Series[1].DataPoints[i][0] || 1000000;
+    candle.volume = json.Series[1].DataPoints[i][0] || 100000;
 
     if (PriorClose && candle.priceLast) {
       candle.priceChange = simpul.math.change.percent(
