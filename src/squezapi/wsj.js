@@ -150,7 +150,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.priceLast = json.Series[0].DataPoints[i][3];
 
-    candle.volume = json.Series[1].DataPoints[i][0];
+    candle.volume = json.Series[1].DataPoints[i][0] || 1000000;
 
     if (PriorClose && candle.priceLast) {
       candle.priceChange = simpul.math.change.percent(
@@ -176,10 +176,6 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       assignSMAData(candle, seriesSlice, period);
       assignVWAPData(candle, seriesSlice, period);
       assignColorData(candle, seriesSlice, period);
-    }
-
-    if (!candle.vwap) {
-      assignSMA200SignalData(candle);
     }
 
     assignTrendData(candle, series);
@@ -419,19 +415,6 @@ function assignSMAData(candle, series, period) {
     let sma = simpul.math.mean(series.map((c) => c.volume));
     candle[`sma${period}Volume`] = sma;
   }
-}
-
-/*
- *
- * --> ASSIGN SMA200 SIGNAL DATA
- *
- */
-
-function assignSMA200SignalData(candle) {
-  // Placeholder for vwap, for BTC.
-  const price = (candle.priceHigh + candle.priceLow + candle.priceLast) / 3;
-  candle.vwap = candle.sma200;
-  candle.vwapSignal = -simpul.math.change.percent(price, candle.vwap);
 }
 
 /*
