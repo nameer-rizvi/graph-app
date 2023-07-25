@@ -13,3 +13,9 @@ export default async function handler(req, res) {
     }
   } else res.status(405).send("Method Not Allowed.");
 }
+
+export const config = {
+  api: {
+    responseLimit: "8mb",
+  },
+};
