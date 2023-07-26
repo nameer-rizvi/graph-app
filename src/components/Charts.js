@@ -19,6 +19,17 @@ export const Charts = () =>
       seriesConfigs: [["rsi", "RSI", "#ff9800"]],
     },
     {
+      title: "Candle Distribution",
+      seriesConfigs: [
+        ["sma20ColorsGreen", "Candles Green", "#4caf50"],
+        // ["sma20ColorsRed", "Candles Red", "#f44336"],
+        // ["sma20ColorsGray", "Candles Gray", "#9e9e9e"],
+        ["sma20ColorVolumeGreen", "Candle Volume Green", "#a5d6a7"],
+        // ["sma20ColorVolumeRed", "Candle Volume Red", "#ef5350"],
+        // ["sma20ColorVolumeGray", "Candle Volume Gray", "#bdbdbd"],
+      ],
+    },
+    {
       title: "MACD",
       seriesConfigs: [
         ["macd", "MACD", "#c2185b"],
@@ -33,16 +44,5 @@ export const Charts = () =>
     {
       title: "VWAP Value",
       seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
-    },
-    {
-      title: "Candle Distribution",
-      seriesConfigs: [
-        ["sma50ColorsGreen", "Candles Green", "#4caf50"],
-        ["sma50ColorsRed", "Candles Red", "#f44336"],
-        ["sma50ColorsGray", "Candles Gray", "#9e9e9e"],
-        ["sma50ColorVolumeGreen", "Candle Volume Green", "#81c784"],
-        ["sma50ColorVolumeRed", "Candle Volume Red", "#e57373"],
-        ["sma50ColorVolumeGray", "Candle Volume Gray", "#e0e0e0"],
-      ],
     },
   ].map((config) => <Chart key={config.title} {...config} />);
