@@ -22,8 +22,8 @@ export const Charts = () =>
       title: "MACD",
       seriesConfigs: [
         ["macd", "MACD", "#c2185b"],
-        ["macdHist", "MACD Hist", "#d81b60"],
-        ["macdSignal", "MACD Signal", "#f06292"],
+        ["macdHist", "MACD Hist", "#f06292"],
+        ["macdSignal", "MACD Signal", "#d81b60"],
       ],
     },
     {
