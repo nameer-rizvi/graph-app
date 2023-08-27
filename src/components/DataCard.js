@@ -15,7 +15,7 @@ export function DataCard() {
     return (
       <Paper>
         <BusinessIcon sx={{ marginTop: 0.5 }} />
-        <Box ml={2}>
+        <Box ml={2} sx={{ overflow: "hidden" }}>
           <DataCardTitle title={data.data.symbol} />
           <DataCardSubtitle subtitle={data.data.name} />
           <DataCardPrice data={data.data.last} />
@@ -91,6 +91,12 @@ function DataCardPrice({ data = {} }) {
 
 function DataCardVolume({ data = {} }) {
   if (data.volumeTotal) {
+    const overflow = {
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+    };
+
     const volume = simpul.numberstring(data.volumeTotal);
 
     const volumeChange = data.volume
@@ -118,12 +124,19 @@ function DataCardVolume({ data = {} }) {
     return (
       <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
         {Icon}
-        <Box ml={0.5}>
+        <Box ml={0.5} style={overflow}>
           <Typography variant="body" mr={1}>
             {volume}
           </Typography>
-          <span style={{ color }}>{volumeChange}</span>
-          <Typography display="block" variant="caption">
+          <span style={{ color }} title={volumeChange}>
+            {volumeChange}
+          </span>
+          <Typography
+            display="block"
+            variant="caption"
+            title={volumeValue}
+            sx={overflow}
+          >
             {volumeValue}
           </Typography>
         </Box>
