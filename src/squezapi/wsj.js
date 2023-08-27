@@ -150,12 +150,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.priceLast = json.Series[0].DataPoints[i][3];
 
-    candle.volume = json.Series[1].DataPoints[i][0] || 100000;
+    candle.volume = json.Series[1].DataPoints[i][0];
 
     if (PriorClose && candle.priceLast) {
       candle.priceChange = simpul.math.change.percent(
         PriorClose,
-        candle.priceLast
+        candle.priceLast,
       );
     }
 
@@ -177,10 +177,6 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       assignVWAPData(candle, seriesSlice, period);
       assignColorData(candle, seriesSlice, period);
     }
-
-    assignTrendData(candle, series);
-
-    assignPriceCrossoverData(candle, series);
 
     data.series.push(candle);
   }
@@ -414,159 +410,6 @@ function assignSMAData(candle, series, period) {
   if (candle.volume) {
     let sma = simpul.math.mean(series.map((c) => c.volume));
     candle[`sma${period}Volume`] = sma;
-  }
-}
-
-/*
- *
- * --> ASSIGN TREND DATA
- *
- */
-
-const trends = [
-  "priceChange",
-  "priceRange",
-  "volume",
-  "vwap",
-  "vwapSignal",
-  "vwapValue",
-  "averageGain",
-  "averageLoss",
-  "rsi",
-  "ema9",
-  "ema12",
-  "ema26",
-  "macd",
-  "macdSignal",
-  "macdHist",
-  "colorsGreen",
-  "colorVolumeGreen",
-  "colorVolumeDiscrepancy",
-  "sma5",
-  "sma5Rsi",
-  "sma5Volume",
-  "sma5Vwap",
-  "sma5VwapSignal",
-  "sma5VwapValue",
-  "sma5ColorsGreen",
-  "sma5ColorVolumeGreen",
-  "sma5ColorVolumeDiscrepancy",
-  "sma10",
-  "sma10Rsi",
-  "sma10Volume",
-  "sma10Vwap",
-  "sma10VwapSignal",
-  "sma10VwapValue",
-  "sma10ColorsGreen",
-  "sma10ColorVolumeGreen",
-  "sma10ColorVolumeDiscrepancy",
-  "sma20",
-  "sma20Rsi",
-  "sma20Volume",
-  "sma20Vwap",
-  "sma20VwapSignal",
-  "sma20VwapValue",
-  "sma20ColorsGreen",
-  "sma20ColorVolumeGreen",
-  "sma20ColorVolumeDiscrepancy",
-  "sma50",
-  "sma50Rsi",
-  "sma50Volume",
-  "sma50Vwap",
-  "sma50VwapSignal",
-  "sma50VwapValue",
-  "sma50ColorsGreen",
-  "sma50ColorVolumeGreen",
-  "sma50ColorVolumeDiscrepancy",
-  "sma100",
-  "sma100Rsi",
-  "sma100Volume",
-  "sma100Vwap",
-  "sma100VwapSignal",
-  "sma100VwapValue",
-  "sma100ColorsGreen",
-  "sma100ColorVolumeGreen",
-  "sma100ColorVolumeDiscrepancy",
-  "sma200",
-  "sma200Rsi",
-  "sma200Volume",
-  "sma200Vwap",
-  "sma200VwapSignal",
-  "sma200VwapValue",
-  "sma200ColorsGreen",
-  "sma200ColorVolumeGreen",
-  "sma200ColorVolumeDiscrepancy",
-];
-
-function assignTrendData(candle, series) {
-  let prev = series[series.length - 2];
-  for (let prop of trends) {
-    if (simpul.isNumber(candle[prop]) && simpul.isNumber(prev?.[prop])) {
-      if (candle[prop] > prev[prop]) {
-        candle[`${prop}Trend`] = "up";
-      } else if (candle[prop] < prev[prop]) {
-        candle[`${prop}Trend`] = "down";
-      } else {
-        candle[`${prop}Trend`] = "";
-      }
-    }
-  }
-}
-
-/*
- *
- * --> ASSIGN CROSSOVER DATA
- *
- */
-
-const pricecrossovers = [
-  "priceOpen",
-  "priceHigh",
-  "priceLow",
-  "priceLast",
-  "vwap",
-  "ema9",
-  "ema12",
-  "ema26",
-  "sma5",
-  "sma5Vwap",
-  "sma10",
-  "sma10Vwap",
-  "sma20",
-  "sma20Vwap",
-  "sma50",
-  "sma50Vwap",
-  "sma100",
-  "sma100Vwap",
-  "sma200",
-  "sma200Vwap",
-];
-
-function assignPriceCrossoverData(candle, series) {
-  let prev = series[series.length - 2];
-  if (prev) {
-    for (let prop of pricecrossovers) {
-      for (let prop2 of pricecrossovers) {
-        if (prop !== prop2) {
-          let state = "";
-          if (prev[prop] <= prev[prop2] && candle[prop] > candle[prop2]) {
-            state = "crossover";
-          } else if (
-            prev[prop] >= prev[prop2] &&
-            candle[prop] < candle[prop2]
-          ) {
-            state = "crossunder";
-          } else if (candle[prop] === candle[prop2]) {
-            state = "equal";
-          } else if (candle[prop] > candle[prop2]) {
-            state = "over";
-          } else if (candle[prop] < candle[prop2]) {
-            state = "under";
-          }
-          if (state) candle[`${prop}_to_${prop2}`] = state;
-        }
-      }
-    }
   }
 }
 
