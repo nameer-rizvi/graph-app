@@ -138,9 +138,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     let tick = json.TimeInfo.Ticks[tickIndex];
 
-    assignSession(json.Series[0], tick, candle);
-
-    assignDateProps(tick, candle);
+    candle.date = new Date(tick);
 
     candle.priceOpen = json.Series[0].DataPoints[i][0];
 
@@ -152,12 +150,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.volume = json.Series[1].DataPoints[i][0];
 
-    if (PriorClose && candle.priceLast) {
-      candle.priceChange = simpul.math.change.percent(
-        PriorClose,
-        candle.priceLast,
-      );
-    }
+    candle.priceChange = simpul.math.change.percent(
+      PriorClose,
+      candle.priceLast,
+    );
 
     let series = [...data.series, candle];
 
@@ -184,42 +180,6 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   assignLast(data);
 
   return data;
-}
-
-/*
- *
- * --> ASSIGN SESSION
- *
- */
-
-function assignSession(series, tick, candle) {
-  let session = series.MarketSessions?.find((marketSession) => {
-    return tick >= marketSession.Start && tick < marketSession.End;
-  })?.Kind;
-  if (session) candle.session = session;
-}
-
-/*
- *
- * --> ASSIGN DATE PROPS
- *
- */
-
-function assignDateProps(tick, candle) {
-  let date = new Date(tick);
-  candle.dateString = date.toLocaleString();
-  candle.dateObject = date;
-  candle.dateYear = date.getFullYear();
-  candle.dateQuarter = Math.floor((date.getMonth() + 3) / 3);
-  candle.dateMonth = date.getMonth() + 1;
-  candle.dateMonthName = date.toLocaleString("default", { month: "long" });
-  candle.dateDate = date.getDate();
-  candle.dateWeekday = date.getDay();
-  candle.dateWeekdayName = date.toLocaleDateString("default", {
-    weekday: "long",
-  });
-  candle.dateHour = date.getHours();
-  candle.dateMinute = date.getMinutes();
 }
 
 /*
@@ -262,37 +222,39 @@ function assignVWAPData(candle, series, period) {
  */
 
 function assignRSIData(candle, series, OPTION) {
-  if (OPTION.API_QUERY_JSON_SERIES_INDICATOR_RSI !== true) {
-    let prev = series[series.length - 2];
-    if (series.length === 15) {
-      let gain = 0;
-      let loss = 0;
-      for (let i = 0; i < series.length; i++) {
-        let currPrice = series[i]?.priceLast;
-        let prevPrice = series[i - 1]?.priceLast;
-        let change = simpul.math.change.num(prevPrice, currPrice);
-        if (change > 0) gain += change;
-        if (change < 0) loss += Math.abs(change);
-      }
-      let averageGain = gain / 14;
-      let averageLoss = loss / 14;
-      let rsi = 100 - 100 / (1 + averageGain / averageLoss);
-      candle.averageGain = averageGain;
-      candle.averageLoss = averageLoss;
-      candle.rsi = rsi;
-    } else if (prev?.rsi) {
-      let gain = prev.averageGain * 13;
-      let loss = prev.averageLoss * 13;
-      let change = simpul.math.change.num(prev.priceLast, candle.priceLast);
+  let prev = series[series.length - 2];
+  if (series.length === 15) {
+    let gain = 0;
+    let loss = 0;
+    for (let i = 0; i < series.length; i++) {
+      let currPrice = series[i]?.priceLast;
+      let prevPrice = series[i - 1]?.priceLast;
+      let change = simpul.math.change.num(prevPrice, currPrice);
       if (change > 0) gain += change;
       if (change < 0) loss += Math.abs(change);
-      let averageGain = gain / 14;
-      let averageLoss = loss / 14;
-      let rsi = 100 - 100 / (1 + averageGain / averageLoss);
-      candle.averageGain = averageGain;
-      candle.averageLoss = averageLoss;
-      candle.rsi = rsi;
     }
+    let averageGain = gain / 14;
+    let averageLoss = loss / 14;
+    let rsi = 100 - 100 / (1 + averageGain / averageLoss);
+    candle.averageGain = averageGain;
+    candle.averageLoss = averageLoss;
+    candle.rsi = rsi;
+  } else if (prev?.rsi) {
+    let gain = prev.averageGain * 13;
+    let loss = prev.averageLoss * 13;
+    let change = simpul.math.change.num(prev.priceLast, candle.priceLast);
+    if (change > 0) gain += change;
+    if (change < 0) loss += Math.abs(change);
+    let averageGain = gain / 14;
+    let averageLoss = loss / 14;
+    let rsi = 100 - 100 / (1 + averageGain / averageLoss);
+    candle.averageGain = averageGain;
+    candle.averageLoss = averageLoss;
+    candle.rsi = rsi;
+  } else {
+    candle.averageGain = 0;
+    candle.averageLoss = 0;
+    candle.rsi = 0;
   }
 }
 
@@ -309,9 +271,9 @@ function assignEMAData(candle, series) {
 }
 
 function assignEMA(period, series, candle, numKey = "priceLast") {
+  let key = `ema${period}`;
   if (series.length > period) {
     let prev = series[series.length - 2];
-    let key = `ema${period}`;
     if (numKey !== "priceLast") key += numKey;
     let prevEMA = prev[key];
     if (!prevEMA) {
@@ -322,6 +284,8 @@ function assignEMA(period, series, candle, numKey = "priceLast") {
       let k = 2 / (period + 1);
       candle[key] = candle[numKey] * k + prevEMA * (1 - k);
     }
+  } else {
+    candle[key] = 0;
   }
 }
 
@@ -332,13 +296,15 @@ function assignEMA(period, series, candle, numKey = "priceLast") {
  */
 
 function assignMACDData(candle, series, OPTION) {
-  if (OPTION.API_QUERY_JSON_SERIES_INDICATOR_MACD !== true) {
-    if (candle.ema12 && candle.ema26) {
-      candle.macd = candle.ema12 - candle.ema26;
-      assignEMA(9, series, candle, "macd");
-      candle.macdSignal = candle.ema9macd;
-      candle.macdHist = candle.macd - candle.macdSignal;
-    }
+  if (candle.ema12 && candle.ema26) {
+    candle.macd = candle.ema12 - candle.ema26;
+    assignEMA(9, series, candle, "macd");
+    candle.macdSignal = candle.ema9macd;
+    candle.macdHist = candle.macd - candle.macdSignal;
+  } else {
+    candle.macd = 0;
+    candle.macdSignal = 0;
+    candle.macdHist = 0;
   }
 }
 

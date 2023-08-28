@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 
 const ReactChart = dynamic(
   () => import("react-charts").then((mod) => mod.Chart),
-  { ssr: false }
+  { ssr: false },
 );
 
 export function Chart({ seriesConfigs, title, ...options }) {
@@ -18,10 +18,13 @@ export function Chart({ seriesConfigs, title, ...options }) {
     const seriesConfig = seriesConfigs.reduce((r, i) => {
       return { ...r, [i[0]]: { label: i[1], data: [] } };
     }, {});
-    for (let tick of data.data?.series || [])
-      for (let [key, value] of Object.entries(tick))
-        if (seriesConfig[key])
-          seriesConfig[key].data.push({ date: tick.dateObject, value });
+    for (let tick of data.data?.series || []) {
+      for (let [key, value] of Object.entries(tick)) {
+        if (seriesConfig[key]) {
+          seriesConfig[key].data.push({ date: tick.date, value });
+        }
+      }
+    }
     return Object.values(seriesConfig);
   }, [seriesConfigs, data.data?.series]);
 
@@ -42,7 +45,7 @@ export function Chart({ seriesConfigs, title, ...options }) {
   const render =
     data.render &&
     series.some((i) =>
-      i.data.some((i) => typeof i.value === "number" && i.value !== 0)
+      i.data.some((i) => typeof i.value === "number" && i.value !== 0),
     );
 
   if (render) {
