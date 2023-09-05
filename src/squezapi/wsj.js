@@ -108,9 +108,9 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       }),
     }).toString();
 
-  const request = await fetch(URL, OPTION);
+  const response = await fetch(URL, OPTION);
 
-  const json = await request.json();
+  const json = await response.json();
 
   if (json.error) throw new Error(json.error);
 
@@ -123,6 +123,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     type: json.Series[0].InstrumentType,
     country: json.Series[0].CountryCode,
     series: [],
+    timeframe: TIMEFRAME,
   };
 
   const PriorClose = json.Series[0].ExtraData.find((i) => {

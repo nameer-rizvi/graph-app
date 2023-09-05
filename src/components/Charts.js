@@ -45,4 +45,12 @@ export const Charts = () =>
       title: "VWAP Value",
       seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
     },
+    {
+      title: "Social Sentiment",
+      seriesConfigs: [
+        ["messageCount", "Message Count", "#d84315"],
+        ["messageSentiment", "Message Sentiment", "#ff5722"],
+        ["messageLikes", "Message Likes", "#ffccbc"],
+      ],
+    },
   ].map((config) => <Chart key={config.title} {...config} />);
