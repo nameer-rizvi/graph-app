@@ -22,11 +22,7 @@ export const Charts = () =>
       title: "Candle Distribution",
       seriesConfigs: [
         ["sma20ColorsGreen", "Candles Green", "#4caf50"],
-        // ["sma20ColorsRed", "Candles Red", "#f44336"],
-        // ["sma20ColorsGray", "Candles Gray", "#9e9e9e"],
         ["sma20ColorVolumeGreen", "Candle Volume Green", "#a5d6a7"],
-        // ["sma20ColorVolumeRed", "Candle Volume Red", "#ef5350"],
-        // ["sma20ColorVolumeGray", "Candle Volume Gray", "#bdbdbd"],
       ],
     },
     {
@@ -48,9 +44,9 @@ export const Charts = () =>
     {
       title: "Social Sentiment",
       seriesConfigs: [
-        ["messageCount", "Message Count", "#d84315"],
-        ["messageSentiment", "Message Sentiment", "#ff5722"],
-        ["messageLikes", "Message Likes", "#ffccbc"],
+        ["messagesTotal", "Messages", "#bdbdbd"],
+        ["messagesBullish", "Bullish", "#19b682"],
+        ["messagesBearish", "Bearish", "#fe433d"],
       ],
     },
   ].map((config) => <Chart key={config.title} {...config} />);

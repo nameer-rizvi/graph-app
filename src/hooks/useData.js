@@ -23,6 +23,7 @@ export function useData() {
     cachetime: getPoll() / 2,
     poll: getPoll(),
     ignoreCleanup: true,
+    timeout: 60000,
   });
 
   useEffect(() => {

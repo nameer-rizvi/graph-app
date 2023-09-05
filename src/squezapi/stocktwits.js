@@ -11,7 +11,7 @@ export async function stocktwits(SYMBOL, series) {
 
   let page = 1;
 
-  let pageMax = 10;
+  let pageMax = 20;
 
   const cutoff = new Date(series[0].date);
 
@@ -39,7 +39,7 @@ export async function stocktwits(SYMBOL, series) {
         cursorNext = null;
       }
 
-      // page++;
+      page++;
     } catch {
       cursorNext = null;
     }
@@ -97,6 +97,14 @@ export async function stocktwits(SYMBOL, series) {
           return r + (m.likes?.total || 0);
         } else return r;
       }, 0);
+
+      curr.messagesTotal = curr.messageCount + curr.messageLikes;
+
+      curr.messagesBullish =
+        curr.messageSentimentBullish + curr.messageLikesBullish;
+
+      curr.messagesBearish =
+        curr.messageSentimentBearish + curr.messageLikesBearish;
     }
   }
 }
