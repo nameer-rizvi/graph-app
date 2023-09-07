@@ -44,9 +44,9 @@ export const Charts = () =>
     {
       title: "Social Sentiment",
       seriesConfigs: [
-        ["messagesTotal", "Messages", "#bdbdbd"],
         ["messagesBullish", "Bullish", "#19b682"],
         ["messagesBearish", "Bearish", "#fe433d"],
+        ["messagesTotal", "Messages", "#616161"],
       ],
     },
   ].map((config) => <Chart key={config.title} {...config} />);

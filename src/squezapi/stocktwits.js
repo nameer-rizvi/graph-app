@@ -1,6 +1,8 @@
 export async function stocktwits(SYMBOL, series) {
   if (!SYMBOL?.trim()) throw new Error("Symbol is required");
 
+  if (SYMBOL.toLowerCase() === "btc") SYMBOL = "BTC.X";
+
   SYMBOL = SYMBOL.toUpperCase().trim();
 
   let cursorNext;
