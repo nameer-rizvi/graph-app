@@ -23,35 +23,6 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     year10: "P10Y",
   }[TIMEFRAME || "day"];
 
-  const CODES = [
-    [
-      "ARCX",
-      [
-        "SPY",
-        "SPXL",
-        "SOXL",
-        "SOXS",
-        "TMF",
-        "HYG",
-        "SCHD",
-        "VTI",
-        "VOO",
-        "SPHY",
-        "VYM",
-        "VIG",
-        "SPHD",
-      ],
-    ],
-    ["BATS", ["UVXY"]],
-    ["CoinDesk", ["BTC"]],
-    ["OOTC", ["BKHY"]],
-    [
-      "XNAS",
-      ["QQQ", "TQQQ", "SQQQ", "TLT", "VGLT", "VGIT", "VGSH", "ANGL", "BKCH"],
-    ],
-    ["XNYS", ["BRK.A", "BRK.B"]],
-  ];
-
   let CODE = CODES[CODES.findIndex((c) => c[1].includes(SYMBOL))]?.[0];
 
   let SERIES_KEY = CODE
@@ -59,6 +30,8 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       ? `CRYPTOCURRENCY/US/CoinDesk/${SYMBOL}USD`
       : CODE === "XNYS"
       ? `STOCK/US/${CODE}/${SYMBOL}`
+      : CODE === "XLON"
+      ? `STOCK/UK/${CODE}/${SYMBOL}`
       : `FUND/US/${CODE}/${SYMBOL}`
     : `STOCK/US//${SYMBOL}`;
 
@@ -394,3 +367,122 @@ function assignLast(data) {
     }
   }
 }
+
+/*
+ *
+ * --> ETF CODES
+ *
+ */
+
+const CODES = [
+  [
+    "ARCX",
+    [
+      "SPY",
+      "SPXL",
+      "SOXL",
+      "SOXS",
+      "TMF",
+      "HYG",
+      "SCHD",
+      "VTI",
+      "VOO",
+      "SPHY",
+      "VYM",
+      "VIG",
+      "SPHD",
+      "XLF",
+      "UNG",
+      "PSQ",
+      "XLE",
+      "EEM",
+      "EWZ",
+      "LABU",
+      "FXI",
+      "BITO",
+      "BITI",
+      "ARKK",
+      "ARKW",
+      "ARKF",
+      "BITQ",
+      "DEFI",
+      "SPXU",
+      "IWM",
+      "KRE",
+      "LQD",
+      "QID",
+      "SPXS",
+      "SH",
+      "XLP",
+      "KWEB",
+      "XLU",
+      "MSOS",
+      "BIL",
+      "GDX",
+      "FNGD",
+      "TZA",
+      "XLC",
+      "SLV",
+      "IEMG",
+      "VEA",
+      "XLI",
+      "EFA",
+      "VWO",
+      "XLV",
+      "MJ",
+      "BOIL",
+      "TECS",
+      "TNA",
+      "XBI",
+      "XLK",
+      "VTEB",
+      "JNK",
+      "BKHY",
+    ],
+  ],
+  [
+    "BATS",
+    [
+      "UVXY",
+      "XBTF",
+      "ARKX",
+      "ARKG",
+      "ARKQ",
+      "PRNT",
+      "IZRL",
+      "SATO",
+      "BLKC",
+      "UVIX",
+      "VXX",
+      "GOVT",
+    ],
+  ],
+  ["CoinDesk", ["BTC"]],
+  ["OOTC", []],
+  ["XLON", []],
+  [
+    "XNAS",
+    [
+      "QQQ",
+      "TQQQ",
+      "SQQQ",
+      "TLT",
+      "VGLT",
+      "VGIT",
+      "VGSH",
+      "ANGL",
+      "BKCH",
+      "BTF",
+      "MAXI",
+      "BITS",
+      "WGMI",
+      "SPBC",
+      "TSLL",
+      "PDBC",
+      "IGSB",
+      "SMH",
+      "DAPP",
+    ],
+  ],
+  ["XNYS", ["BRK.A", "BRK.B"]],
+];

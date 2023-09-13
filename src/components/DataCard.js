@@ -39,6 +39,7 @@ function DataCardSubtitle({ subtitle }) {
   return (
     <Typography
       gutterBottom
+      title={subtitle}
       variant="subtitle2"
       style={{
         lineHeight: 1.3,
