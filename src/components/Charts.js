@@ -7,22 +7,22 @@ export const Charts = () =>
       seriesConfigs: [
         ["priceLast", "Close Price", "#2196f3"],
         ["vwap", "VWAP", "#9c27b0"],
-        ["sma10", "SMA(10)", "#b2dfdb"],
-        ["sma20", "SMA(20)", "#4db6ac"],
-        ["sma50", "SMA(50)", "#009688"],
-        ["sma100", "SMA(100)", "#00796b"],
-        ["sma200", "SMA(200)", "#004d40"],
+        ["sma10", "SMA(10)", "#607d8b"],
+        ["sma20", "SMA(20)", "#546e7a"],
+        ["sma50", "SMA(50)", "#455a64"],
+        ["sma100", "SMA(100)", "#37474f"],
+        ["sma200", "SMA(200)", "#263238"],
       ],
     },
     {
-      title: "Signals",
+      title: "Price Diversion",
       seriesConfigs: [
         ["vwapSignal", "VWAP", "#9c27b0"],
-        ["sma10Signal", "SMA(10)", "#b2dfdb"],
-        ["sma20Signal", "SMA(20)", "#4db6ac"],
-        ["sma50Signal", "SMA(50)", "#009688"],
-        ["sma100Signal", "SMA(100)", "#00796b"],
-        ["sma200Signal", "SMA(200)", "#004d40"],
+        ["sma10Signal", "SMA(10)", "#607d8b"],
+        ["sma20Signal", "SMA(20)", "#546e7a"],
+        ["sma50Signal", "SMA(50)", "#455a64"],
+        ["sma100Signal", "SMA(100)", "#37474f"],
+        ["sma200Signal", "SMA(200)", "#263238"],
       ],
     },
     {
@@ -57,7 +57,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["messagesBullish", "Bullish", "#19b682"],
         ["messagesBearish", "Bearish", "#fe433d"],
-        ["messagesTotal", "Messages", "#616161"],
+        ["messagesTotal", "All", "#616161"],
       ],
     },
   ].map((config) => <Chart key={config.title} {...config} />);
