@@ -3,16 +3,27 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Price vs. SMA(20) vs.VWAP",
+      title: "Price vs. VWAP vs. SMA(10,20,50,100,200)",
       seriesConfigs: [
         ["priceLast", "Close Price", "#2196f3"],
-        ["sma20", "SMA(20)", "#009688"],
         ["vwap", "VWAP", "#9c27b0"],
+        ["sma10", "SMA(10)", "#b2dfdb"],
+        ["sma20", "SMA(20)", "#4db6ac"],
+        ["sma50", "SMA(50)", "#009688"],
+        ["sma100", "SMA(100)", "#00796b"],
+        ["sma200", "SMA(200)", "#004d40"],
       ],
     },
     {
-      title: "VWAP Signal",
-      seriesConfigs: [["vwapSignal", "VWAP Signal", "#8e24aa"]],
+      title: "Signals",
+      seriesConfigs: [
+        ["vwapSignal", "VWAP", "#9c27b0"],
+        ["sma10Signal", "SMA(10)", "#b2dfdb"],
+        ["sma20Signal", "SMA(20)", "#4db6ac"],
+        ["sma50Signal", "SMA(50)", "#009688"],
+        ["sma100Signal", "SMA(100)", "#00796b"],
+        ["sma200Signal", "SMA(200)", "#004d40"],
+      ],
     },
     {
       title: "RSI",

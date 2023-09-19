@@ -342,6 +342,10 @@ function assignSMAData(candle, series, period) {
   if (!candle[`sma${period}`] && candle.priceLast) {
     let sma = simpul.math.mean(series.map((c) => c.priceLast));
     candle[`sma${period}`] = sma;
+    candle[`sma${period}Signal`] = -simpul.math.change.percent(
+      candle.priceLast,
+      sma,
+    );
   }
   if (candle.rsi) {
     let sma = simpul.math.mean(series.map((c) => c.rsi));
