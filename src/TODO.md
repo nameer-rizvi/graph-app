@@ -1,3 +1,0 @@
-# TODO
-
-Stocktwits, Finviz News.

@@ -1,9 +1,10 @@
+const utils = require("../utils");
 const simpul = require("simpul");
 
 export async function wsj(SYMBOL, TIMEFRAME) {
-  if (!SYMBOL?.trim()) throw new Error("Symbol is required");
+  SYMBOL = utils.cleanSymbol(SYMBOL);
 
-  SYMBOL = SYMBOL.toUpperCase().trim();
+  if (SYMBOL === "BTC.X") SYMBOL = "BTC";
 
   const STEP = {
     day: "PT5M",
@@ -384,6 +385,7 @@ const CODES = [
     [
       "SPY",
       "SPXL",
+      "SPXS",
       "SOXL",
       "SOXS",
       "TMF",
@@ -415,7 +417,6 @@ const CODES = [
       "KRE",
       "LQD",
       "QID",
-      "SPXS",
       "SH",
       "XLP",
       "KWEB",
@@ -442,6 +443,7 @@ const CODES = [
       "VTEB",
       "JNK",
       "BKHY",
+      "DIA",
     ],
   ],
   [

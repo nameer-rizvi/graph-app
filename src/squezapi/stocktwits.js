@@ -1,9 +1,7 @@
+const utils = require("../utils");
+
 export async function stocktwits(SYMBOL, series) {
-  if (!SYMBOL?.trim()) throw new Error("Symbol is required");
-
-  if (SYMBOL.toLowerCase() === "btc") SYMBOL = "BTC.X";
-
-  SYMBOL = SYMBOL.toUpperCase().trim();
+  SYMBOL = utils.cleanSymbol(SYMBOL);
 
   let cursorNext;
 
