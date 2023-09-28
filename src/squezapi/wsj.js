@@ -152,6 +152,11 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     data.series.push(candle);
   }
 
+  if (data) {
+    scale(data.series, "sma5Volume");
+    scale(data.series, "sma5VwapValue");
+  }
+
   assignLast(data);
 
   return data;
@@ -492,3 +497,19 @@ const CODES = [
   ],
   ["XNYS", ["BRK.A", "BRK.B"]],
 ];
+
+function scale(array, propName) {
+  let high = 0;
+  let low = 0;
+  for (let item of array) {
+    if (item[propName] > high) {
+      high = item[propName];
+    } else if (item[propName] < low) {
+      low = item[propName];
+    }
+  }
+  let size = (high - low) / 100;
+  for (let item of array) {
+    item[propName] = item[propName] / size;
+  }
+}
