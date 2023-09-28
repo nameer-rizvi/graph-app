@@ -30,7 +30,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["rsi", "RSI", "#ff9800"],
         ["sma20ColorsGreen", "Candles Green", "#4caf50"],
-        ["sma20ColorVolumeGreen", "Candle Volume Green", "#a5d6a7"],
+        // ["sma20ColorVolumeGreen", "Candle Volume Green", "#a5d6a7"],
       ],
     },
     {
