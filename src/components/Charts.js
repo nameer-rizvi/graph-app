@@ -42,12 +42,11 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Volume",
-      seriesConfigs: [["sma5Volume", "Volume", "#3f51b5"]],
-    },
-    {
-      title: "VWAP Value",
-      seriesConfigs: [["sma5VwapValue", "VWAP Value", "#673ab7"]],
+      title: "Volume vs. VWAP Value",
+      seriesConfigs: [
+        ["sma5Volume", "Volume", "#3f51b5"],
+        ["sma5VwapValue", "VWAP Value", "#673ab7"],
+      ],
     },
     {
       title: "Social Sentiment",
