@@ -29,7 +29,7 @@ export const Charts = () =>
       title: "RSI vs. Candle Distribution",
       seriesConfigs: [
         ["rsi", "RSI", "#ff9800"],
-        ["sma20ColorsGreen", "Candles Green", "#4caf50"],
+        ["sma20ColorVolumeGreen", "Candles Green", "#4caf50"],
         // ["sma20ColorVolumeGreen", "Candle Volume Green", "#a5d6a7"],
       ],
     },
