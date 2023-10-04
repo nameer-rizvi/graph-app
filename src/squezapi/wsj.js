@@ -104,7 +104,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     return i.Name === "PriorClose";
   })?.Value;
 
-  const periods = [5, 10, 20, 50, 100, 200];
+  const periods = [1, 5, 10, 20, 50, 100, 200];
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
     let candle = {};
@@ -153,8 +153,14 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   }
 
   if (data) {
-    scale(data.series, "sma5Volume");
-    scale(data.series, "sma5VwapValue");
+    scale(data.series, "sma1Volume");
+    scale(data.series, "sma1VwapValue");
+    for (let i = 0; i < data.series.length; i++) {
+      data.series[i].sma1V = simpul.math.change.num(
+        data.series[i].sma1Volume,
+        data.series[i].sma1VwapValue,
+      );
+    }
   }
 
   assignLast(data);
