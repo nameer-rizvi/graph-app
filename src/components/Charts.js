@@ -7,7 +7,6 @@ export const Charts = () =>
       seriesConfigs: [
         ["volumeS", "Volume", "#3f51b5"],
         ["sma1VwapValue", "VWAP Value", "#673ab7"],
-        ["anchor50", "Anchor", "#424242"],
       ],
     },
     {
@@ -45,9 +44,10 @@ export const Charts = () =>
       title: "RSI vs. Candle Distribution",
       seriesConfigs: [
         ["rsi", "RSI", "#ef6c00"],
-        // ["sma20ColorsGreen", "Candles Green", "#2e7d32"],
-        ["sma20ColorVolumeGreen", "Candle Volume Green", "#2e7d32"],
-        ["anchor50", "Anchor", "#424242"],
+        // ["sma20ColorsGreen", "Candles Green", "#2e8d32"],
+        ["sma10ColorVolumeGreen", "Candle Volume Green", "#2e7d32"],
+        ["anchor0", "Anchor [0]", "#424242"],
+        ["anchor100", "Anchor [100]", "#424242"],
       ],
     },
     {

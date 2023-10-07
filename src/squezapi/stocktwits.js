@@ -70,10 +70,6 @@ export async function stocktwits(SYMBOL, series) {
         return m.entities?.sentiment?.basic === "Bearish" ? r + 1 : r;
       }, 0);
 
-      curr.messageSentimentNeutral = ms.reduce((r, m) => {
-        return !m.entities?.sentiment?.basic ? r + 1 : r;
-      }, 0);
-
       curr.messageLikes = ms.reduce((r, m) => {
         if (m.entities?.sentiment?.basic) {
           return r + (m.likes?.total || 0);
@@ -88,12 +84,6 @@ export async function stocktwits(SYMBOL, series) {
 
       curr.messageLikesBearish = ms.reduce((r, m) => {
         if (m.entities?.sentiment?.basic === "Bearish") {
-          return r + (m.likes?.total || 0);
-        } else return r;
-      }, 0);
-
-      curr.messageLikesNeutral = ms.reduce((r, m) => {
-        if (!m.entities?.sentiment?.basic) {
           return r + (m.likes?.total || 0);
         } else return r;
       }, 0);

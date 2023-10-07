@@ -117,6 +117,8 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.anchor50 = 50;
 
+    candle.anchor100 = 100;
+
     candle.date = new Date(tick);
 
     candle.priceOpen = json.Series[0].DataPoints[i][0];
@@ -127,7 +129,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     candle.priceLast = json.Series[0].DataPoints[i][3];
 
-    candle.volume = json.Series[1].DataPoints[i][0] || 1;
+    candle.volume = json.Series[1].DataPoints[i][0];
 
     candle.volumeS = candle.volume;
 
@@ -152,8 +154,11 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     for (let period of periods) {
       let seriesSlice = series.slice(-period);
+
       assignSMAData(candle, seriesSlice, period);
+
       assignVWAPData(candle, seriesSlice, period);
+
       assignColorData(candle, seriesSlice, period);
     }
 
@@ -162,7 +167,9 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   if (data) {
     scale(data.series, "volumeS");
+
     scale(data.series, "sma1VwapValue");
+
     for (let i = 0; i < data.series.length; i++) {
       data.series[i].volumeVwapDiscrepancy = simpul.math.change.num(
         data.series[i].volumeS,
@@ -188,24 +195,24 @@ function assignVWAPData(candle, series, period) {
   let v = 0;
   for (let s of series) {
     if (s.priceHigh && s.priceLow && s.priceLast && s.volume) {
-      price = (s.priceHigh + s.priceLow + s.priceLast) / 3;
+      price = simpul.math.mean([s.priceHigh, s.priceLow, s.priceLast]);
       pv += price * s.volume;
       v += s.volume;
     }
   }
   let vwap = +(pv / v).toFixed(3);
-  let vwapSignal = -simpul.math.change.percent(price, vwap);
+  let vwapSignal = simpul.math.change.percent(vwap, price);
   let vwapValue = pv;
   if (period) {
+    candle[`sma${period}VolumeTotal`] = v / period;
     candle[`sma${period}Vwap`] = vwap;
     candle[`sma${period}VwapSignal`] = vwapSignal;
     candle[`sma${period}VwapValue`] = vwapValue / period;
   } else {
+    candle.volumeTotal = v;
     candle.vwap = vwap;
     candle.vwapSignal = vwapSignal;
     candle.vwapValue = vwapValue;
-    candle.volumeTotal = v;
-    candle.value = price * candle.volume;
   }
 }
 
@@ -330,25 +337,11 @@ function assignColorData(candle, series, period) {
     let seriesPriceLast = series[series.length - 1]?.priceLast;
     candle[`sma${period}Color`] = getColor(seriesPriceOpen, seriesPriceLast);
     candle[`sma${period}ColorsGreen`] = getPercent(countColor.green);
-    candle[`sma${period}ColorsRed`] = getPercent(countColor.red);
-    candle[`sma${period}ColorsGray`] = getPercent(countColor.gray);
     candle[`sma${period}ColorVolumeGreen`] = getPercent2(countVolume.green);
-    candle[`sma${period}ColorVolumeRed`] = getPercent2(countVolume.red);
-    candle[`sma${period}ColorVolumeGray`] = getPercent2(countVolume.gray);
-    candle[`sma${period}ColorVolumeDiscrepancy`] =
-      candle[`sma${period}ColorsGreen`] /
-        candle[`sma${period}ColorVolumeGreen`] -
-      1;
   } else {
     candle.color = getColor(candle.priceLast, candle.priceOpen);
     candle.colorsGreen = getPercent(countColor.green);
-    candle.colorsRed = getPercent(countColor.red);
-    candle.colorsGray = getPercent(countColor.gray);
     candle.colorVolumeGreen = getPercent2(countVolume.green);
-    candle.colorVolumeRed = getPercent2(countVolume.red);
-    candle.colorVolumeGray = getPercent2(countVolume.gray);
-    candle.colorVolumeDiscrepancy =
-      candle.colorsGreen / candle.colorVolumeGreen - 1;
   }
 }
 
@@ -362,9 +355,9 @@ function assignSMAData(candle, series, period) {
   if (!candle[`sma${period}`] && candle.priceLast) {
     let sma = simpul.math.mean(series.map((c) => c.priceLast));
     candle[`sma${period}`] = sma;
-    candle[`sma${period}Signal`] = -simpul.math.change.percent(
-      candle.priceLast,
+    candle[`sma${period}Signal`] = simpul.math.change.percent(
       sma,
+      candle.priceLast,
     );
   }
   if (candle.rsi) {
