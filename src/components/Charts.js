@@ -3,20 +3,6 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Volume vs. VWAP Value",
-      seriesConfigs: [
-        ["volumeS", "Volume", "#3f51b5"],
-        ["sma1VwapValue", "VWAP Value", "#673ab7"],
-      ],
-    },
-    {
-      title: "Volume / VWAP Value Discrepancy",
-      seriesConfigs: [
-        ["volumeVwapDiscrepancy", "Discrepancy", "#311b92"],
-        ["anchor0", "Anchor", "#424242"],
-      ],
-    },
-    {
       title: "Price vs. VWAP vs. SMA(10,20,50,100,200)",
       seriesConfigs: [
         ["priceLast", "Close Price", "#90a4ae"],
@@ -37,6 +23,20 @@ export const Charts = () =>
         ["sma50Signal", "SMA(50)", "#455a64"],
         ["sma100Signal", "SMA(100)", "#37474f"],
         ["sma200Signal", "SMA(200)", "#263238"],
+        ["anchor0", "Anchor", "#424242"],
+      ],
+    },
+    {
+      title: "Volume vs. VWAP Value",
+      seriesConfigs: [
+        ["volumeS", "Volume", "#3f51b5"],
+        ["sma1VwapValue", "VWAP Value", "#673ab7"],
+      ],
+    },
+    {
+      title: "Volume / VWAP Value Discrepancy",
+      seriesConfigs: [
+        ["volumeVwapDiscrepancy", "Discrepancy", "#311b92"],
         ["anchor0", "Anchor", "#424242"],
       ],
     },
