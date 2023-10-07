@@ -113,6 +113,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
     let tick = json.TimeInfo.Ticks[tickIndex];
 
+    candle.anchor0 = 0;
+
+    candle.anchor50 = 50;
+
     candle.date = new Date(tick);
 
     candle.priceOpen = json.Series[0].DataPoints[i][0];
