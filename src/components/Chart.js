@@ -11,8 +11,16 @@ const ReactChart = dynamic(
   { ssr: false },
 );
 
-export function Chart({ seriesConfigs, title, ...options }) {
+export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
   const data = useContext(DataContext);
+
+  const seriesConfigs = _seriesConfigs.filter((i) => {
+    if (data.data.symbol === "BTCUSD") {
+      return i[0] !== "sma10ColorVolumeGreen";
+    } else {
+      return i[0] !== "sma20ColorsGreen";
+    }
+  });
 
   const series = useMemo(() => {
     const seriesConfig = seriesConfigs.reduce((r, i) => {

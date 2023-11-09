@@ -44,7 +44,9 @@ export function LinksCard() {
               },
               {
                 label: "Tickeron" + signal,
-                href: `https://tickeron.com/ticker/${symbol}`,
+                href: `https://tickeron.com/ticker/${
+                  symbol === "BTCUSD" ? "BTC.X" : symbol
+                }`,
               },
               {
                 label: "Stocktwits",
