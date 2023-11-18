@@ -456,6 +456,9 @@ const CODES = [
       "JNK",
       "BKHY",
       "DIA",
+      "TAN",
+      "LIT",
+      "FAN",
     ],
   ],
   [
@@ -500,6 +503,8 @@ const CODES = [
       "IGSB",
       "SMH",
       "DAPP",
+      "ICLN",
+      "QCLN",
     ],
   ],
   ["XNYS", ["BRK.A", "BRK.B"]],

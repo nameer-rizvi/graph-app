@@ -16,9 +16,9 @@ export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
 
   const seriesConfigs = _seriesConfigs.filter((i) => {
     if (data.data.symbol === "BTCUSD") {
-      return i[0] !== "sma10ColorVolumeGreen";
+      return i[0] !== "sma5ColorVolumeGreen";
     } else {
-      return i[0] !== "sma20ColorsGreen";
+      return i[0] !== "sma5ColorsGreen";
     }
   });
 
