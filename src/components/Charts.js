@@ -27,20 +27,6 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Volume vs. VWAP Value",
-      seriesConfigs: [
-        ["volumeS", "Volume", "#3f51b5"],
-        ["sma1VwapValue", "VWAP Value", "#673ab7"],
-      ],
-    },
-    {
-      title: "Volume / VWAP Value Discrepancy",
-      seriesConfigs: [
-        ["volumeVwapDiscrepancy", "Discrepancy", "#311b92"],
-        ["anchor0", "Anchor", "#424242"],
-      ],
-    },
-    {
       title: "RSI vs. Candle Distribution",
       seriesConfigs: [
         ["rsi", "RSI", "#ef6c00"],
@@ -56,6 +42,20 @@ export const Charts = () =>
         ["macd", "MACD", "#d81b60"],
         ["macdHist", "MACD Hist", "#ec407a"],
         ["macdSignal", "MACD Signal", "#ad1457"],
+        ["anchor0", "Anchor", "#424242"],
+      ],
+    },
+    {
+      title: "Volume vs. VWAP Value",
+      seriesConfigs: [
+        ["volumeS", "Volume", "#3f51b5"],
+        ["sma1VwapValue", "VWAP Value", "#673ab7"],
+      ],
+    },
+    {
+      title: "Volume / VWAP Value Discrepancy",
+      seriesConfigs: [
+        ["volumeVwapDiscrepancy", "Discrepancy", "#311b92"],
         ["anchor0", "Anchor", "#424242"],
       ],
     },
