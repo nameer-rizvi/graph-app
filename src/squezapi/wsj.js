@@ -230,7 +230,7 @@ function assignRSIData(candle, series, OPTION) {
     for (let i = 0; i < series.length; i++) {
       let currPrice = series[i]?.priceLast;
       let prevPrice = series[i - 1]?.priceLast;
-      let change = prevPrice - currPrice;
+      let change = currPrice - prevPrice;
       if (change > 0) gain += change;
       if (change < 0) loss += Math.abs(change);
     }
@@ -243,7 +243,7 @@ function assignRSIData(candle, series, OPTION) {
   } else if (prev?.rsi) {
     let gain = prev.averageGain * 13;
     let loss = prev.averageLoss * 13;
-    let change = prev.priceLast - candle.priceLast;
+    let change = candle.priceLast - prev.priceLast;
     if (change > 0) gain += change;
     if (change < 0) loss += Math.abs(change);
     let averageGain = gain / 14;
