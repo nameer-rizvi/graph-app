@@ -18,7 +18,7 @@ export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
     if (data.data.symbol === "BTCUSD") {
       return i[0] !== "sma5ColorVolumeGreen";
     } else {
-      return i[0] !== "sma5ColorsGreen";
+      return i[0] !== "sma10ColorsGreen";
     }
   });
 
