@@ -1,10 +1,14 @@
 const utils = require("../utils");
 const simpul = require("simpul");
 
+const SERIES_KEY_CACHE = {};
+
 export async function wsj(SYMBOL, TIMEFRAME) {
   SYMBOL = utils.cleanSymbol(SYMBOL);
 
-  if (SYMBOL === "BTC.X") SYMBOL = "BTC";
+  if (SYMBOL === "BTC.X") SYMBOL = "BTCUSD";
+
+  const URL = "https://api.wsj.net/api/michelangelo/timeseries/history?";
 
   const STEP = {
     day: "PT5M",
@@ -24,17 +28,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     year10: "P10Y",
   }[TIMEFRAME || "day"];
 
-  let CODE = CODES[CODES.findIndex((c) => c[1].includes(SYMBOL))]?.[0];
-
-  let SERIES_KEY = CODE
-    ? CODE === "CoinDesk"
-      ? `CRYPTOCURRENCY/US/CoinDesk/${SYMBOL}USD`
-      : CODE === "XNYS"
-      ? `STOCK/US/${CODE}/${SYMBOL}`
-      : CODE === "XLON"
-      ? `STOCK/UK/${CODE}/${SYMBOL}`
-      : `FUND/US/${CODE}/${SYMBOL}`
-    : `STOCK/US//${SYMBOL}`;
+  const SERIES_KEY = SERIES_KEY_CACHE[SYMBOL] || `STOCK/US//${SYMBOL}`;
 
   const OPTION = {
     headers: {
@@ -43,48 +37,60 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     },
   };
 
-  const URL =
-    "https://api.wsj.net/api/michelangelo/timeseries/history?" +
-    new URLSearchParams({
-      ckey: "57494d5ed7",
-      json: JSON.stringify({
-        EntitlementToken: OPTION.headers["Dylan2010.EntitlementToken"],
-        Step: STEP,
-        TimeFrame: TIMEFRAME2,
-        ShowPreMarket: true,
-        ShowAfterHours: true,
-        FilterClosedPoints: true,
-        FilterNullSlots: true,
-        IncludeClosedSlots: false,
-        IncludeCurrentQuotes: false,
-        IncludeMockTick: true,
-        IncludeOfficialClose: true,
-        InjectOpen: false,
-        ResetTodaysAfterHoursPercentChange: false,
-        UseExtendedTimeFrame: true,
-        WantPriorClose: true,
-        Series: [
-          {
-            Key: SERIES_KEY,
-            Dialect: "Charting",
-            Kind: "Ticker",
-            SeriesId: "s1",
-            DataTypes: ["Open", "High", "Low", "Last"],
-            Indicators: [
-              {
-                Kind: "Volume",
-                SeriesId: "i2",
-                Parameters: [],
-              },
-            ],
-          },
-        ],
-      }),
-    }).toString();
+  const PARAMS = {
+    ckey: "57494d5ed7",
+    json: JSON.stringify({
+      EntitlementToken: OPTION.headers["Dylan2010.EntitlementToken"],
+      Step: STEP,
+      TimeFrame: TIMEFRAME2,
+      ShowPreMarket: true,
+      ShowAfterHours: true,
+      FilterClosedPoints: true,
+      FilterNullSlots: true,
+      IncludeClosedSlots: false,
+      IncludeCurrentQuotes: false,
+      IncludeMockTick: true,
+      IncludeOfficialClose: true,
+      InjectOpen: false,
+      ResetTodaysAfterHoursPercentChange: false,
+      UseExtendedTimeFrame: true,
+      WantPriorClose: true,
+      Series: [
+        {
+          Key: SERIES_KEY,
+          Dialect: "Charting",
+          Kind: "Ticker",
+          SeriesId: "s1",
+          DataTypes: ["Open", "High", "Low", "Last"],
+          Indicators: [
+            {
+              Kind: "Volume",
+              SeriesId: "i2",
+              Parameters: [],
+            },
+          ],
+        },
+      ],
+    }),
+  };
 
-  const response = await fetch(URL, OPTION);
+  let response = await fetch(URL + new URLSearchParams(PARAMS), OPTION);
 
-  const json = await response.json();
+  let json = await response.json();
+
+  if (json.error?.startsWith("Unknown instrument")) {
+    let SERIES_KEY_2 = await autocomplete(SYMBOL.replace(".X", ""));
+
+    if (SERIES_KEY_2) {
+      PARAMS.json = PARAMS.json.replace(SERIES_KEY, SERIES_KEY_2);
+
+      response = await fetch(URL + new URLSearchParams(PARAMS), OPTION);
+
+      json = await response.json();
+
+      if (!json.error) SERIES_KEY_CACHE[SYMBOL] = SERIES_KEY_2;
+    }
+  }
 
   if (json.error) throw new Error(json.error);
 
@@ -181,6 +187,36 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   assignLast(data);
 
   return data;
+}
+
+/*
+ *
+ * --> AUTOCOMPLETE
+ *
+ */
+
+async function autocomplete(SYMBOL) {
+  const url =
+    "https://services.dowjones.com/autocomplete/data?" +
+    new URLSearchParams({
+      count: 1,
+      q: SYMBOL,
+      need: "symbol",
+      it: [
+        "fund",
+        "exchangetradedfund",
+        "stock",
+        "Index",
+        "Currency",
+        "Benchmark",
+        "Future",
+        "Bond",
+        "CryptoCurrency",
+      ],
+    });
+  const response = await fetch(url);
+  const json = await response.json();
+  return json?.symbols?.[0]?.chartingSymbol;
 }
 
 /*
@@ -387,128 +423,9 @@ function assignLast(data) {
 
 /*
  *
- * --> ETF CODES
+ * --> SCALE
  *
  */
-
-const CODES = [
-  [
-    "ARCX",
-    [
-      "SPY",
-      "SPXL",
-      "SPXS",
-      "SOXL",
-      "SOXS",
-      "TMF",
-      "HYG",
-      "SCHD",
-      "VTI",
-      "VOO",
-      "SPHY",
-      "VYM",
-      "VIG",
-      "SPHD",
-      "XLF",
-      "UNG",
-      "PSQ",
-      "XLE",
-      "EEM",
-      "EWZ",
-      "LABU",
-      "FXI",
-      "BITO",
-      "BITI",
-      "ARKK",
-      "ARKW",
-      "ARKF",
-      "BITQ",
-      "DEFI",
-      "SPXU",
-      "IWM",
-      "KRE",
-      "LQD",
-      "QID",
-      "SH",
-      "XLP",
-      "KWEB",
-      "XLU",
-      "MSOS",
-      "BIL",
-      "GDX",
-      "FNGD",
-      "TZA",
-      "XLC",
-      "SLV",
-      "IEMG",
-      "VEA",
-      "XLI",
-      "EFA",
-      "VWO",
-      "XLV",
-      "MJ",
-      "BOIL",
-      "TECS",
-      "TNA",
-      "XBI",
-      "XLK",
-      "VTEB",
-      "JNK",
-      "BKHY",
-      "DIA",
-      "TAN",
-      "LIT",
-      "FAN",
-    ],
-  ],
-  [
-    "BATS",
-    [
-      "UVXY",
-      "XBTF",
-      "ARKX",
-      "ARKG",
-      "ARKQ",
-      "PRNT",
-      "IZRL",
-      "SATO",
-      "BLKC",
-      "UVIX",
-      "VXX",
-      "GOVT",
-    ],
-  ],
-  ["CoinDesk", ["BTC"]],
-  ["OOTC", []],
-  ["XLON", []],
-  [
-    "XNAS",
-    [
-      "QQQ",
-      "TQQQ",
-      "SQQQ",
-      "TLT",
-      "VGLT",
-      "VGIT",
-      "VGSH",
-      "ANGL",
-      "BKCH",
-      "BTF",
-      "MAXI",
-      "BITS",
-      "WGMI",
-      "SPBC",
-      "TSLL",
-      "PDBC",
-      "IGSB",
-      "SMH",
-      "DAPP",
-      "ICLN",
-      "QCLN",
-    ],
-  ],
-  ["XNYS", ["BRK.A", "BRK.B"]],
-];
 
 function scale(array, propName) {
   let high = 0;
