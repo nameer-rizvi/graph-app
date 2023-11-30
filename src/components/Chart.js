@@ -15,11 +15,11 @@ export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
   const data = useContext(DataContext);
 
   const seriesConfigs = _seriesConfigs.filter((i) => {
-    // if (data.data.symbol === "BTCUSD") {
-    // return i[0] !== "sma5ColorVolumeGreen";
-    // } else {
-    return i[0] !== "sma10ColorsGreen";
-    // }
+    if (data.data?.series?.some((j) => j.sma5ColorVolumeGreen)) {
+      return i[0] !== "sma10ColorsGreen";
+    } else {
+      return i[0] !== "sma5ColorVolumeGreen";
+    }
   });
 
   const series = useMemo(() => {
