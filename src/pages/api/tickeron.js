@@ -6,8 +6,8 @@ import { tickeron } from "../../squezapi";
 export default async function handler(req, res) {
   if (req.method === "GET") {
     try {
-      const json = await tickeron(req.query.symbol);
-      res.status(200).json(json);
+      // const json = await tickeron(req.query.symbol);
+      res.status(200).json({});
     } catch (error) {
       res.status(400).send(error.toString());
     }
