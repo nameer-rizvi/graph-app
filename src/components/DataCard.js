@@ -55,8 +55,8 @@ function DataCardSubtitle({ subtitle }) {
 }
 
 function DataCardPrice({ data = {} }) {
-  if (data.priceLast) {
-    const price = simpul.numberstring(data.priceLast, ["$"]);
+  if (data.priceClose) {
+    const price = simpul.numberstring(data.priceClose, ["$"]);
 
     const priceChange = data.priceChange
       ? `(${simpul.numberstring(data.priceChange, ["+", "%"])})`

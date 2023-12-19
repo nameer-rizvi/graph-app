@@ -28,13 +28,15 @@ export function useData() {
 
   useEffect(() => {
     const symbolTitle = data.value.symbol?.toUpperCase();
-    const priceLast = simpul.numberstring(data?.value?.last?.priceLast, ["$"]);
-    if (symbolTitle && priceLast) {
-      document.title = [symbolTitle, priceLast].join(" - ");
+    const priceClose = simpul.numberstring(data?.value?.last?.priceClose, [
+      "$",
+    ]);
+    if (symbolTitle && priceClose) {
+      document.title = [symbolTitle, priceClose].join(" - ");
     } else if (symbolTitle) {
       document.title = [APP_NAME, symbolTitle].join(" - ");
     } else document.title = APP_NAME;
-  }, [data.value.symbol, data?.value?.last?.priceLast]);
+  }, [data.value.symbol, data?.value?.last?.priceClose]);
 
   useEffect(() => {
     if (data?.value?.last?.priceChange > 0) {
@@ -59,10 +61,10 @@ function getPoll() {
   const day = new Date().getDay();
   const hour = new Date().getHours();
   if (day === 0 || day === 6) {
-    return 600000;
+    return 3600000;
   } else if (hour > 4 && hour < 20) {
     return 300000;
   } else {
-    return 450000;
+    return 900000;
   }
 }

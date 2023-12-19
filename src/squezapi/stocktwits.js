@@ -11,7 +11,7 @@ export async function stocktwits(SYMBOL, series) {
 
   let page = 1;
 
-  let pageMax = 20;
+  let pageMax = 10;
 
   const cutoff = new Date(series[0].date);
 

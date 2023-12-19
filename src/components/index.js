@@ -4,5 +4,5 @@ export * from "./FixedHeader";
 export * from "./HTMLHead";
 export * from "./Main";
 export * from "./Sidebar";
-export * from "./ThemeToggle";
+// export * from "./ThemeToggle";
 export * from "./TimeframeSelect";

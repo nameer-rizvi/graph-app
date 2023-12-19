@@ -8,17 +8,19 @@ import { ThemeProvider, DataProvider } from "../providers";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Analytics } from "@vercel/analytics/react";
 
-const MyApp = ({ Component, pageProps }) => (
-  <>
-    <HTMLHead />
-    <ThemeProvider>
-      <CssBaseline />
-      <DataProvider>
-        <Component {...pageProps} />
-      </DataProvider>
-    </ThemeProvider>
-    <Analytics />
-  </>
-);
+function MyApp({ Component, pageProps }) {
+  return (
+    <>
+      <HTMLHead />
+      <ThemeProvider>
+        <CssBaseline />
+        <DataProvider>
+          <Component {...pageProps} />
+        </DataProvider>
+      </ThemeProvider>
+      <Analytics />
+    </>
+  );
+}
 
 export default MyApp;

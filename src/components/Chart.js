@@ -29,7 +29,7 @@ export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
     for (let tick of data.data?.series || []) {
       for (let [key, value] of Object.entries(tick)) {
         if (seriesConfig[key]) {
-          seriesConfig[key].data.push({ date: tick.date, value });
+          seriesConfig[key].data.push({ date: tick.dateObject, value });
         }
       }
     }

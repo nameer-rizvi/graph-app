@@ -1,11 +1,10 @@
 import {
   Container,
   Sidebar,
-  Main,
   FixedHeader,
   TimeframeSelect,
+  Main,
   Charts,
-  ThemeToggle,
 } from "../components";
 
 const Home = () => (
@@ -17,7 +16,7 @@ const Home = () => (
     <Main>
       <Charts />
     </Main>
-    <ThemeToggle />
+    {/*<ThemeToggle />*/}
   </Container>
 );
 

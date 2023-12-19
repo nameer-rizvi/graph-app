@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { support } from "simpul";
+import simpul from "simpul";
 
 export function useCSR() {
   const [render, setRender] = useState(false);
 
   useEffect(() => {
-    if (support.window()) setRender(true);
+    if (simpul.support.window) setRender(true);
   }, []);
 
   return { render };
