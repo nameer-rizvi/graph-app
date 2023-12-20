@@ -105,6 +105,9 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     country: json.Series[0].CountryCode,
     series: [],
     timeframe: TIMEFRAME,
+    basePrice: json.Series[0].ExtraData.find((i) => {
+      return i.Name === "PriorClose";
+    })?.Value,
   };
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
@@ -130,9 +133,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   const pricehistory = simpul.pricehistory(data.series, {
     anchor: true,
     vwapdisc: true,
-    basePrice: json.Series[0].ExtraData.find((i) => {
-      return i.Name === "PriorClose";
-    })?.Value,
+    basePrice: data.basePrice,
   });
 
   simpul.scale(pricehistory.candles, "priceRange");
