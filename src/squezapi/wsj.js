@@ -130,7 +130,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   const pricehistory = simpul.pricehistory(data.series, {
     anchor: true,
     vwapdisc: true,
+    basePrice: json.Series[0].ExtraData.find((i) => {
+      return i.Name === "PriorClose";
+    })?.Value,
   });
+
+  simpul.scale(pricehistory.candles, "priceRange");
 
   data.series = pricehistory.candles;
 

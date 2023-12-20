@@ -50,6 +50,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["volumeScale", "Volume", "#3f51b5"],
         ["vwapValueScale", "VWAP Value", "#673ab7"],
+        ["priceRange", "Price Range", "#263238"],
       ],
     },
     {
