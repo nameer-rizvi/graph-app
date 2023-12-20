@@ -3,7 +3,7 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Price vs. VWAP vs. SMA(10,20,50,100,200)",
+      title: "Price, VWAP, SMA(10,20,50,100,200)",
       seriesConfigs: [
         ["priceClose", "Close Price", "#90a4ae"],
         ["vwap", "VWAP", "#311b92"],
@@ -17,12 +17,12 @@ export const Charts = () =>
     {
       title: "Price Diversion",
       seriesConfigs: [
-        ["vwapSignal", "VWAP", "#311b92"],
-        ["sma10Signal", "SMA(10)", "#607d8b"],
-        ["sma20Signal", "SMA(20)", "#546e7a"],
-        ["sma50Signal", "SMA(50)", "#455a64"],
-        ["sma100Signal", "SMA(100)", "#37474f"],
-        ["sma200Signal", "SMA(200)", "#263238"],
+        ["vwapSignal", "VWAP Signal", "#311b92"],
+        ["sma10Signal", "SMA(10) Signal", "#607d8b"],
+        ["sma20Signal", "SMA(20) Signal", "#546e7a"],
+        ["sma50Signal", "SMA(50) Signal", "#455a64"],
+        ["sma100Signal", "SMA(100) Signal", "#37474f"],
+        ["sma200Signal", "SMA(200) Signal", "#263238"],
         ["anchor0", "Anchor", "#424242"],
       ],
     },
@@ -46,17 +46,17 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Volume vs. VWAP Value",
+      title: "Scaled: Volume, Value, Volatility",
       seriesConfigs: [
         ["volumeScale", "Volume", "#3f51b5"],
-        ["vwapValueScale", "VWAP Value", "#673ab7"],
-        ["priceRange", "Price Range", "#263238"],
+        ["sma1VwapValueScale", "VWAP Value", "#673ab7"],
+        ["priceRangeScale", "Price Range", "#263238"],
       ],
     },
     {
-      title: "Volume / VWAP Value Discrepancy",
+      title: "Volume / VWAP Discrepancy",
       seriesConfigs: [
-        ["volumeVwapValueDiscrepancy", "Discrepancy", "#311b92"],
+        ["volumeVwapValueDiscrepancy", "Volume / VWAP Value", "#311b92"],
         ["anchor0", "Anchor", "#424242"],
       ],
     },

@@ -13,7 +13,7 @@ export async function stocktwits(SYMBOL, series) {
 
   let pageMax = 10;
 
-  const cutoff = new Date(series[0].date);
+  const cutoff = new Date(series[0].dateString);
 
   const messages = [];
 
@@ -51,8 +51,8 @@ export async function stocktwits(SYMBOL, series) {
 
       let ms = messages.filter((m) => {
         let mDate = new Date(m.created_at);
-        let cDate = new Date(curr.date);
-        let nDate = next?.date ? new Date(next.date) : new Date();
+        let cDate = new Date(curr.dateString);
+        let nDate = next?.dateString ? new Date(next.dateString) : new Date();
         return mDate >= cDate && mDate < nDate;
       });
 
