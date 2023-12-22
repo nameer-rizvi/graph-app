@@ -41,7 +41,12 @@ export function Chart(props) {
     return { dataset, min, max };
   }, [seriesConfigs, data.data?.series]);
 
-  console.log(chart);
+  const datetimeparse =
+    data.timeframe.value === "day"
+      ? "toLocaleTimeString"
+      : data.timeframe.value === "week" || data.timeframe.value === "week2"
+      ? "toLocaleString"
+      : "toLocaleDateString";
 
   if (data.render && chart.dataset.length) {
     return (
@@ -56,7 +61,7 @@ export function Chart(props) {
             {
               dataKey: "datetime",
               scaleType: "time",
-              valueFormatter: (v) => new Date(v).toLocaleString(),
+              valueFormatter: (v) => new Date(v)[datetimeparse](),
             },
           ]}
           series={seriesConfigs.map((config) => ({
