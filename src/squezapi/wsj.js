@@ -147,7 +147,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
 function injectVVCVG(candles) {
   candles.forEach((candle) => {
-    const vvcvg = candle.sma5VwapValueScale * candle.sma5ColorVolumeGreen;
+    const vvcvg = candle.sma5VwapValueScale + candle.sma5ColorVolumeGreen / 2;
     candle.vvcvg = simpul.math.num(vvcvg);
   });
   simpul.scale(candles, "vvcvg");
