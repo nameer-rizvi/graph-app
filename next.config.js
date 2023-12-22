@@ -1,4 +1,7 @@
-const withTM = require("next-transpile-modules")(["async-fetch"]);
+const withTM = require("next-transpile-modules")([
+  "async-fetch",
+  "@mui/x-charts",
+]);
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withTM({

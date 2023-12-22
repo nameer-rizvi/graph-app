@@ -1,84 +1,74 @@
+import dynamic from "next/dynamic";
 import { useContext, useMemo } from "react";
 import { DataContext } from "../context";
-import dynamic from "next/dynamic";
-import { useTheme } from "@mui/material/styles";
-import { STYLE_THEMES } from "../constant";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-const ReactChart = dynamic(
-  () => import("react-charts").then((mod) => mod.Chart),
+const LineChart = dynamic(
+  () => import("@mui/x-charts/LineChart").then((mod) => mod.LineChart),
   { ssr: false },
 );
 
-export function Chart({ seriesConfigs: _seriesConfigs, title, ...options }) {
+export function Chart(props) {
   const data = useContext(DataContext);
 
-  const seriesConfigs = _seriesConfigs.filter((i) => {
-    if (data.data?.series?.some((j) => j.sma5ColorVolumeGreen)) {
-      return i[0] !== "sma10ColorsGreen";
-    } else {
-      return i[0] !== "sma5ColorVolumeGreen";
-    }
+  const seriesConfigs = props.seriesConfigs.filter((i) => {
+    const v = data.data?.series?.some((j) => typeof j[i[0]] === "number");
+    const c = i[3] ? i[3](data) : true;
+    return v && c;
   });
 
-  const series = useMemo(() => {
-    const seriesConfig = seriesConfigs.reduce((r, i) => {
-      return { ...r, [i[0]]: { label: i[1], data: [] } };
-    }, {});
+  seriesConfigs.reverse();
+
+  const chart = useMemo(() => {
+    let dataset = [];
+    let min, max;
     for (let tick of data.data?.series || []) {
-      for (let [key, value] of Object.entries(tick)) {
-        if (seriesConfig[key]) {
-          seriesConfig[key].data.push({ date: tick.dateObject, value });
+      let point = {};
+      for (let seriesConfig of seriesConfigs) {
+        let v = tick[seriesConfig[0]];
+        if (typeof v === "number") {
+          if (min === undefined || v < min) min = v;
+          if (max === undefined || v > max) max = v;
+          point[seriesConfig[0]] = v;
         }
       }
+      point.datetime = new Date(tick.dateObject).getTime();
+      dataset.push(point);
     }
-    return Object.values(seriesConfig);
+    // if (min !== 0 && min !== 100) min = min - min * 0.1;
+    // if (max !== 0 && max !== 100) max = max + max * 0.1;
+    return { dataset, min, max };
   }, [seriesConfigs, data.data?.series]);
 
-  const primaryAxis = useMemo(() => {
-    return { getValue: (datum) => fixedDate(datum.date) };
-  }, []);
+  console.log(chart);
 
-  const secondaryAxes = useMemo(() => {
-    return [{ getValue: (datum) => datum.value }];
-  }, []);
-
-  const defaultColors = seriesConfigs.map((i) => i[2]);
-
-  const theme = useTheme();
-
-  const dark = theme.palette.mode === STYLE_THEMES[1];
-
-  const render =
-    data.render &&
-    series.some((i) =>
-      i.data.some((i) => typeof i.value === "number" && i.value !== 0),
-    );
-
-  if (render) {
+  if (data.render && chart.dataset.length) {
     return (
-      <Box mt={6} mb={6} sx={{ height: 150 }}>
+      <Box mt={6} mb={4} sx={{ height: 220 }}>
         <Typography variant="overline" display="block" gutterBottom>
-          {title}
+          {props.title}
         </Typography>
-        <ReactChart
-          options={{
-            ...options,
-            data: series,
-            primaryAxis,
-            secondaryAxes,
-            defaultColors,
-            dark,
-          }}
+        <LineChart
+          axisHighlight={{ x: "line", y: "line" }}
+          yAxis={[{ min: chart.min, max: chart.max }]}
+          xAxis={[
+            {
+              dataKey: "datetime",
+              scaleType: "time",
+              valueFormatter: (v) => new Date(v).toLocaleString(),
+            },
+          ]}
+          series={seriesConfigs.map((config) => ({
+            dataKey: config[0],
+            label: config[1],
+            color: config[2],
+            showMark: false,
+          }))}
+          dataset={chart.dataset}
+          legend={{ hidden: true }}
         />
       </Box>
     );
   }
-}
-
-function fixedDate(d) {
-  const date = new Date(d);
-  date.setHours(date.getHours() - 4);
-  return date;
 }

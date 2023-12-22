@@ -30,8 +30,18 @@ export const Charts = () =>
       title: "RSI, Candle Distribution, VVCVG",
       seriesConfigs: [
         ["rsi", "RSI", "#ef6c00"],
-        ["sma5ColorVolumeGreen", "Candle Volume Green", "#2e7d32"],
-        ["sma10ColorsGreen", "Candles Green", "#2e7d32"],
+        [
+          "sma5ColorVolumeGreen",
+          "Candle Volume Green",
+          "#2e7d32",
+          (data) => data?.data?.symbol !== "BTCUSD",
+        ],
+        [
+          "sma10ColorsGreen",
+          "Candles Green",
+          "#43a047",
+          (data) => data?.data?.symbol === "BTCUSD",
+        ],
         ["vvcvg", "VVCVG", "#6a1b9a"],
         ["anchor0", "Anchor [0]", "#424242"],
         ["anchor100", "Anchor [100]", "#424242"],
