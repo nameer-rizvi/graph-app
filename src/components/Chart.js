@@ -65,8 +65,8 @@ export function Chart(props) {
           yAxis={[
             {
               tickNumber: 5,
-              min: chart.min,
-              max: chart.max,
+              min: typeof props.min === "number" ? props.min : chart.min,
+              max: typeof props.max === "number" ? props.max : chart.max,
             },
           ]}
           series={seriesConfigs.map((config) => ({

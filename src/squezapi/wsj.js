@@ -132,13 +132,14 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   const pricehistory = simpul.pricehistory(data.series, {
     anchor: true,
-    scales: ["vwapdisc", "priceRange", "sma5VwapValue"],
+    scales: [
+      "vwapdisc",
+      "vvcvg",
+      "priceRange",
+      "priceRangeDiff",
+      "sma5VwapValue",
+    ],
     basePrice: data.basePrice,
-  });
-
-  pricehistory.candles.forEach((candle) => {
-    const vvcvg = (candle.sma5VwapValueScale + candle.sma5ColorVolumeGreen) / 2;
-    candle.vvcvg = simpul.math.num(vvcvg);
   });
 
   data.series = pricehistory.candles;

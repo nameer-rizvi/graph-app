@@ -14,22 +14,25 @@ export const Charts = () =>
         ["sma200", "SMA(200)", "#263238", ["$"]],
       ],
     },
-    {
-      title: "Price Diversion",
-      seriesConfigs: [
-        ["vwapSignal", "VWAP Signal", "#311b92", ["%"]],
-        ["sma10Signal", "SMA(10) Signal", "#607d8b", ["%"]],
-        ["sma20Signal", "SMA(20) Signal", "#546e7a", ["%"]],
-        ["sma50Signal", "SMA(50) Signal", "#455a64", ["%"]],
-        ["sma100Signal", "SMA(100) Signal", "#37474f", ["%"]],
-        ["sma200Signal", "SMA(200) Signal", "#263238", ["%"]],
-        ["anchor0", "Anchor", "#424242", ["%"]],
-      ],
-    },
+    // {
+    //   title: "Price Diversion",
+    //   seriesConfigs: [
+    //     ["vwapSignal", "VWAP Signal", "#311b92", ["%"]],
+    //     ["sma10Signal", "SMA(10) Signal", "#607d8b", ["%"]],
+    //     ["sma20Signal", "SMA(20) Signal", "#546e7a", ["%"]],
+    //     ["sma50Signal", "SMA(50) Signal", "#455a64", ["%"]],
+    //     ["sma100Signal", "SMA(100) Signal", "#37474f", ["%"]],
+    //     ["sma200Signal", "SMA(200) Signal", "#263238", ["%"]],
+    //     ["anchor0", "Anchor", "#424242", ["%"]],
+    //   ],
+    // },
     {
       title: "RSI, Candle Distribution, VVCVG",
+      min: 0,
+      max: 100,
       seriesConfigs: [
         ["rsi", "RSI", "#ef6c00"],
+        ["vvcvg", "VVCVG", "#6a1b9a"],
         [
           "sma5ColorVolumeGreen",
           "Candle Volume Green",
@@ -44,26 +47,24 @@ export const Charts = () =>
           undefined,
           (data) => data?.data?.symbol === "BTCUSD",
         ],
-        ["vvcvg", "VVCVG", "#6a1b9a"],
-        ["anchor0", "Anchor [0]", "#424242"],
-        ["anchor100", "Anchor [100]", "#424242"],
+        ["anchor50", "Anchor [50]", "#424242"],
       ],
     },
-    {
-      title: "MACD",
-      seriesConfigs: [
-        ["macd", "MACD", "#d81b60"],
-        ["macdHist", "MACD Hist", "#ec407a"],
-        ["macdSignal", "MACD Signal", "#ad1457"],
-        ["anchor0", "Anchor", "#424242"],
-      ],
-    },
+    // {
+    //   title: "MACD",
+    //   seriesConfigs: [
+    //     ["macd", "MACD", "#d81b60"],
+    //     ["macdHist", "MACD Hist", "#ec407a"],
+    //     ["macdSignal", "MACD Signal", "#ad1457"],
+    //     ["anchor0", "Anchor", "#424242"],
+    //   ],
+    // },
     {
       title: "Scaled: Volume, Value, Volatility",
       seriesConfigs: [
         ["volumeScale", "Volume", "#3f51b5"],
         ["sma1VwapValueScale", "VWAP Value", "#673ab7"],
-        ["priceRangeScale", "Price Range", "#263238"],
+        ["priceRangeDiffScale", "Price Range Diff", "#263238"],
       ],
     },
     {
