@@ -136,19 +136,14 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     basePrice: data.basePrice,
   });
 
-  injectVVCVG(pricehistory.candles);
+  pricehistory.candles.forEach((candle) => {
+    const vvcvg = (candle.sma5VwapValueScale + candle.sma5ColorVolumeGreen) / 2;
+    candle.vvcvg = simpul.math.num(vvcvg);
+  });
 
   data.series = pricehistory.candles;
 
   data.last = pricehistory.curr;
 
   return data;
-}
-
-function injectVVCVG(candles) {
-  candles.forEach((candle) => {
-    const vvcvg = candle.sma5VwapValueScale + candle.sma5ColorVolumeGreen / 2;
-    candle.vvcvg = simpul.math.num(vvcvg);
-  });
-  simpul.scale(candles, "vvcvg");
 }
