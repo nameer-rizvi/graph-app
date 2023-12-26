@@ -147,7 +147,11 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.last = pricehistory.curr;
 
-  if (TIMEFRAME === "day" && data.last?.dateObject.getHours() < 20) {
+  let currentHour = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+  ).getHours();
+
+  if (TIMEFRAME === "day" && currentHour < 20) {
     let time = data.isBitcoin ? "17:00:00" : "20:00:00";
     let date = new Date(`${new Date().toDateString()} ${time} EST`);
     data.series.push({ dateObject: date });
