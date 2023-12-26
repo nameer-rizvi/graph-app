@@ -146,7 +146,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.last = pricehistory.curr;
 
-  if (TIMEFRAME === "day" && data.last.dateObject.getHours() < 20) {
+  if (TIMEFRAME === "day" && data.last?.dateObject.getHours() < 20) {
     let date = new Date(`${new Date().toDateString()} 20:00:00 EST`);
     data.series.push({ dateObject: date });
   }
