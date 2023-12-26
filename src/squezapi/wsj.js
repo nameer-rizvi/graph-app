@@ -108,6 +108,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     basePrice: json.Series[0].ExtraData.find((i) => {
       return i.Name === "PriorClose";
     })?.Value,
+    isBitcoin: json.Series[0].Ticker === "BTCUSD",
   };
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
@@ -147,7 +148,8 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   data.last = pricehistory.curr;
 
   if (TIMEFRAME === "day" && data.last?.dateObject.getHours() < 20) {
-    let date = new Date(`${new Date().toDateString()} 20:00:00 EST`);
+    let time = data.isBitcoin ? "17:00:00" : "20:00:00";
+    let date = new Date(`${new Date().toDateString()} ${time} EST`);
     data.series.push({ dateObject: date });
   }
 

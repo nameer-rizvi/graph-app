@@ -37,7 +37,7 @@ export function LinksCard() {
               {
                 label: "Tickeron",
                 href: `https://tickeron.com/ticker/${
-                  symbol === "BTCUSD" ? "BTC.X" : symbol
+                  data.data.isBitcoin ? "BTC.X" : symbol
                 }`,
               },
               {
