@@ -3,7 +3,7 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Price, VWAP, SMA(10,20,50,100,200)",
+      title: "Price (High, Low, Close), VWAP",
       seriesConfigs: [
         ["priceClose", "Price Close", "#78909c", ["$"]],
         ["priceHigh", "Price High", "#33691e", ["$"]],
@@ -50,7 +50,7 @@ export const Charts = () =>
     //   ],
     // },
     {
-      title: "Scaled: Volume, Value, Volatility",
+      title: "Volume, Value, Volatility",
       seriesConfigs: [
         ["volumeScale", "Volume", "#0d47a1"],
         ["sma1VwapValueScale", "VWAP Value", "#4527a0"],
@@ -60,9 +60,13 @@ export const Charts = () =>
     {
       title: "Price Diversion",
       seriesConfigs: [
-        ["vwapSignal", "VWAP Signal", "#311b92", ["%"]],
+        ["vwapSignal", "VWAP", "#311b92", ["%"]],
         ["volumeVwapValueDiscrepancy", "Volume / VWAP Value", "#283593"],
-        ["sma10Signal", "SMA(10) Signal", "#607d8b", ["%"]],
+        ["sma10Signal", "SMA(10)", "#607d8b", ["%"]],
+        // ["sma20Signal", "SMA(20)", "#546e7a", ["%"]],
+        // ["sma50Signal", "SMA(50)", "#455a64", ["%"]],
+        // ["sma100Signal", "SMA(100)", "#37474f", ["%"]],
+        // ["sma200Signal", "SMA(200)", "#263238", ["%"]],
         ["anchor0", "Anchor", "#212121"],
       ],
     },

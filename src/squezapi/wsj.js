@@ -47,7 +47,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
       ShowPreMarket: true,
       ShowAfterHours: true,
       FilterClosedPoints: true,
-      FilterNullSlots: true,
+      FilterNullSlots: TIMEFRAME !== "day",
       IncludeClosedSlots: false,
       IncludeCurrentQuotes: false,
       IncludeMockTick: true,
@@ -144,7 +144,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.series = pricehistory.candles;
 
-  data.last = pricehistory.curr;
+  for (let i = pricehistory.candles.length - 1; i >= 0; i--) {
+    if (!data.last) {
+      if (pricehistory.candles[i].priceClose)
+        data.last = pricehistory.candles[i];
+    } else break;
+  }
 
   return data;
 }
