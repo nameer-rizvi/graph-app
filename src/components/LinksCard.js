@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { DataContext } from "../context";
-import { useTickeron } from "../hooks";
 import { Paper } from "./Paper";
 import LinkIcon from "@mui/icons-material/Link";
 import Box from "@mui/material/Box";
@@ -11,13 +10,6 @@ import Link from "@mui/material/Link";
 export function LinksCard() {
   const data = useContext(DataContext);
   const symbol = data.data?.symbol;
-  const tickeron = useTickeron(symbol);
-  let signal = "";
-  if (tickeron?.symbol === symbol && tickeron?.isBuy) {
-    signal = " 🟢";
-  } else if (tickeron?.symbol === symbol && tickeron?.isSell) {
-    signal = " 🔴";
-  }
   if (data.render && symbol) {
     return (
       <Paper>
@@ -43,7 +35,7 @@ export function LinksCard() {
                 href: `https://iborrowdesk.com/report/${symbol}`,
               },
               {
-                label: "Tickeron" + signal,
+                label: "Tickeron",
                 href: `https://tickeron.com/ticker/${
                   symbol === "BTCUSD" ? "BTC.X" : symbol
                 }`,
