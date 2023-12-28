@@ -147,8 +147,10 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.last = pricehistory.curr;
 
+  const tz = "America/New_York";
+
   let currentHour = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
+    new Date(data.last.dateObject).toLocaleString("en-US", { timeZone: tz }),
   ).getHours();
 
   if (TIMEFRAME === "day" && currentHour < 20) {

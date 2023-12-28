@@ -24,8 +24,9 @@ export function Chart(props) {
   const chart = useMemo(() => {
     let dataset = [];
     let min, max;
+    let index = 0;
     for (let tick of data.data?.series || []) {
-      let point = {};
+      let point = { index };
       for (let seriesConfig of seriesConfigs) {
         let v = tick[seriesConfig[0]];
         if (typeof v === "number") {
@@ -36,16 +37,27 @@ export function Chart(props) {
       }
       point.datetime = new Date(tick.dateObject).getTime();
       dataset.push(point);
+      index++;
     }
     return { dataset, min, max };
   }, [seriesConfigs, data.data?.series]);
 
-  const datetimeparse =
-    data.timeframe.value === "day"
-      ? "toLocaleTimeString"
-      : data.timeframe.value === "week" || data.timeframe.value === "week2"
-      ? "toLocaleString"
-      : "toLocaleDateString";
+  const xAxis =
+    data.timeframe.value === "week" || data.timeframe.value === "week2"
+      ? {
+          dataKey: "index",
+          scaleType: "linear",
+          valueFormatter: (v) =>
+            simpul.datestring(chart.dataset[v]?.datetime, "M/D, h p"),
+        }
+      : {
+          dataKey: "datetime",
+          scaleType: "time",
+          valueFormatter: (v) =>
+            data.timeframe.value === "day"
+              ? new Date(v).toLocaleTimeString()
+              : new Date(v).toLocaleDateString(),
+        };
 
   if (data.render && chart.dataset.length) {
     return (
@@ -55,13 +67,7 @@ export function Chart(props) {
         </Typography>
         <LineChart
           axisHighlight={{ x: "line", y: "line" }}
-          xAxis={[
-            {
-              dataKey: "datetime",
-              scaleType: "time",
-              valueFormatter: (v) => new Date(v)[datetimeparse](),
-            },
-          ]}
+          xAxis={[xAxis]}
           yAxis={[
             {
               tickNumber: 5,
