@@ -47,8 +47,10 @@ export function Chart(props) {
       ? {
           dataKey: "index",
           scaleType: "linear",
-          valueFormatter: (v) =>
-            simpul.datestring(chart.dataset[v]?.datetime, "M/D, h p"),
+          valueFormatter: (v) => {
+            let d = new Date(chart.dataset[v]?.datetime);
+            return simpul.datestring(d, "M/D, h:m p");
+          },
         }
       : {
           dataKey: "datetime",
