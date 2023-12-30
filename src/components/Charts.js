@@ -1,7 +1,5 @@
 import { Chart } from "./Chart";
 
-// "day", "week", "week2", "year10"
-
 export const Charts = () =>
   [
     {
@@ -14,7 +12,7 @@ export const Charts = () =>
         ["sma10", "SMA(10)", "#212121", ["$"], isTimeframes(["day", "year10"])], // "#607d8b"
         ["sma20", "SMA(20)", "#212121", ["$"], isTimeframes(["year"])], // "#546e7a"
         ["sma50", "SMA(50)", "#212121", ["$"], isTimeframes(["year5"])], // "#455a64"
-        // ["sma100", "SMA(100)", "#212121", ["$"],isTimeframes(["week"])], // "#37474f"
+        // ["sma100", "SMA(100)", "#212121", ["$"]], // "#37474f"
         // ["sma200", "SMA(200)", "#212121", ["$"]], // "#263238"
       ],
     },
