@@ -147,17 +147,25 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.last = pricehistory.curr;
 
-  const tz = "America/New_York";
-
-  let currentHour = new Date(
-    new Date(data.last.dateObject).toLocaleString("en-US", { timeZone: tz }),
-  ).getHours();
-
-  if (TIMEFRAME === "day" && currentHour < 20) {
-    let time = data.isBitcoin ? "17:00:00" : "20:00:00";
-    let date = new Date(`${new Date().toDateString()} ${time} EST`);
-    data.series.push({ dateObject: date });
-  }
+  if (TIMEFRAME === "day") correctChartDatetimeEnd(data);
 
   return data;
+}
+
+function correctChartDatetimeEnd(data) {
+  const curr = EST(new Date());
+  const last = EST(data.last.dateObject);
+  const isDate = curr.getDate() === last.getDate();
+  const isEarly = last.getHours() < (data.isBitcoin ? 17 : 20);
+  if (isDate && isEarly) {
+    const time = data.isBitcoin ? "17:00:00" : "20:00:00";
+    const date = new Date(`${last.toDateString()} ${time} EST`);
+    data.series.push({ dateObject: date });
+  }
+}
+
+function EST(date) {
+  return new Date(
+    date.toLocaleString("en-US", { timeZone: "America/New_York" }),
+  );
 }
