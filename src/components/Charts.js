@@ -9,11 +9,8 @@ export const Charts = () =>
         ["priceHigh", "Price High", "#33691e", ["$"]],
         ["priceLow", "Price Low", "#880e4f", ["$"]],
         ["vwap", "VWAP", "#311b92", ["$"]],
-        ["sma10", "SMA(10)", "#263238", ["$"], isTimeframes(["day", "year10"])], // "#607d8b"
-        ["sma20", "SMA(20)", "#263238", ["$"], isTimeframes(["year"])], // "#546e7a"
-        ["sma50", "SMA(50)", "#263238", ["$"], isTimeframes(["year5"])], // "#455a64"
-        // ["sma100", "SMA(100)", "#263238", ["$"]], // "#37474f"
-        // ["sma200", "SMA(200)", "#263238", ["$"]], // "#263238"
+        ["sma10", "SMA(10)", "#1b2429", ["$"], isTimeframes(["day", "year10"])], // "#607d8b"
+        ["sma50", "SMA(50)", "#1b2429", ["$"], isTimeframes(["year", "year5"])], // "#455a64"
       ],
     },
     {
@@ -54,7 +51,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["volumeScale", "Volume", "#0d47a1", []],
         ["sma1VwapValueScale", "VWAP Value", "#4527a0", []],
-        ["priceRangeDiffScale", "Price Range", "#263238", []],
+        ["priceRangeDiffScale", "Price Range", "#1b2429", []],
       ],
     },
     {
@@ -63,8 +60,13 @@ export const Charts = () =>
         ["sma10Signal", "SMA(10)", "#607d8b", ["%"]],
         ["vwapSignal", "VWAP", "#311b92", ["%"]],
         ["volumeVwapValueDiscrepancy", "Volume / VWAP Value", "#283593", []],
-        ["sma20Signal", "SMA(20)", "#263238", ["%"], isTimeframes(["year"])], // "#546e7a"
-        ["sma50Signal", "SMA(50)", "#263238", ["%"], isTimeframes(["year5"])], // "#455a64"
+        [
+          "sma50Signal",
+          "SMA(50)",
+          "#1b2429",
+          ["%"],
+          isTimeframes(["year", "year5"]),
+        ],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
