@@ -12,12 +12,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   const URL = "https://api.wsj.net/api/michelangelo/timeseries/history?";
 
   const STEP = {
-    day: "PT5M",
-    week: "PT10M",
-    week2: "PT1H",
+    day: "PT4M",
+    week: "PT20M",
+    week2: "PT40M",
     year: "P1D",
     year5: "P7D",
-    year10: "P1M",
+    year10: "P14D",
   }[TIMEFRAME || "day"];
 
   const TIMEFRAME2 = {
