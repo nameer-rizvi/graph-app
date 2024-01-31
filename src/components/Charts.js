@@ -9,28 +9,23 @@ export const Charts = () =>
         ["priceHigh", "Price High", "#33691e", ["$"]],
         ["priceLow", "Price Low", "#880e4f", ["$"]],
         ["vwap", "VWAP", "#311b92", ["$"]],
+        ["sma10", "SMA(10)", "#1b2429", ["$"], isTimeframes(["day"])],
         ["sma20", "SMA(20)", "#1b2429", ["$"], isTimeframes(["year10"])],
         [
           "sma50",
           "SMA(50)",
           "#1b2429",
           ["$"],
-          isTimeframes(["year5", "year", "week2", "week"]),
+          isTimeframesNot(["year10", "day"]),
         ],
       ],
     },
     {
-      title: "Green Candles",
+      title: "Green Candle",
       min: 0,
       max: 100,
       seriesConfigs: [
-        [
-          "rsi",
-          "RSI",
-          "#bf360c",
-          [],
-          (data) => !data?.data?.series?.some((i) => i.sma5ColorVolumeGreen),
-        ],
+        // ["rsi", "RSI", "#bf360c", []],
         // ["vvcvg", "VVCVG", "#01579b", []],
         ["sma10ColorsGreen", "Green Candles", "#4caf50", []],
         [
@@ -38,9 +33,15 @@ export const Charts = () =>
           "Green Candle Volume",
           "#1b5e20",
           [],
-          (data) => data?.data?.series?.some((i) => i.sma5ColorVolumeGreen),
+          isTimeframesNot(["week", "week2"]),
         ],
-        // ["sma5ColorVolumeDiscrepancy", "Discrepancy", "#1b2429", []],
+        [
+          "sma10ColorVolumeGreen",
+          "Green Candle Volume",
+          "#1b5e20",
+          [],
+          isTimeframes(["week", "week2"]),
+        ],
         ["anchor50", "Anchor [50]", "#212121"],
       ],
     },
@@ -75,7 +76,7 @@ export const Charts = () =>
           "SMA(50)",
           "#1b2429",
           ["%", "+"],
-          isTimeframes(["year5", "year", "week2", "week"]),
+          isTimeframesNot(["year10", "day"]),
         ],
         ["anchor0", "Anchor", "#212121"],
       ],
@@ -101,4 +102,12 @@ export const Charts = () =>
 
 function isTimeframes(timeframes) {
   return (data) => timeframes.includes(data?.timeframe?.value);
+}
+
+function isTimeframesNot(timeframes) {
+  return (data) => !timeframes.includes(data?.timeframe?.value);
+}
+
+function hasVolume(data) {
+  return data?.data?.series?.some((i) => typeof i.volume === "number");
 }
