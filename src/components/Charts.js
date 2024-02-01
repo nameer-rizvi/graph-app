@@ -21,7 +21,7 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Green Candle",
+      title: "Green Candle Index",
       min: 0,
       max: 100,
       seriesConfigs: [
@@ -79,6 +79,13 @@ export const Charts = () =>
           isTimeframesNot(["year10", "day"]),
         ],
         ["anchor0", "Anchor", "#212121"],
+      ],
+    },
+    {
+      title: "On Balance Volume",
+      seriesConfigs: [
+        ["obvScale", "On Balance Volume", "#880e4f", []],
+        ["anchor0", "Anchor", "#212121", []],
       ],
     },
     // {

@@ -2743,10 +2743,10 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-simpul@^0.9.9:
-  version "0.9.9"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-0.9.9.tgz#f420ce3b889d12e41503ee987f2595a26d901544"
-  integrity sha512-Pd0g1gXByjKUKhYvldK+/7WeQbrnKbJcJy+VnJAjcAhfz/OCv9hbEWGNfMkijSA6pIuyrngoYTBtpFZ5s+Zu0A==
+simpul@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.0.tgz#d29842e20254ddd03b836f541a20ada49df1a00c"
+  integrity sha512-KwBM/6mt4Hir/MawH9AhVEYPvT5cLxEeK31InOUWNCajt/5y63yBFr/rZkif5Odj+yhB7YTojdNqaxymMj/pcQ==
   dependencies:
     change-case "4.1.2"
     eslint "^8.56.0"

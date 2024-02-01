@@ -132,8 +132,12 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   }
 
   const pricehistory = simpul.pricehistory(data.series, {
+    volumefill: true,
+    volumefillperiod: null,
+    obv: true,
     anchor: true,
     scales: [
+      "obv",
       "vwapdisc",
       "vvcvg",
       "priceRange",
