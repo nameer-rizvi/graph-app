@@ -20,6 +20,23 @@ export const Charts = () =>
       ],
     },
     {
+      title: "Green Candle Index",
+      min: 0,
+      max: 100,
+      seriesConfigs: [
+        ["sma10ColorsGreen", "Green Candles", "#4caf50", []],
+        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#1b5e20", []],
+        ["anchor50", "Anchor [50]", "#212121"],
+      ],
+    },
+    {
+      title: "Volume / VWAP Value Discrepancy Index",
+      seriesConfigs: [
+        ["volumeVwapValueDiscrepancy", "Discrepancy", "#283593", ["%", "+"]],
+        ["anchor0", "Anchor", "#212121"],
+      ],
+    },
+    {
       title: "Price Diversion",
       seriesConfigs: [
         ["sma10Signal", "SMA(10) Signal", "#607d8b", ["%", "+"]],
@@ -38,23 +55,6 @@ export const Charts = () =>
           ["%", "+"],
           isTimeframesNot(["year10", "day"]),
         ],
-        ["anchor0", "Anchor", "#212121"],
-      ],
-    },
-    {
-      title: "Green Candle Index",
-      min: 0,
-      max: 100,
-      seriesConfigs: [
-        ["sma10ColorsGreen", "Green Candles", "#4caf50", []],
-        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#1b5e20", []],
-        ["anchor50", "Anchor [50]", "#212121"],
-      ],
-    },
-    {
-      title: "Volume / VWAP Value Discrepancy Index",
-      seriesConfigs: [
-        ["volumeVwapValueDiscrepancy", "Discrepancy", "#283593", ["%", "+"]],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
