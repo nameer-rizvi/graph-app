@@ -9,7 +9,6 @@ export const Charts = () =>
         ["priceHigh", "Price High", "#33691e", ["$"]],
         ["priceLow", "Price Low", "#880e4f", ["$"]],
         ["vwap", "VWAP", "#311b92", ["$"]],
-        ["sma10", "SMA(10)", "#1b2429", ["$"], isTimeframes(["day"])],
         ["sma20", "SMA(20)", "#1b2429", ["$"], isTimeframes(["year10"])],
         [
           "sma50",
@@ -21,46 +20,20 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Green Candle Index",
-      min: 0,
-      max: 100,
-      seriesConfigs: [
-        // ["rsi", "RSI", "#bf360c", []],
-        // ["vvcvg", "VVCVG", "#01579b", []],
-        ["sma10ColorsGreen", "Green Candles", "#4caf50", []],
-        ["sma5ColorVolumeGreen", "Green Candle Volume", "#1b5e20", []],
-        ["anchor50", "Anchor [50]", "#212121"],
-      ],
-    },
-    {
-      title: "Volume, Value, Volatility",
-      seriesConfigs: [
-        ["volumeScale", "Volume", "#0d47a1", []],
-        ["sma1VwapValueScale", "VWAP Value", "#4527a0", []],
-        ["priceRangeDiffScale", "Price Range", "#1b2429", []],
-      ],
-    },
-    {
       title: "Price Diversion",
       seriesConfigs: [
-        ["sma10Signal", "SMA(10)", "#607d8b", ["%", "+"]],
-        [
-          "volumeVwapValueDiscrepancy",
-          "Volume / VWAP Value",
-          "#283593",
-          ["%", "+"],
-        ],
-        ["vwapSignal", "VWAP", "#311b92", ["%", "+"]],
+        ["sma10Signal", "SMA(10) Signal", "#607d8b", ["%", "+"]],
+        // ["vwapSignal", "VWAP", "#311b92", ["%", "+"]],
         [
           "sma20Signal",
-          "SMA(20)",
+          "SMA(20) Signal",
           "#1b2429",
           ["%", "+"],
           isTimeframes(["year10"]),
         ],
         [
           "sma50Signal",
-          "SMA(50)",
+          "SMA(50) Signal",
           "#1b2429",
           ["%", "+"],
           isTimeframesNot(["year10", "day"]),
@@ -69,21 +42,22 @@ export const Charts = () =>
       ],
     },
     {
-      title: "On Balance Volume",
+      title: "Green Candle Index",
+      min: 0,
+      max: 100,
       seriesConfigs: [
-        ["obvScale", "On Balance Volume", "#880e4f", []],
-        ["anchor0", "Anchor", "#212121", []],
+        ["sma10ColorsGreen", "Green Candles", "#4caf50", []],
+        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#1b5e20", []],
+        ["anchor50", "Anchor [50]", "#212121"],
       ],
     },
-    // {
-    //   title: "MACD",
-    //   seriesConfigs: [
-    //     ["macd", "MACD", "#880e4f", []],
-    //     ["macdHist", "MACD Hist", "#ad1457", []],
-    //     ["macdSignal", "MACD Signal", "#c2185b", []],
-    //     ["anchor0", "Anchor", "#212121", []],
-    //   ],
-    // },
+    {
+      title: "Volume / VWAP Value Discrepancy Index",
+      seriesConfigs: [
+        ["volumeVwapValueDiscrepancy", "Discrepancy", "#283593", ["%", "+"]],
+        ["anchor0", "Anchor", "#212121"],
+      ],
+    },
     {
       title: "Social Sentiment",
       seriesConfigs: [
@@ -105,3 +79,30 @@ function isTimeframesNot(timeframes) {
 function hasVolume(data) {
   return data?.data?.series?.some((i) => typeof i.volume === "number");
 }
+
+// ["rsi", "RSI", "#bf360c", []],
+// ["vvcvg", "VVCVG", "#01579b", []],
+// {
+//   title: "Volume, Value, Volatility",
+//   seriesConfigs: [
+//     ["volumeScale", "Volume", "#0d47a1", []],
+//     ["sma1VwapValueScale", "VWAP Value", "#4527a0", []],
+//     ["priceRangeDiffScale", "Price Volatility", "#1b2429", []],
+//   ],
+// },
+// {
+//   title: "On Balance Volume",
+//   seriesConfigs: [
+//     ["obvScale", "On Balance Volume", "#880e4f", []],
+//     ["anchor0", "Anchor", "#212121", []],
+//   ],
+// },
+// {
+//   title: "MACD",
+//   seriesConfigs: [
+//     ["macd", "MACD", "#880e4f", []],
+//     ["macdHist", "MACD Hist", "#ad1457", []],
+//     ["macdSignal", "MACD Signal", "#c2185b", []],
+//     ["anchor0", "Anchor", "#212121", []],
+//   ],
+// },
