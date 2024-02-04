@@ -134,7 +134,8 @@ export async function wsj(SYMBOL, TIMEFRAME) {
   const pricehistory = simpul.pricehistory(data.series, {
     volumefill: true,
     anchor: true,
-    scales: ["vwapdisc"],
+    trend: true,
+    scales: ["vwapdisc", "priceRangeDiff"],
     basePrice: data.basePrice,
   });
 
@@ -160,7 +161,6 @@ function correctChartDatetimeEnd(data) {
 }
 
 function EST(date) {
-  return new Date(
-    date.toLocaleString("en-US", { timeZone: "America/New_York" }),
-  );
+  const d = date.toLocaleString("en-US", { timeZone: "America/New_York" });
+  return new Date(d);
 }
