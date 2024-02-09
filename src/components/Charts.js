@@ -32,7 +32,7 @@ export const Charts = () =>
       min: 0,
       max: 100,
       seriesConfigs: [
-        ["sma10ColorsGreen", "Green Candles", "#1b5e20", []],
+        ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
         ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
         ["anchor50", "Anchor [50]", "#212121"],
       ],
@@ -68,7 +68,6 @@ function hasVolume(data) {
 }
 
 // ["rsi", "RSI", "#bf360c", []],
-// ["vvcvg", "VVCVG", "#01579b", []],
 // {
 //   title: "On Balance Volume",
 //   seriesConfigs: [
