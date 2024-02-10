@@ -91,6 +91,7 @@ export function Chart(props) {
             },
           }))}
           dataset={chart.dataset}
+          tooltip={{ trigger: "item" }}
           legend={{ hidden: true }}
           margin={{ top: 10, bottom: 50 }}
         />
