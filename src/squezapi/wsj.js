@@ -141,6 +141,8 @@ export async function wsj(SYMBOL, TIMEFRAME) {
 
   data.series = pricehistory.candles;
 
+  // for (let candle of data.series) {}
+
   data.last = pricehistory.curr;
 
   if (TIMEFRAME === "day") correctChartDatetimeEnd(data);
