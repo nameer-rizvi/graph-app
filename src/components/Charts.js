@@ -34,6 +34,7 @@ export const Charts = () =>
       seriesConfigs: [
         ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
         ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
+        ["vvcvg", "VVCVG", "#1b2429", []],
         ["anchor50", "Anchor [50]", "#212121"],
       ],
     },
