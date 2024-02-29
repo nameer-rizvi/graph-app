@@ -1,9 +1,7 @@
 export function cleanSymbol(SYMBOL) {
   if (!SYMBOL?.trim()) throw new Error("Symbol is required");
 
-  if (SYMBOL.toLowerCase() === "btc" || SYMBOL.toLowerCase() === "btcusd") {
-    SYMBOL = "BTC.X";
-  }
+  SYMBOL = SYMBOL.toUpperCase().trim().split(" ")[0];
 
-  return SYMBOL.toUpperCase().trim();
+  return SYMBOL === "BTC" || SYMBOL === "BTCUSD" ? "BTC.X" : SYMBOL;
 }

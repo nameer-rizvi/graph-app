@@ -5,6 +5,8 @@ const simpul = require("simpul");
 const SERIES_KEY_CACHE = {};
 
 export async function wsj(SYMBOL, TIMEFRAME) {
+  const LEVERAGE = +SYMBOL?.split(" ")[1];
+
   SYMBOL = utils.cleanSymbol(SYMBOL);
 
   if (SYMBOL === "BTC.X") SYMBOL = "BTCUSD";
@@ -135,6 +137,7 @@ export async function wsj(SYMBOL, TIMEFRAME) {
     volumefill: true,
     anchor: true,
     trend: true,
+    leverage: LEVERAGE,
     scales: ["vwapdisc", "priceRangeDiff", "vvcvg"],
     basePrice: data.basePrice,
   });
