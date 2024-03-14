@@ -39,10 +39,9 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Discrepancy: Volume / Value, SMA(10)",
+      title: "Discrepancy: SMA(10)",
       seriesConfigs: [
-        ["volumeVwapValueDiscrepancy", "Volume / Value", "#283593", ["%", "+"]],
-        ["sma10Signal", "SMA(10)", "#1b2429", ["%", "+"]],
+        ["sma10Signal", "SMA(10)", "#546e7a", ["%", "+"]],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
@@ -67,36 +66,3 @@ function isTimeframesNot(timeframes) {
 function hasVolume(data) {
   return data?.data?.series?.some((i) => typeof i.volume === "number");
 }
-
-// ["rsi", "RSI", "#bf360c", []],
-// {
-//   title: "On Balance Volume",
-//   seriesConfigs: [
-//     ["obvScale", "On Balance Volume", "#880e4f", []],
-//     ["anchor0", "Anchor", "#212121", []],
-//   ],
-// },
-// {
-//   title: "MACD",
-//   seriesConfigs: [
-//     ["macd", "MACD", "#880e4f", []],
-//     ["macdHist", "MACD Hist", "#ad1457", []],
-//     ["macdSignal", "MACD Signal", "#c2185b", []],
-//     ["anchor0", "Anchor", "#212121", []],
-//   ],
-// },
-// ["vwapSignal", "VWAP", "#311b92", ["%", "+"]],
-// [
-//   "sma20Signal",
-//   "SMA(20) Signal",
-//   "#1b2429",
-//   ["%", "+"],
-//   isTimeframes(["year10"]),
-// ],
-// [
-//   "sma50Signal",
-//   "SMA(50) Signal",
-//   "#1b2429",
-//   ["%", "+"],
-//   isTimeframesNot(["year10", "day"]),
-// ],
