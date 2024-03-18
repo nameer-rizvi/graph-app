@@ -45,14 +45,14 @@ export const Charts = () =>
         ["anchor0", "Anchor", "#212121"],
       ],
     },
-    {
-      title: "Social Sentiment",
-      seriesConfigs: [
-        ["messagesBullish", "Bullish", "#1b5e20", []],
-        ["messagesBearish", "Bearish", "#b71c1c", []],
-        ["messagesTotal", "All", "#212121", []],
-      ],
-    },
+    // {
+    //   title: "Social Sentiment",
+    //   seriesConfigs: [
+    //     ["messagesBullish", "Bullish", "#1b5e20", []],
+    //     ["messagesBearish", "Bearish", "#b71c1c", []],
+    //     ["messagesTotal", "All", "#212121", []],
+    //   ],
+    // },
   ].map((config) => <Chart key={config.title} {...config} />);
 
 function isTimeframes(timeframes) {
