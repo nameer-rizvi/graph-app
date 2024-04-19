@@ -33,7 +33,7 @@ export function Chart(props) {
           if (min === undefined || v < min) min = v;
           if (max === undefined || v > max) max = v;
           point[seriesConfig[0]] = v;
-        }
+        } else point[seriesConfig[0]] = null;
       }
       point.datetime = new Date(tick.dateObject).getTime();
       dataset.push(point);
