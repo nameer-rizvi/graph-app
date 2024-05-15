@@ -2768,10 +2768,10 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
-simpul@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.3.tgz#e1a0d04631f3654f1f52c28e1a7b731b7b1389db"
-  integrity sha512-VWjN7LTHnwEh9DQiekxHhyY7hO5v9EOz/RxeowetyaW5WmJR1YBQAGstmi5KyXeDbQsMr2qNI7RXeSxvlnF/kQ==
+simpul@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.7.tgz#fede9f4cd831ffaccaa67d55a0f2605c4e2ecca7"
+  integrity sha512-EJ3wsUs3n27lZaMO/zwL1yP09KOeqsVqSaOji1VGkJpRnhGKrpaEvWcJ7oR67rr+ISWqi02Lah/UZidfEmg2dw==
   dependencies:
     change-case "4.1.2"
     eslint "^8.56.0"
