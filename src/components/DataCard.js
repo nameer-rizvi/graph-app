@@ -20,6 +20,7 @@ export function DataCard() {
           <DataCardSubtitle subtitle={data.data.name} />
           <DataCardPrice data={data.data.last} />
           <DataCardVolume data={data.data.last} />
+          <DataCardVVCVG data={data.data.last} />
           <DataCardDate data={data.data.last} />
         </Box>
       </Paper>
@@ -92,14 +93,14 @@ function DataCardPrice({ data = {} }) {
   }
 }
 
+const overflow = {
+  overflow: "hidden",
+  whiteSpace: "nowrap",
+  textOverflow: "ellipsis",
+};
+
 function DataCardVolume({ data = {} }) {
   if (data.volumeTotal) {
-    const overflow = {
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textOverflow: "ellipsis",
-    };
-
     const volume = simpul.numberstring(data.volumeTotal);
 
     const volumeChange = data.volume
@@ -143,6 +144,39 @@ function DataCardVolume({ data = {} }) {
             sx={overflow}
           >
             {volumeValue}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
+}
+
+function DataCardVVCVG({ data = {} }) {
+  if (data.vvcvg) {
+    const vvcvg = simpul.numberstring(data.vvcvg);
+
+    const vvcvgTrend = data.vvcvgTrend;
+
+    let color;
+
+    let Icon;
+
+    if (vvcvgTrend === "up") {
+      color = "#00c805";
+      Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
+    } else if (vvcvgTrend === "down") {
+      color = "#ff5000";
+      Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
+    } else {
+      Icon = <RemoveSharpIcon sx={{ color }} />;
+    }
+
+    return (
+      <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
+        {Icon}
+        <Box ml={0.5} style={overflow}>
+          <Typography variant="body" mr={1} title={vvcvg}>
+            {vvcvg} Rating
           </Typography>
         </Box>
       </Box>

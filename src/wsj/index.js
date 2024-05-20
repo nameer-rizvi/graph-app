@@ -142,8 +142,9 @@ export async function wsj(symbol, timeframe) {
     volumefill: true,
     anchor: true,
     trend: true,
+    obv: true,
     leverage: leverage,
-    scales: ["vwapdisc", "priceRangeDiff", "vvcvg"],
+    scales: ["vwapdisc", "priceRangeDiff", "vvcvg", "obv"],
     basePrice: data.basePrice,
   });
 

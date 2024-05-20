@@ -19,32 +19,45 @@ export function LinksCard() {
         <Box ml={2}>
           <LinksCardTitle title="Quick Links" />
           <LinksCardLinks
-            links={[
-              {
-                label: "TD Ameritrade",
-                href: `https://secure.tdameritrade.com/quotes/summary/${symbol}`,
-              },
-              {
-                label: "TD Ameritrade (Level II)",
-                href: `https://secure.tdameritrade.com/level2/${symbol}`,
-              },
-              {
-                label: "Finviz",
-                href: `https://finviz.com/quote.ashx?t=${symbol}`,
-              },
-              {
-                label: "IBorrowDesk",
-                href: `https://iborrowdesk.com/report/${symbol}`,
-              },
-              {
-                label: "Stocktwits",
-                href: `https://stocktwits.com/symbol/${symbol}`,
-              },
-              {
-                label: "Robinhood",
-                href: `https://robinhood.com/stocks/${symbol}`,
-              },
-            ]}
+            links={
+              data.data.isBitcoin
+                ? [
+                    {
+                      label: "Finviz",
+                      href: "https://finviz.com/crypto_charts.ashx?t=BTCUSD",
+                    },
+                    {
+                      label: "Robinhood",
+                      href: "https://robinhood.com/crypto/BTC",
+                    },
+                    {
+                      label: "Stocktwits",
+                      href: "https://stocktwits.com/symbol/BTC.X",
+                    },
+                    {
+                      label: "Reddit",
+                      href: "https://www.reddit.com/r/Bitcoin/",
+                    },
+                  ]
+                : [
+                    {
+                      label: "Finviz",
+                      href: `https://finviz.com/quote.ashx?t=${symbol}`,
+                    },
+                    {
+                      label: "IBorrowDesk",
+                      href: `https://iborrowdesk.com/report/${symbol}`,
+                    },
+                    {
+                      label: "Robinhood",
+                      href: `https://robinhood.com/stocks/${symbol}`,
+                    },
+                    {
+                      label: "Stocktwits",
+                      href: `https://stocktwits.com/symbol/${symbol}`,
+                    },
+                  ]
+            }
           />
         </Box>
       </Paper>

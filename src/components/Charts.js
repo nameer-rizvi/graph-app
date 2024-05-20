@@ -16,13 +16,12 @@ export const Charts = () =>
           ["$"],
           isTimeframes(["year10", "year20", "year50"]),
         ],
-
         [
           "sma50",
           "SMA(50)",
           "#1b2429",
           ["$"],
-          isTimeframesNot(["year10", "year20", "year50", "day"]),
+          isTimeframesNot(["year10", "year20", "year50"]),
         ],
       ],
     },
@@ -49,6 +48,13 @@ export const Charts = () =>
       title: "Discrepancy: SMA(10)",
       seriesConfigs: [
         ["sma10Signal", "SMA(10)", "#546e7a", ["%", "+"]],
+        ["anchor0", "Anchor", "#212121"],
+      ],
+    },
+    {
+      title: "On Balance Volume",
+      seriesConfigs: [
+        ["obvScale", "OBV", "#880e4f", ["%", "+"]],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
