@@ -778,10 +778,10 @@ ast-types-flow@^0.0.8:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.8.tgz#0a85e1c92695769ac13a428bb653e7538bea27d6"
   integrity sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==
 
-async-fetch@^0.2.9:
-  version "0.2.9"
-  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.2.9.tgz#435172f5daed9e89036a842c0974b98a180be628"
-  integrity sha512-UuzVxEKUh+ayQ1J9eZnPG9iOa5toPxLCyq1oxjHy33txL1wl5GJZ5ceniylvwEQW7goqMvGfY26DAkHv/F7PRg==
+async-fetch@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.3.0.tgz#25f835faaa4c5b69fece267f0086ea98f4b79e22"
+  integrity sha512-FU30TbfuySSrxAVmOJZJybT7IJzBkhtIRTznLfi2ueqBPoq4F4aRTL5pI2zsmS6FgxoK7bElR7zaU6J43ZNM0g==
 
 available-typed-arrays@^1.0.7:
   version "1.0.7"
@@ -1469,7 +1469,7 @@ eslint-visitor-keys@^3.3.0, eslint-visitor-keys@^3.4.1, eslint-visitor-keys@^3.4
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.4.3.tgz#0cd72fe8550e3c2eae156a96a4dddcd1c8ac5800"
   integrity sha512-wpc+LXeiyiisxPlEkUzU6svyS1frIO3Mgxj1fdy7Pm8Ygzguax2N3Fa/D/ag1WqbOprdI+uY6wMUl8/a2G+iag==
 
-eslint@^8, eslint@^8.56.0:
+eslint@^8:
   version "8.57.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.57.0.tgz#c786a6fd0e0b68941aaf624596fb987089195668"
   integrity sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==
@@ -2768,13 +2768,12 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
-simpul@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.7.tgz#fede9f4cd831ffaccaa67d55a0f2605c4e2ecca7"
-  integrity sha512-EJ3wsUs3n27lZaMO/zwL1yP09KOeqsVqSaOji1VGkJpRnhGKrpaEvWcJ7oR67rr+ISWqi02Lah/UZidfEmg2dw==
+simpul@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.8.tgz#680b7369482d5ff2ee9bc923240dab458fee2a74"
+  integrity sha512-Jrnh5YxB0Ewd7c4lJlZ1c2B0GYUNT5VKOr+SikN32r21Tk/6pcCsG0TmSIPE0kBEJYqP0q1qqGeTCj1WOrgZaQ==
   dependencies:
     change-case "4.1.2"
-    eslint "^8.56.0"
     he "^1.2.0"
     lodash.clonedeep "^4.5.0"
     safe-regex "^2.1.1"
@@ -2813,8 +2812,16 @@ string-strip-html@8.5.0:
   resolved "https://registry.yarnpkg.com/string-strip-html/-/string-strip-html-8.5.0.tgz#5e239fe84016fad7b33ca02d23c591f1ccb6af75"
   integrity sha512-5ICsK1B1j0A3AF1d45m0sqQCcmi1Q+t1QpF+b794LO5FTHV+ITkGR5C+UCDJQZgs5LMuRruqr6j48PxQVIurJQ==
 
-"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
-  name string-width-cjs
+"string-width-cjs@npm:string-width@^4.2.0":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
+  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
+  dependencies:
+    emoji-regex "^8.0.0"
+    is-fullwidth-code-point "^3.0.0"
+    strip-ansi "^6.0.1"
+
+string-width@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -2878,7 +2885,14 @@ string.prototype.trimstart@^1.0.8:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
+  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
+  dependencies:
+    ansi-regex "^5.0.1"
+
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==

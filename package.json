@@ -16,12 +16,12 @@
     "@mui/material": "^5.15.15",
     "@mui/x-charts": "^7.3.0",
     "@vercel/analytics": "^1.2.2",
-    "async-fetch": "^0.2.9",
+    "async-fetch": "^0.3.0",
     "next": "14.2.2",
     "next-transpile-modules": "^10.0.1",
     "react": "^18",
     "react-dom": "^18",
-    "simpul": "^1.0.7"
+    "simpul": "^1.0.8"
   },
   "devDependencies": {
     "eslint": "^8",
