@@ -778,10 +778,10 @@ ast-types-flow@^0.0.8:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.8.tgz#0a85e1c92695769ac13a428bb653e7538bea27d6"
   integrity sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==
 
-async-fetch@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.3.2.tgz#3ea5d96613d658f82833c5a9c4635e484d426067"
-  integrity sha512-LWxMOKNyuXo4DUhBorTkfIvQyflC7f94IoDyw+mEfsjWerLMPxVuxc7i4lPaJg5g7Pha3SfZVLmA0I6ltOOnBQ==
+async-fetch@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.3.4.tgz#6f88d44ca07003165f7da41688605c16b847a434"
+  integrity sha512-LtECqnDJ1rslH6Gvtk99XBqdKaO08CT3SSIESjyASRcDnTHEuoqGBQ6JA3GfbUpyIv8+avkiLlnmGODwR5OCvQ==
 
 available-typed-arrays@^1.0.7:
   version "1.0.7"
@@ -2768,10 +2768,10 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
-simpul@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.8.tgz#680b7369482d5ff2ee9bc923240dab458fee2a74"
-  integrity sha512-Jrnh5YxB0Ewd7c4lJlZ1c2B0GYUNT5VKOr+SikN32r21Tk/6pcCsG0TmSIPE0kBEJYqP0q1qqGeTCj1WOrgZaQ==
+simpul@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.0.9.tgz#0a274028c1d1d6a0103646577682ddc100c61a61"
+  integrity sha512-oGBGWb3LyvTkNoPP1srTPAPRrgNMwvH8V25WOIFKYu+5WhYvk3IzKx82o8Dmw9H+thtyoJZ1c6WnMxy4gIiEHg==
   dependencies:
     change-case "4.1.2"
     he "^1.2.0"
