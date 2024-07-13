@@ -45,9 +45,22 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Discrepancy: SMA(10)",
+      title: "Oscillator: SMA",
       seriesConfigs: [
-        ["sma10Signal", "SMA(10)", "#546e7a", ["%", "+"]],
+        [
+          "sma20Signal",
+          "SMA(20) Signal",
+          "#546e7a",
+          ["$"],
+          isTimeframes(["year10", "year20", "year50"]),
+        ],
+        [
+          "sma50Signal",
+          "SMA(50) Signal",
+          "#546e7a",
+          ["$"],
+          isTimeframesNot(["year10", "year20", "year50"]),
+        ],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
