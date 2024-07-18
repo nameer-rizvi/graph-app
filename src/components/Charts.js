@@ -67,7 +67,7 @@ export const Charts = () =>
     {
       title: "On Balance Volume",
       seriesConfigs: [
-        ["obvScale", "OBV", "#880e4f", ["%", "+"]],
+        ["obvScale", "OBV", "#880e4f", ["+"]],
         ["anchor0", "Anchor", "#212121"],
       ],
     },

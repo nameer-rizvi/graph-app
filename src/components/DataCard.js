@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../contexts";
 import { Paper } from "./Paper";
 import BusinessIcon from "@mui/icons-material/Business";
@@ -11,6 +11,7 @@ import simpul from "simpul";
 
 export function DataCard() {
   const data = useContext(DataContext);
+  useTrendTable(data.data);
   if (data.render && data.data.symbol) {
     return (
       <Paper>
@@ -26,6 +27,16 @@ export function DataCard() {
       </Paper>
     );
   }
+}
+
+function useTrendTable(data) {
+  useEffect(() => {
+    const trendKeys = Object.keys(data.last).filter((key) => {
+      return key.endsWith("Trend");
+    });
+    const table = trendKeys.reduce((r, k) => ({ ...r, [k]: data.last[k] }), {});
+    console.table(table);
+  }, [data]);
 }
 
 function DataCardTitle({ title }) {
