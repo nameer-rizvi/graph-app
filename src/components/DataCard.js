@@ -31,11 +31,15 @@ export function DataCard() {
 
 function useTrendTable(data) {
   useEffect(() => {
-    const trendKeys = Object.keys(data.last).filter((key) => {
-      return key.endsWith("Trend");
-    });
-    const table = trendKeys.reduce((r, k) => ({ ...r, [k]: data.last[k] }), {});
-    console.table(table);
+    if (data.last) {
+      const trendKeys = Object.keys(data.last).filter((key) => {
+        return key.endsWith("Trend");
+      });
+      const table = trendKeys.reduce((r, k) => {
+        return { ...r, [k]: data.last[k] };
+      }, {});
+      console.table(table);
+    }
   }, [data]);
 }
 
