@@ -49,6 +49,10 @@ export function LinksCard() {
                       href: `https://iborrowdesk.com/report/${symbol}`,
                     },
                     {
+                      label: "Naked Short Report",
+                      href: `https://www.nakedshortreport.com/company/${symbol}`,
+                    },
+                    {
                       label: "Robinhood",
                       href: `https://robinhood.com/stocks/${symbol}`,
                     },
