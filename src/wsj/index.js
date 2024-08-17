@@ -154,7 +154,10 @@ export async function wsj(symbol, timeframe) {
 
   data.series = pricehistory.candles;
 
-  // for (let candle of data.series) {}
+  for (let candle of data.series) {
+    // candle.test = Math.abs(candle.sma20) + candle.volumeScale;
+    // candle.test2 = Math.abs(candle.sma50) + candle.volumeScale;
+  }
 
   data.last = pricehistory.curr;
 

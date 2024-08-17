@@ -34,17 +34,6 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Wave: Green Candles & Green Candle Volume",
-      min: 0,
-      max: 100,
-      seriesConfigs: [
-        ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
-        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
-        ["vvcvg", "VVCVG", "#1b2429", []],
-        ["anchor50", "Anchor [50]", "#212121"],
-      ],
-    },
-    {
       title: "Oscillator: SMA",
       seriesConfigs: [
         [
@@ -64,13 +53,6 @@ export const Charts = () =>
         ["anchor0", "Anchor", "#212121"],
       ],
     },
-    {
-      title: "On Balance Volume",
-      seriesConfigs: [
-        ["obvScale", "OBV", "#880e4f", ["+"]],
-        ["anchor0", "Anchor", "#212121"],
-      ],
-    },
   ].map((config) => <Chart key={config.title} {...config} />);
 
 function isTimeframes(timeframes) {
@@ -84,3 +66,22 @@ function isTimeframesNot(timeframes) {
 function hasVolume(data) {
   return data?.data?.series?.some((i) => typeof i.volume === "number");
 }
+
+// {
+//   title: "Wave: Green Candles & Green Candle Volume",
+//   min: 0,
+//   max: 100,
+//   seriesConfigs: [
+//     ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
+//     ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
+//     ["vvcvg", "VVCVG", "#1b2429", []],
+//     ["anchor50", "Anchor [50]", "#212121"],
+//   ],
+// },
+// {
+//   title: "On Balance Volume",
+//   seriesConfigs: [
+//     ["obvScale", "OBV", "#880e4f", ["+"]],
+//     ["anchor0", "Anchor", "#212121"],
+//   ],
+// },
