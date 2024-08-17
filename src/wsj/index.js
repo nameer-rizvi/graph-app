@@ -147,17 +147,13 @@ export async function wsj(symbol, timeframe) {
     anchor: true,
     trend: true,
     color: true,
-    obv: true,
-    scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg", "obv"],
+    scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg"],
     leverage: leverage,
   });
 
   data.series = pricehistory.candles;
 
-  for (let candle of data.series) {
-    // candle.test = Math.abs(candle.sma20) + candle.volumeScale;
-    // candle.test2 = Math.abs(candle.sma50) + candle.volumeScale;
-  }
+  // for (let candle of data.series) {}
 
   data.last = pricehistory.curr;
 

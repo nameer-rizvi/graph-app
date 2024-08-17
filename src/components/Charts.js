@@ -39,14 +39,14 @@ export const Charts = () =>
         [
           "sma20Signal",
           "SMA(20) Signal",
-          "#546e7a",
+          "#607d8b",
           [],
           isTimeframes(["year10", "year20", "year50"]),
         ],
         [
           "sma50Signal",
           "SMA(50) Signal",
-          "#546e7a",
+          "#607d8b",
           [],
           isTimeframesNot(["year10", "year20", "year50"]),
         ],
@@ -76,12 +76,5 @@ function hasVolume(data) {
 //     ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
 //     ["vvcvg", "VVCVG", "#1b2429", []],
 //     ["anchor50", "Anchor [50]", "#212121"],
-//   ],
-// },
-// {
-//   title: "On Balance Volume",
-//   seriesConfigs: [
-//     ["obvScale", "OBV", "#880e4f", ["+"]],
-//     ["anchor0", "Anchor", "#212121"],
 //   ],
 // },
