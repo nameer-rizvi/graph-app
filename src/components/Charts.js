@@ -26,11 +26,14 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Scale: Volume, Value, Volatility",
+      title: "Wave: Green Candles & Green Candle Volume",
+      min: 0,
+      max: 100,
       seriesConfigs: [
-        ["volumeScale", "Volume", "#0d47a1", []],
-        ["sma1VwapValueScale", "Value", "#1a237e", []],
-        ["priceRangeDiffScale", "Volatility", "#1b2429", []],
+        ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
+        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
+        ["vvcvg", "VVCVG", "#1b2429", []],
+        ["anchor50", "Anchor [50]", "#212121"],
       ],
     },
     {
@@ -68,13 +71,10 @@ function hasVolume(data) {
 }
 
 // {
-//   title: "Wave: Green Candles & Green Candle Volume",
-//   min: 0,
-//   max: 100,
+//   title: "Scale: Volume, Value, Volatility",
 //   seriesConfigs: [
-//     ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
-//     ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
-//     ["vvcvg", "VVCVG", "#1b2429", []],
-//     ["anchor50", "Anchor [50]", "#212121"],
+//     ["volumeScale", "Volume", "#0d47a1", []],
+//     ["sma1VwapValueScale", "Value", "#1a237e", []],
+//     ["priceRangeDiffScale", "Volatility", "#1b2429", []],
 //   ],
 // },
