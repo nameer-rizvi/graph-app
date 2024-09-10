@@ -37,19 +37,19 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Oscillator: SMA",
+      title: "Oscillator: SMA Signal (Close)",
       seriesConfigs: [
         [
           "sma20Signal",
           "SMA(20) Signal",
-          "#607d8b",
+          "#78909c",
           [],
           isTimeframes(["year10", "year20", "year50"]),
         ],
         [
           "sma50Signal",
           "SMA(50) Signal",
-          "#607d8b",
+          "#78909c",
           [],
           isTimeframesNot(["year10", "year20", "year50"]),
         ],

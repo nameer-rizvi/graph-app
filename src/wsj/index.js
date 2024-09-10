@@ -153,14 +153,7 @@ export async function wsj(symbol, timeframe) {
 
   data.series = pricehistory.candles;
 
-  for (let candle of data.series) {
-    candle.sma20VolumeSignal = simpul.math.num(
-      ((candle.volume - candle.sma20Volume) / candle.sma20Volume) * 100,
-    );
-    candle.sma50VolumeSignal = simpul.math.num(
-      ((candle.volume - candle.sma50Volume) / candle.sma50Volume) * 100,
-    );
-  }
+  // for (let candle of data.series) {}
 
   data.last = pricehistory.curr;
 
