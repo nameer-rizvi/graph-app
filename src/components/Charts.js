@@ -26,6 +26,14 @@ export const Charts = () =>
       ],
     },
     {
+      title: "Scale: Volume, Value, Volatility",
+      seriesConfigs: [
+        ["volumeScale", "Volume", "#0d47a1", []],
+        ["sma1VwapValueScale", "Value", "#1a237e", []],
+        ["priceRangeDiffScale", "Volatility", "#1b2429", []],
+      ],
+    },
+    {
       title: "Wave: Green Candles & Green Candle Volume",
       min: 0,
       max: 100,
@@ -69,12 +77,3 @@ function isTimeframesNot(timeframes) {
 function hasVolume(data) {
   return data?.data?.series?.some((i) => typeof i.volume === "number");
 }
-
-// {
-//   title: "Scale: Volume, Value, Volatility",
-//   seriesConfigs: [
-//     ["volumeScale", "Volume", "#0d47a1", []],
-//     ["sma1VwapValueScale", "Value", "#1a237e", []],
-//     ["priceRangeDiffScale", "Volatility", "#1b2429", []],
-//   ],
-// },
