@@ -113,7 +113,7 @@ export async function wsj(symbol, timeframe) {
     series: [],
     timeframe: timeframe,
     basePrice: json.Series[0].ExtraData.find((i) => {
-      return i.Name === "PriorClose";
+      return i.Name === "PriorOpen";
     })?.Value,
     isBitcoin: json.Series[0].Ticker === "BTCUSD",
   };
@@ -140,16 +140,15 @@ export async function wsj(symbol, timeframe) {
 
   const pricehistory = simpul.pricehistory(data.series, {
     basePrice: data.basePrice,
-    anchor: true,
-    sma: true,
-    price: true,
-    vwap: true,
-    color: true,
     volumefill: true,
-    trend: true,
-    periods: [5, 10, 20, 50],
-    scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg"],
     leverage: leverage,
+    vwap: true,
+    sma: true,
+    color: true,
+    periods: [5, 10, 20, 50],
+    trend: true,
+    anchor: true,
+    scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg"],
   });
 
   data.series = pricehistory.candles;

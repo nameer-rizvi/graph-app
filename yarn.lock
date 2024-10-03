@@ -2800,10 +2800,10 @@ signal-exit@^4.0.1:
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-4.1.0.tgz#952188c1cbd546070e2dd20d0f41c0ae0530cb04"
   integrity sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==
 
-simpul@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.1.8.tgz#b682a7ffd599575d388ce712d57cf049a65fddf7"
-  integrity sha512-YiE3wYp9z2qv6zjGuIAkLzRnQ/3gEKz6jfvfQj0ywiyHye8W4eNxteuYmCo/ALXRAGB46kroo6CnK0ihfeFkew==
+simpul@^1.1.9:
+  version "1.1.9"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.1.9.tgz#d9b81cdbc1ad11cd8b188349a069f6eb145d068e"
+  integrity sha512-IKt2X7E6XlmxVY1pKniqHvK76xF4nHrRpgWtFE2Ve0KNNQ1I7VFqKcSzD0sTOMdqXC5NAFCq7lzep8Ikaipyqg==
   dependencies:
     "@types/he" "^1.2.3"
     "@types/lodash.clonedeep" "^4.5.9"
