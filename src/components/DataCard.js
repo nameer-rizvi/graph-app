@@ -123,9 +123,13 @@ function DataCardVolume({ data = {} }) {
       : "";
 
     const volumeValue = data.vwapValue
-      ? `Notional Value ${simpul.numberstring(data.vwapValue, ["$"])}`
+      ? `Notional Value ${
+          simpul.numberstring(data.vwapValue, ["$"]).split(".00")[0]
+        }`
       : data.volumeValue
-      ? `Notional Value ${simpul.numberstring(data.volumeValue, ["$"])}`
+      ? `Notional Value ${
+          simpul.numberstring(data.volumeValue, ["$"]).split(".00")[0]
+        }`
       : "";
 
     let color;

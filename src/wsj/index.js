@@ -6,7 +6,7 @@ import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 const seriesKeyCache = {};
 
 export async function wsj(symbol, timeframe) {
-  const leverage = +symbol?.split(" ")[1].trim();
+  const leverage = +symbol?.split(" ")[1]?.trim();
 
   symbol = utils.cleanSymbol(symbol);
 
@@ -140,14 +140,14 @@ export async function wsj(symbol, timeframe) {
 
   const pricehistory = simpul.pricehistory(data.series, {
     basePrice: data.basePrice,
+    anchor: true,
+    sma: true,
     price: true,
     vwap: true,
-    sma: true,
-    periods: [5, 10, 20, 50],
-    volumefill: true,
-    anchor: true,
-    trend: true,
     color: true,
+    volumefill: true,
+    trend: true,
+    periods: [5, 10, 20, 50],
     scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg"],
     leverage: leverage,
   });
