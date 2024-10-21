@@ -21,7 +21,7 @@ export function DataCard() {
           <DataCardSubtitle subtitle={data.data.name} />
           <DataCardPrice data={data.data.last} />
           <DataCardVolume data={data.data.last} />
-          <DataCardVVCVG data={data.data.last} />
+          <DataCardRating data={data.data.last} />
           <DataCardDate data={data.data.last} />
         </Box>
       </Paper>
@@ -170,20 +170,17 @@ function DataCardVolume({ data = {} }) {
   }
 }
 
-function DataCardVVCVG({ data = {} }) {
-  if (data.vvcvg) {
-    const vvcvg = simpul.numberstring(data.vvcvg);
+function DataCardRating({ data = {} }) {
+  let rating = data.macdHist;
+  if (simpul.isNumber(rating)) {
+    rating = simpul.numberstring(rating);
 
-    const vvcvgTrend = data.vvcvgTrend;
+    let color, Icon;
 
-    let color;
-
-    let Icon;
-
-    if (vvcvgTrend === "up") {
+    if (data.macdHistTrend === "up") {
       color = "#00c805";
       Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-    } else if (vvcvgTrend === "down") {
+    } else if (data.macdHistTrend === "down") {
       color = "#ff5000";
       Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
     } else {
@@ -194,8 +191,8 @@ function DataCardVVCVG({ data = {} }) {
       <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
         {Icon}
         <Box ml={0.5} style={overflow}>
-          <Typography variant="body" mr={1} title={vvcvg}>
-            {vvcvg} Rating
+          <Typography variant="body" mr={1} title={rating}>
+            {rating} Rating
           </Typography>
         </Box>
       </Box>

@@ -148,7 +148,8 @@ export async function wsj(symbol, timeframe) {
     periods: [5, 10, 20, 50],
     trend: true,
     anchor: true,
-    scales: ["volume", "vwapdisc", "priceRangeDiff", "vvcvg"],
+    macd: true,
+    scales: ["volume", "vwapdisc", "priceRangeDiff"],
   });
 
   data.series = pricehistory.candles;
