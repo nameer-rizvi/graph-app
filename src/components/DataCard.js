@@ -171,16 +171,17 @@ function DataCardVolume({ data = {} }) {
 }
 
 function DataCardRating({ data = {} }) {
-  let rating = data.macdHist;
+  let rating = data.rating;
+
   if (simpul.isNumber(rating)) {
     rating = simpul.numberstring(rating);
 
     let color, Icon;
 
-    if (data.macdHistTrend === "up") {
+    if (data.ratingTrend === "up") {
       color = "#00c805";
       Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-    } else if (data.macdHistTrend === "down") {
+    } else if (data.ratingTrend === "down") {
       color = "#ff5000";
       Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
     } else {

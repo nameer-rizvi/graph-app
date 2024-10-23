@@ -139,22 +139,44 @@ export async function wsj(symbol, timeframe) {
   }
 
   const pricehistory = simpul.pricehistory(data.series, {
-    basePrice: data.basePrice,
-    volumefill: true,
     leverage: leverage,
+    price: true,
     vwap: true,
+    trend: true,
+    macd: true,
     sma: true,
+    volumefill: true,
+    anchor: true,
     color: true,
     periods: [5, 10, 20, 50],
-    trend: true,
-    anchor: true,
-    macd: true,
-    scales: ["volume", "vwapdisc", "priceRangeDiff"],
+    scales: [
+      "volume",
+      "vwapdisc",
+      "priceRangeDiff",
+      "sma20Signal",
+      "sma50Signal",
+    ],
   });
 
   data.series = pricehistory.candles;
 
-  // for (let candle of data.series) {}
+  for (let i = 0; i < data.series.length; i++) {
+    const signal = ["year10", "year20", "year50"]
+      ? data.series[i].sma20SignalScale
+      : data.series[i].sma50SignalScale;
+    const values = [
+      data.series[i].sma5ColorVolumeGreen,
+      data.series[i].sma10ColorsGreen,
+      signal,
+    ].filter(simpul.isNumber);
+    data.series[i].rating = simpul.math.sum(values) / values.length;
+    data.series[i].ratingTrend =
+      data.series[i].rating > data.series[i - 1]?.rating
+        ? "up"
+        : data.series[i].rating < data.series[i - 1]?.rating
+        ? "down"
+        : "";
+  }
 
   data.last = pricehistory.curr;
 

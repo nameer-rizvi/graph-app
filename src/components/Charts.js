@@ -3,7 +3,7 @@ import { Chart } from "./Chart";
 export const Charts = () =>
   [
     {
-      title: "Price: High, Low, Close, VWAP, SMA",
+      title: "Price: Close, High, Low, VWAP, SMA",
       seriesConfigs: [
         ["priceClose", "Close", "#78909c", ["$"]],
         ["priceHigh", "High", "#33691e", ["$"]],
@@ -36,13 +36,13 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Wave: Green Candles & Green Candle Volume",
+      title: "Wave: Green Candles, Green Volume",
       min: 0,
       max: 100,
       seriesConfigs: [
         ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
-        ["sma5ColorVolumeGreen", "Green Candle Volume ", "#004d40", []],
-        // ["anchor50", "Anchor [50]", "#212121"],
+        ["sma5ColorVolumeGreen", "Green Volume ", "#004d40", []],
+        ["rating", "Rating", "#1b2429", []],
       ],
     },
     {
