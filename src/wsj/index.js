@@ -161,21 +161,20 @@ export async function wsj(symbol, timeframe) {
   data.series = pricehistory.candles;
 
   for (let i = 0; i < data.series.length; i++) {
-    const signal = ["year10", "year20", "year50"]
-      ? data.series[i].sma20SignalScale
-      : data.series[i].sma50SignalScale;
     const values = [
       data.series[i].sma5ColorVolumeGreen,
       data.series[i].sma10ColorsGreen,
-      signal,
-    ].filter(simpul.isNumber);
-    data.series[i].rating = simpul.math.sum(values) / values.length;
-    data.series[i].ratingTrend =
-      data.series[i].rating > data.series[i - 1]?.rating
-        ? "up"
-        : data.series[i].rating < data.series[i - 1]?.rating
-        ? "down"
-        : "";
+    ];
+    const signal = ["year10", "year20", "year50"]
+      ? data.series[i].sma20SignalScale
+      : data.series[i].sma50SignalScale;
+    values.push(signal);
+    data.series[i].rating = simpul.math.mean(values.filter(simpul.isNumber));
+    if (data.series[i].rating > data.series[i - 1]?.rating) {
+      data.series[i].ratingTrend = "up";
+    } else if (data.series[i].rating < data.series[i - 1]?.rating) {
+      data.series[i].ratingTrend = "down";
+    }
   }
 
   data.last = pricehistory.curr;
