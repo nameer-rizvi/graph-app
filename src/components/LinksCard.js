@@ -24,7 +24,7 @@ export function LinksCard() {
                 ? [
                     {
                       label: "Finviz",
-                      href: "https://finviz.com/crypto_charts.ashx?t=BTCUSD",
+                      href: "https://finviz.com/crypto_charts.ashx?t=BTCUSD&p=w",
                     },
                     {
                       label: "Robinhood",
@@ -42,7 +42,7 @@ export function LinksCard() {
                 : [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/quote.ashx?t=${symbol}`,
+                      href: `https://finviz.com/quote.ashx?t=${symbol}&p=w`,
                     },
                     {
                       label: "IBorrowDesk",
