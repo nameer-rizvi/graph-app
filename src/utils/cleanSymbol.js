@@ -3,5 +3,11 @@ export function cleanSymbol(symbol) {
 
   symbol = symbol.toUpperCase().trim().split(" ")[0];
 
-  return symbol === "BTC" || symbol === "BTCUSD" ? "BTC.X" : symbol;
+  if (symbol === "BTC" || symbol === "BTCUSD") {
+    return "BTC.X";
+  } else if (symbol === "ETH" || symbol === "ETHUSD") {
+    return "ETH.X";
+  } else {
+    return symbol;
+  }
 }

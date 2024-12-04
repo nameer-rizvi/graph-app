@@ -10,7 +10,11 @@ export async function wsj(symbol, timeframe) {
 
   symbol = utils.cleanSymbol(symbol);
 
-  if (symbol === "BTC.X") symbol = "BTCUSD";
+  if (symbol === "BTC.X") {
+    symbol = "BTCUSD";
+  } else if (symbol === "ETH.X") {
+    symbol = "ETHUSD";
+  }
 
   const url = "https://api.wsj.net/api/michelangelo/timeseries/history?";
 
@@ -116,7 +120,10 @@ export async function wsj(symbol, timeframe) {
       return i.Name === "PriorOpen";
     })?.Value,
     isBitcoin: json.Series[0].Ticker === "BTCUSD",
+    isEthereum: json.Series[0].Ticker === "ETHUSD",
   };
+
+  data.isCrypto = data.isBitcoin || data.isEthereum;
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
     let candle = {};

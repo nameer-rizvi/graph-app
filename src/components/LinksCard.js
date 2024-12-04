@@ -39,6 +39,25 @@ export function LinksCard() {
                       href: "https://www.reddit.com/r/Bitcoin/",
                     },
                   ]
+                : data.data.isEthereum
+                ? [
+                    {
+                      label: "Finviz",
+                      href: "https://finviz.com/crypto_charts.ashx?t=ETHUSD&p=w",
+                    },
+                    {
+                      label: "Robinhood",
+                      href: "https://robinhood.com/crypto/ETH",
+                    },
+                    {
+                      label: "Stocktwits",
+                      href: "https://stocktwits.com/symbol/ETH.X",
+                    },
+                    {
+                      label: "Reddit",
+                      href: "https://www.reddit.com/r/Ethereum/",
+                    },
+                  ]
                 : [
                     {
                       label: "Finviz",

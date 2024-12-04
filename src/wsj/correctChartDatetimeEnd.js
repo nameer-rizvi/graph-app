@@ -5,10 +5,10 @@ export function correctChartDatetimeEnd(data) {
 
   const isDate = curr.getDate() === last.getDate();
 
-  const isEarly = last.getHours() < (data.isBitcoin ? 17 : 20);
+  const isEarly = last.getHours() < (data.isCrypto ? 17 : 20);
 
   if (isDate && isEarly) {
-    const time = data.isBitcoin ? "17:00:00" : "20:00:00";
+    const time = data.isCrypto ? "17:00:00" : "20:00:00";
 
     const date = new Date(`${last.toDateString()} ${time} EST`);
 
