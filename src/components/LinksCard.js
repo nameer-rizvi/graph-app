@@ -38,6 +38,14 @@ export function LinksCard() {
                       label: "Reddit",
                       href: "https://www.reddit.com/r/Bitcoin/",
                     },
+                    {
+                      label: "Liquidation Heatmap",
+                      href: `https://www.coinglass.com/pro/futures/LiquidationHeatMapNew`,
+                    },
+                    {
+                      label: "Decay Oscillator",
+                      href: "https://www.gnanadhandayuthapani.com/indicators/DECAYOSC",
+                    },
                   ]
                 : data.data.isEthereum
                 ? [
