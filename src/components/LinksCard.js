@@ -12,6 +12,8 @@ export function LinksCard() {
 
   const symbol = data.data?.symbol;
 
+  const p = getFinvizTimeframe(data);
+
   if (data.render && symbol) {
     return (
       <Paper>
@@ -24,7 +26,7 @@ export function LinksCard() {
                 ? [
                     {
                       label: "Finviz",
-                      href: "https://finviz.com/crypto_charts.ashx?t=BTCUSD&p=w",
+                      href: `https://finviz.com/crypto_charts.ashx?t=BTCUSD&p=${p}`,
                     },
                     {
                       label: "Robinhood",
@@ -51,7 +53,7 @@ export function LinksCard() {
                 ? [
                     {
                       label: "Finviz",
-                      href: "https://finviz.com/crypto_charts.ashx?t=ETHUSD&p=w",
+                      href: `https://finviz.com/crypto_charts.ashx?t=ETHUSD&p=${p}`,
                     },
                     {
                       label: "Robinhood",
@@ -69,7 +71,7 @@ export function LinksCard() {
                 : [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/quote.ashx?t=${symbol}&p=w`,
+                      href: `https://finviz.com/quote.ashx?t=${symbol}&p=${p}`,
                     },
                     {
                       label: "IBorrowDesk",
@@ -113,4 +115,14 @@ function LinksCardLinks({ links = [] }) {
       </Link>
     </Box>
   ));
+}
+
+function getFinvizTimeframe(data = {}) {
+  if (["year50", "year20"].includes(data.timeframe?.value)) {
+    return "m";
+  } else if (["year10", "year5"].includes(data.timeframe?.value)) {
+    return "w";
+  } else {
+    return "d";
+  }
 }

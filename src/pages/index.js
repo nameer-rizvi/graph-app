@@ -15,6 +15,7 @@ function Home() {
         <TimeframeSelect />
       </FixedHeader>
       <Main>
+        {/*<ApexChart />*/}
         <Charts />
       </Main>
     </Container>
