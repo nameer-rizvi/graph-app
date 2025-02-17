@@ -2,27 +2,19 @@ import { SidebarContainer, SidebarContainerButton } from "./SidebarContainer";
 import Divider from "@mui/material/Divider";
 import Toolbar from "@mui/material/Toolbar";
 import { AppHeader } from "./AppHeader";
-import { SearchInput } from "./SearchInput";
-import { DataCard } from "./DataCard";
-import { LinksCard } from "./LinksCard";
-import { RefreshButton } from "./RefreshButton";
+import { FormCard } from "./FormCard";
+import { UploadButton } from "./UploadButton";
 
-export function Sidebar() {
+export function Sidebar2(props) {
   return (
     <SidebarContainer>
       <AppHeader />
       <Divider />
       <Toolbar sx={{ mt: 2 }}>
-        <SearchInput />
-      </Toolbar>
-      <Toolbar>
-        <DataCard />
-      </Toolbar>
-      <Toolbar sx={{ mt: 2 }}>
-        <LinksCard />
+        <FormCard {...props} />
       </Toolbar>
       <SidebarContainerButton>
-        <RefreshButton />
+        <UploadButton {...props} />
       </SidebarContainerButton>
     </SidebarContainer>
   );
