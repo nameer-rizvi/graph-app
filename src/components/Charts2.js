@@ -10,7 +10,7 @@ const LineChart = dynamic(
   { ssr: false },
 );
 
-const DATA_LIMIT = 100;
+const DATA_LIMIT = 500;
 
 export function Charts2({ data, axis }) {
   const dataset = useDataset(data, axis);
@@ -18,13 +18,13 @@ export function Charts2({ data, axis }) {
   if (!dataset.length || !axis.x || !axis.y.length) return;
 
   return (
-    <Box mt={2} mb={4} sx={{ height: 300 }}>
+    <Box mt={2} mb={4} sx={{ height: 500 }}>
       <ChartTitle axis={axis} />
       <LineChart
         axisHighlight={{ x: "line", y: "line" }}
         xAxis={[getXAxis(axis, dataset)]}
         series={getSeries(axis)}
-        margin={{ top: 10, bottom: 50 }}
+        margin={{ top: 10, bottom: 50, left: 75 }}
         legend={{ hidden: true }}
         dataset={dataset}
       />
