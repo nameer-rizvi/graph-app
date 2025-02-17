@@ -10,7 +10,7 @@ const LineChart = dynamic(
   { ssr: false },
 );
 
-const DATA_LIMIT = 50;
+const DATA_LIMIT = 100;
 
 export function Charts2({ data, axis }) {
   const dataset = useDataset(data, axis);
