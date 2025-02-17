@@ -35,14 +35,17 @@ export function Charts2({ data, axis }) {
 function useDataset(data, axis) {
   const [dataset, setDataset] = useState([]);
   useEffect(() => {
-    if (data.length <= DATA_LIMIT) setDataset(parsePoints(data, axis));
-    const step = Math.floor(data.length / DATA_LIMIT);
-    const arr = [];
-    for (let i = 0; i < data.length; i += step) arr.push(data[i]);
-    const lastA = JSON.stringify(data[data.length - 1]);
-    const lastB = JSON.stringify(arr[arr.length - 1]);
-    if (lastA !== lastB) arr.push(data[data.length - 1]);
-    setDataset(parsePoints(arr, axis));
+    if (data.length <= DATA_LIMIT) {
+      setDataset(parsePoints(data, axis));
+    } else {
+      const step = Math.max(1, Math.floor(data.length / DATA_LIMIT));
+      const arr = [];
+      for (let i = 0; i < data.length; i += step) arr.push(data[i]);
+      const lastA = JSON.stringify(data[data.length - 1]);
+      const lastB = JSON.stringify(arr[arr.length - 1]);
+      if (lastA !== lastB) arr.push(data[data.length - 1]);
+      setDataset(parsePoints(arr, axis));
+    }
   }, [data, axis]);
   return dataset;
 }
