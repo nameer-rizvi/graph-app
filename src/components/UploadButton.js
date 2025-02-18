@@ -22,6 +22,8 @@ export function UploadButton({ axis, setData, setAxis }) {
       reader.onload = onLoad;
       reader.readAsText(file);
     }
+    // Reset the input value to allow re-uploading the same file
+    event.target.value = "";
   }
 
   function onLoad(event) {
