@@ -172,9 +172,12 @@ export async function wsj(symbol, timeframe) {
       data.series[i].sma5ColorVolumeGreen,
       data.series[i].sma10ColorsGreen,
     ];
+    const sma = ["year10", "year20", "year50"].includes(timeframe)
+      ? "sma20"
+      : "sma50";
     const signal = ["year10", "year20", "year50"]
-      ? data.series[i].sma20SignalScale
-      : data.series[i].sma50SignalScale;
+      ? data.series[i][`${sma}SignalScale`]
+      : data.series[i][`${sma}SignalScale`];
     values.push(signal);
     data.series[i].rating = simpul.math.mean(values.filter(simpul.isNumber));
     if (data.series[i].rating > data.series[i - 1]?.rating) {
@@ -182,6 +185,14 @@ export async function wsj(symbol, timeframe) {
     } else if (data.series[i].rating < data.series[i - 1]?.rating) {
       data.series[i].ratingTrend = "down";
     }
+    data.series[i][`${sma}SignalHigh`] =
+      simpul.math.change.percent(
+        data.series[i][sma],
+        data.series[i].priceHigh,
+      ) * 100;
+    data.series[i][`${sma}SignalLow`] =
+      simpul.math.change.percent(data.series[i][sma], data.series[i].priceLow) *
+      100;
   }
 
   data.last = pricehistory.curr;
