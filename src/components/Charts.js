@@ -64,7 +64,7 @@ export const Charts = () =>
         ],
         [
           "sma20SignalLow",
-          "SMA(20) SignalLow",
+          "SMA(20) Signal Low",
           "#880e4f",
           [],
           isTimeframes(["year10", "year20", "year50"]),
