@@ -4,10 +4,10 @@ import {
   FixedHeader,
   TimeframeSelect,
   Main,
-  Charts,
+  ApexChart,
 } from "../components";
 
-function Home() {
+function Apex() {
   return (
     <Container>
       <Sidebar />
@@ -15,10 +15,10 @@ function Home() {
         <TimeframeSelect />
       </FixedHeader>
       <Main>
-        <Charts />
+        <ApexChart />
       </Main>
     </Container>
   );
 }
 
-export default Home;
+export default Apex;

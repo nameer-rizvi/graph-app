@@ -1,9 +1,12 @@
 "use client";
 import { useContext } from "react";
 import { DataContext } from "../contexts";
+import simpul from "simpul";
 import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+// TODO: style: x-axis labels, y-axis labels, y-axis cross-lines, tooltip, crosshair tooltip.
 
 export function ApexChart() {
   const data = useContext(DataContext);
@@ -15,9 +18,20 @@ export function ApexChart() {
       id: "apexchart-1",
     },
     xaxis: {
-      type: "datetime",
+      type: "category",
+      labels: {
+        formatter: (date) =>
+          data.timeframe.value?.includes("year")
+            ? simpul.datestring(date, "M/D/Y")
+            : data.timeframe.value?.includes("week")
+            ? simpul.datestring(date, "D/M h:m p")
+            : simpul.datestring(date, "h:m p"),
+      },
     },
     yaxis: {
+      logarithmic: false,
+      forceNiceScale: false,
+      decimalsInFloat: false,
       tooltip: {
         enabled: true,
       },
@@ -37,7 +51,7 @@ export function ApexChart() {
     {
       name: "candle",
       type: "candlestick",
-      data: data.data.series.map((candle) => ({
+      data: data.data.series.slice(-75).map((candle) => ({
         x: new Date(candle.dateString),
         y: [
           candle.priceOpen,
@@ -50,17 +64,13 @@ export function ApexChart() {
   ];
 
   return (
-    <Box mt={6} mb={4} sx={{ height: 200 }}>
-      <Chart type="candlestick" options={option} series={series} height="200" />
+    <Box mt={6} mb={4} sx={{ height: 500 }}>
+      <Chart
+        type="candlestick"
+        options={option}
+        series={series}
+        height="100%"
+      />
     </Box>
   );
-
-  // return (
-  //   <Chart
-  //     options={apex.options}
-  //     series={apex.series}
-  //     type="candlestick"
-  //     height="350"
-  //   />
-  // );
 }
