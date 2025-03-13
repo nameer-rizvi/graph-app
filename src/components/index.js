@@ -8,3 +8,4 @@ export * from "./Main";
 export * from "./Sidebar";
 export * from "./Sidebar2";
 export * from "./TimeframeSelect";
+export * from "./ViewToggle";

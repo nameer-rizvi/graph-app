@@ -6,8 +6,6 @@ import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
-// TODO: style: x-axis labels, y-axis labels, y-axis cross-lines, tooltip, crosshair tooltip.
-
 export function ApexChart() {
   const data = useContext(DataContext);
 
@@ -16,33 +14,40 @@ export function ApexChart() {
   const option = {
     chart: {
       id: "apexchart-1",
+      fontFamily: "inherit",
+      animations: { enabled: false },
     },
+    grid: {
+      show: true,
+      borderColor: "#1b2429",
+      xaxis: { lines: { show: true } },
+      yaxis: { lines: { show: true } },
+    },
+    tooltip: { theme: "dark" },
     xaxis: {
+      tickAmount: 10,
       type: "category",
       labels: {
-        formatter: (date) =>
-          data.timeframe.value?.includes("year")
-            ? simpul.datestring(date, "M/D/Y")
-            : data.timeframe.value?.includes("week")
-            ? simpul.datestring(date, "D/M h:m p")
-            : simpul.datestring(date, "h:m p"),
+        style: { colors: "rgb(255, 255, 255)" },
+        formatter: xFormatter(data),
       },
     },
     yaxis: {
-      logarithmic: false,
-      forceNiceScale: false,
-      decimalsInFloat: false,
-      tooltip: {
-        enabled: true,
+      max: (m) => m,
+      min: (m) => m,
+      tickAmount: 5,
+      tooltip: { enabled: true },
+      axisBorder: {
+        show: true,
+        color: "rgb(255, 255, 255)",
       },
-    },
-    candlestick: {
-      colors: {
-        upward: "#3C90EB",
-        downward: "#DF7D46",
+      axisTicks: {
+        show: true,
+        color: "rgb(255, 255, 255)",
       },
-      wick: {
-        useFillColor: true,
+      labels: {
+        style: { colors: "rgb(255, 255, 255)" },
+        formatter: yFormatter(),
       },
     },
   };
@@ -51,7 +56,7 @@ export function ApexChart() {
     {
       name: "candle",
       type: "candlestick",
-      data: data.data.series.slice(-75).map((candle) => ({
+      data: data.data.series.slice(-100).map((candle) => ({
         x: new Date(candle.dateString),
         y: [
           candle.priceOpen,
@@ -73,4 +78,20 @@ export function ApexChart() {
       />
     </Box>
   );
+}
+
+function xFormatter(data) {
+  return (date) =>
+    data.timeframe?.value?.includes("year")
+      ? simpul.datestring(date, "M/D/Y")
+      : data.timeframe?.value?.includes("week")
+      ? simpul.datestring(date, "M/D h:m p")
+      : simpul.datestring(date, "h:m p");
+}
+
+function yFormatter() {
+  return (v) =>
+    v >= 100
+      ? simpul.numberstring(v, ["$"]).split(".")[0]
+      : simpul.numberstring(v, ["$"]);
 }
