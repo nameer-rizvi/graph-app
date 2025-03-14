@@ -11,11 +11,16 @@ export function ApexChart() {
 
   if (!data.render) return;
 
+  const filename = `${data.data.timeframe.toUpperCase()}-${data.data.symbol}`;
+
   const option = {
     chart: {
       id: "apexchart-1",
       fontFamily: "inherit",
       animations: { enabled: false },
+      toolbar: {
+        export: { csv: { filename }, svg: { filename }, png: { filename } },
+      },
     },
     grid: {
       show: true,
@@ -56,7 +61,7 @@ export function ApexChart() {
     {
       name: "candle",
       type: "candlestick",
-      data: data.data.series.slice(-100).map((candle) => ({
+      data: data.data.series.map((candle) => ({
         x: new Date(candle.dateString),
         y: [
           candle.priceOpen,

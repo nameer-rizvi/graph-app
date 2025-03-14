@@ -5,3 +5,11 @@ a {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.apexcharts-menu.apexcharts-menu-open {
+  background-color: #222222;
+}
+
+.apexcharts-menu.apexcharts-menu-open .apexcharts-menu-item:hover {
+  text-decoration: underline;
+}
