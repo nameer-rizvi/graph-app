@@ -61,15 +61,17 @@ export function ApexChart() {
     {
       name: "candle",
       type: "candlestick",
-      data: data.data.series.map((candle) => ({
-        x: new Date(candle.dateString),
-        y: [
-          candle.priceOpen,
-          candle.priceHigh,
-          candle.priceLow,
-          candle.priceClose,
-        ],
-      })),
+      data: data.data.series
+        .map((candle) => ({
+          x: new Date(candle.dateString),
+          y: [
+            candle.priceOpen,
+            candle.priceHigh,
+            candle.priceLow,
+            candle.priceClose,
+          ],
+        }))
+        .filter((candle) => candle.y.every(simpul.isNumber)),
     },
   ];
 
