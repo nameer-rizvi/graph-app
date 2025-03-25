@@ -19,9 +19,9 @@ export async function wsj(symbol, timeframe) {
   const url = "https://api.wsj.net/api/michelangelo/timeseries/history?";
 
   const step = {
-    day: "PT4M",
-    week: "PT20M",
-    week2: "PT40M",
+    day: "PT5M",
+    week: "PT15M",
+    week2: "PT30M",
     year: "P1D",
     year5: "P7D",
     year10: "P14D",
