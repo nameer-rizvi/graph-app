@@ -16,7 +16,7 @@ export function FormCard(props) {
     <Paper>
       <SsidChartIcon sx={{ marginTop: 0.5 }} />
       <Box ml={2} sx={{ overflow: "hidden", width: "100%" }}>
-        <FormCardTitle />
+        <FormCardTitle {...props} />
         <FormCardXAxis {...props} />
         <FormCardYAxis {...props} />
       </Box>
@@ -24,10 +24,11 @@ export function FormCard(props) {
   );
 }
 
-function FormCardTitle() {
+function FormCardTitle({ axis }) {
+  const title = axis.filename || "Chart Form";
   return (
-    <Typography variant="h5" mb={2} title={"Chart Form"}>
-      {"Chart Form"}
+    <Typography variant="h5" mb={2} title={title} noWrap>
+      {title}
     </Typography>
   );
 }
