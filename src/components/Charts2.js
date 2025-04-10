@@ -94,6 +94,7 @@ function getXAxis(axis, dataset) {
 
 function getSeries(axis) {
   return axis.y.map((y) => ({
+    connectNulls: true,
     showMark: false,
     dataKey: y,
     label: capitalize(y),
