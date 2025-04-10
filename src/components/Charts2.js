@@ -19,6 +19,7 @@ export function Charts2({ data, axis }) {
 
   return (
     <Box mt={2} mb={4} sx={{ height: 500 }}>
+      <ChartFilename filename={axis.filename} />
       <ChartTitle axis={axis} />
       <LineChart
         axisHighlight={{ x: "line", y: "line" }}
@@ -68,6 +69,10 @@ function parsePoints(data = [], axis) {
     arr.push(point);
   }
   return arr;
+}
+
+function ChartFilename({ filename }) {
+  if (filename) return <Typography variant="overline">{filename}</Typography>;
 }
 
 function ChartTitle({ axis }) {

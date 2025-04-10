@@ -19,21 +19,20 @@ export function UploadButton({ axis, setData, setAxis }) {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = onLoad;
+      reader.onload = (e) => onLoad(e, file.name);
       reader.readAsText(file);
     }
-    // Reset the input value to allow re-uploading the same file
-    event.target.value = "";
+    event.target.value = ""; // Reset the input value to allow re-uploading the same file.
   }
 
-  function onLoad(event) {
+  function onLoad(event, filename) {
     const json = JSON.parse(event.target.result);
     const options = [...new Set(json.map((o) => Object.keys(o)).flat())];
     options.push("index");
     const x = options.includes(axis.x) ? axis.x : "";
     const y = axis.y.filter((y) => options.includes(y));
     setData(json);
-    setAxis({ x, y, options });
+    setAxis({ filename, x, y, options });
   }
 
   return (

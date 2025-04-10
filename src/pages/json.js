@@ -4,7 +4,7 @@ import { useState } from "react";
 function Json() {
   const [data, setData] = useState([]);
 
-  const [axis, setAxis] = useState({ x: "", y: [], options: [] });
+  const [axis, setAxis] = useState({ filename: "", x: "", y: [], options: [] });
 
   return (
     <Container>
