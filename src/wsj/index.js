@@ -6,6 +6,8 @@ import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 const seriesKeyCache = {};
 
 export async function wsj(symbol, timeframe) {
+  const leverage = +symbol?.trim().split(" ")[1]?.trim();
+
   symbol = utils.cleanSymbol(symbol);
 
   if (symbol === "BTC.X") {
@@ -134,17 +136,16 @@ export async function wsj(symbol, timeframe) {
   }
 
   data.series = pricehistory(data.series, {
-    // leverage: +symbol?.trim().split(" ")[1]?.trim(),
+    leverage: leverage,
     price: true,
-    // vwap: true,
-    // trend: true,
-    // macd: true,
-    // sma: true,
-    // volumefill: true,
-    // anchor: true,
-    // color: true,
-    // periods: [5, 10, 20, 50],
-    // normalize: ["volume", "priceRangeDiff", "sma20Signal", "sma50Signal"],
+    volumeFill: true,
+    vwap: true,
+    sma: true,
+    trend: true,
+    color: true,
+    periods: [10, 20, 50],
+    anchor: [0, 50, 100],
+    normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
   });
 
   data.last = data.series[data.series.length - 1];

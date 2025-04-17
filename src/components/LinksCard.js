@@ -9,11 +9,8 @@ import Link from "@mui/material/Link";
 
 export function LinksCard() {
   const data = useContext(DataContext);
-
   const symbol = data.data?.symbol;
-
   const p = getFinvizTimeframe(data);
-
   if (data.render && symbol) {
     return (
       <Paper>
@@ -45,8 +42,8 @@ export function LinksCard() {
                       href: `https://www.coinglass.com/pro/futures/LiquidationHeatMapNew`,
                     },
                     {
-                      label: "Decay Oscillator",
-                      href: "https://www.gnanadhandayuthapani.com/indicators/DECAYOSC",
+                      label: "Power Law",
+                      href: "https://charts.bitbo.io/long-term-power-law/",
                     },
                   ]
                 : data.data.isEthereum

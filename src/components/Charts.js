@@ -1,5 +1,7 @@
 import { Chart } from "./Chart";
 
+const sma20Timeframes = ["year10", "year20", "year50"];
+
 export const Charts = () =>
   [
     {
@@ -9,19 +11,13 @@ export const Charts = () =>
         ["priceHigh", "High", "#33691e", ["$"]],
         ["priceLow", "Low", "#880e4f", ["$"]],
         ["vwap", "VWAP", "#311b92", ["$"]],
-        [
-          "sma20",
-          "SMA(20)",
-          "#1b2429",
-          ["$"],
-          isTimeframes(["year10", "year20", "year50"]),
-        ],
+        ["sma20", "SMA(20)", "#1b2429", ["$"], isTimeframes(sma20Timeframes)],
         [
           "sma50",
           "SMA(50)",
           "#1b2429",
           ["$"],
-          isTimeframesNot(["year10", "year20", "year50"]),
+          isTimeframesNot(sma20Timeframes),
         ],
       ],
     },
@@ -30,70 +26,70 @@ export const Charts = () =>
       min: 0,
       max: 100,
       seriesConfigs: [
-        ["volumeScale", "Volume", "#0d47a1", []],
-        ["sma1VwapValueScale", "Value", "#1a237e", []],
-        ["priceRangeDiffScale", "Volatility", "#1b2429", []],
+        ["volumeN", "Volume", "#0d47a1", []],
+        ["sma1VwapValueN", "Value", "#1a237e", []],
+        ["priceRangeDiffN", "Rating", "#1b2429", []],
       ],
     },
     {
-      title: "Wave: Green Candles, Green Volume",
+      title: "Momentum: Green vs. Red",
       min: 0,
       max: 100,
       seriesConfigs: [
         ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
-        ["sma5ColorVolumeGreen", "Green Volume ", "#004d40", []],
-        ["rating", "Rating", "#1b2429", []],
+        ["sma10ColorsRed", "Red Candles", "#c62828", []],
+        ["anchor50", "Anchor", "#212121"],
       ],
     },
     {
       title: "Oscillator: SMA Signal (Close)",
       seriesConfigs: [
         [
-          "sma20Signal",
+          "sma20SignalPriceClose",
           "SMA(20) Signal",
           "#78909c",
           [],
-          isTimeframes(["year10", "year20", "year50"]),
+          isTimeframes(sma20Timeframes),
         ],
         [
-          "sma20SignalHigh",
+          "sma20SignalPriceHigh",
           "SMA(20) Signal High",
           "#33691e",
           [],
-          isTimeframes(["year10", "year20", "year50"]),
+          isTimeframes(sma20Timeframes),
         ],
         [
-          "sma20SignalLow",
+          "sma20SignalPriceLow",
           "SMA(20) Signal Low",
           "#880e4f",
           [],
-          isTimeframes(["year10", "year20", "year50"]),
+          isTimeframes(sma20Timeframes),
         ],
         [
-          "sma50Signal",
+          "sma50SignalPriceClose",
           "SMA(50) Signal",
           "#78909c",
           [],
-          isTimeframesNot(["year10", "year20", "year50"]),
+          isTimeframesNot(sma20Timeframes),
         ],
         [
-          "sma50SignalHigh",
+          "sma50SignalPriceHigh",
           "SMA(50) Signal High",
           "#33691e",
           [],
-          isTimeframesNot(["year10", "year20", "year50"]),
+          isTimeframesNot(sma20Timeframes),
         ],
         [
-          "sma50SignalLow",
+          "sma50SignalPriceLow",
           "SMA(50) SignalLow",
           "#880e4f",
           [],
-          isTimeframesNot(["year10", "year20", "year50"]),
+          isTimeframesNot(sma20Timeframes),
         ],
         ["anchor0", "Anchor", "#212121"],
       ],
     },
-  ].map((config) => <Chart key={config.title} {...config} />);
+  ].map((config, index) => <Chart key={config.title || index} {...config} />);
 
 function isTimeframes(timeframes) {
   return (data) => timeframes.includes(data?.timeframe?.value);
@@ -101,8 +97,4 @@ function isTimeframes(timeframes) {
 
 function isTimeframesNot(timeframes) {
   return (data) => !timeframes.includes(data?.timeframe?.value);
-}
-
-function hasVolume(data) {
-  return data?.data?.series?.some((i) => typeof i.volume === "number");
 }

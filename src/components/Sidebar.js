@@ -1,7 +1,7 @@
 import { SidebarContainer, SidebarContainerButton } from "./SidebarContainer";
+import { AppHeader } from "./AppHeader";
 import Divider from "@mui/material/Divider";
 import Toolbar from "@mui/material/Toolbar";
-import { AppHeader } from "./AppHeader";
 import { SearchInput } from "./SearchInput";
 import { DataCard } from "./DataCard";
 import { LinksCard } from "./LinksCard";

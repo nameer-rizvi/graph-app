@@ -4,43 +4,28 @@ import { Paper } from "./Paper";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import simpul from "simpul";
 import ArrowDropUpSharpIcon from "@mui/icons-material/ArrowDropUpSharp";
 import ArrowDropDownSharpIcon from "@mui/icons-material/ArrowDropDownSharp";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
-import simpul from "simpul";
 
 export function DataCard() {
   const data = useContext(DataContext);
-  useTrendTable(data.data);
-  if (data.render && data.data.symbol) {
-    return (
-      <Paper>
-        <BusinessIcon sx={{ marginTop: 0.5 }} />
-        <Box ml={2} sx={{ overflow: "hidden" }}>
-          <DataCardTitle title={data.data.symbol} />
-          <DataCardSubtitle subtitle={data.data.name} />
-          <DataCardPrice data={data.data.last} />
-          <DataCardVolume data={data.data.last} />
-          <DataCardRating data={data.data.last} />
-          <DataCardDate data={data.data.last} />
-        </Box>
-      </Paper>
-    );
-  }
-}
 
-function useTrendTable(data) {
-  useEffect(() => {
-    if (data.last) {
-      const trendKeys = Object.keys(data.last).filter((key) => {
-        return key.endsWith("Trend");
-      });
-      const table = trendKeys.reduce((r, k) => {
-        return { ...r, [k]: data.last[k] };
-      }, {});
-      console.table(table);
-    }
-  }, [data]);
+  if (!data.render || !data.data.symbol?.length) return;
+
+  return (
+    <Paper>
+      <BusinessIcon sx={{ marginTop: 0.5 }} />
+      <Box ml={2} sx={{ overflow: "hidden" }}>
+        <DataCardTitle title={data.data.symbol} />
+        <DataCardSubtitle subtitle={data.data.name} />
+        <DataCardPrice data={data.data.last} />
+        <DataCardVolume data={data.data.last} />
+        <DataCardDate data={data.data.last} />
+      </Box>
+    </Paper>
+  );
 }
 
 function DataCardTitle({ title }) {
@@ -71,41 +56,35 @@ function DataCardSubtitle({ subtitle }) {
 }
 
 function DataCardPrice({ data = {} }) {
-  if (data.priceClose) {
-    const price = simpul.numberstring(data.priceClose, ["$"]);
-
-    const priceChange = data.priceChange
-      ? `(${simpul.numberstring(data.priceChange, ["+", "%"])})`
-      : "";
-
-    let color;
-
-    let Icon;
-
-    if (data.priceChange > 0) {
-      color = "#00c805";
-      Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-    } else if (data.priceChange < 0) {
-      color = "#ff5000";
-      Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
-    } else {
-      Icon = <RemoveSharpIcon sx={{ color }} />;
-    }
-
-    return (
-      <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
-        {Icon}
-        <Box ml={0.5}>
-          <Typography variant="body" mr={1} title={price}>
-            {price}
-          </Typography>
-          <span style={{ color }} title={priceChange}>
-            {priceChange}
-          </span>
-        </Box>
-      </Box>
-    );
+  if (!simpul.isNumber(data.priceClose)) return;
+  const price = simpul.numberstring(data.priceClose, ["$"]);
+  const priceChange = data.priceChangeCumulative
+    ? `(${simpul.numberstring(data.priceChangeCumulative, ["+", "%"])})`
+    : "";
+  let color;
+  let Icon;
+  if (data.priceChangeCumulative > 0) {
+    color = "#00c805";
+    Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
+  } else if (data.priceChangeCumulative < 0) {
+    color = "#ff5000";
+    Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
+  } else {
+    Icon = <RemoveSharpIcon sx={{ color }} />;
   }
+  return (
+    <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
+      {Icon}
+      <Box ml={0.5}>
+        <Typography variant="body" mr={1} title={price}>
+          {price}
+        </Typography>
+        <span style={{ color }} title={priceChange}>
+          {priceChange}
+        </span>
+      </Box>
+    </Box>
+  );
 }
 
 const overflow = {
@@ -115,105 +94,66 @@ const overflow = {
 };
 
 function DataCardVolume({ data = {} }) {
-  if (data.volumeTotal) {
-    const volume = simpul.numberstring(data.volumeTotal);
-
-    const volumeChange = data.volume
-      ? `(${simpul.numberstring(data.volume, ["+"])})`
-      : "";
-
-    const volumeValue = data.vwapValue
-      ? `Notional Value ${
-          simpul.numberstring(data.vwapValue, ["$"]).split(".00")[0]
-        }`
-      : data.volumeValue
-      ? `Notional Value ${
-          simpul.numberstring(data.volumeValue, ["$"]).split(".00")[0]
-        }`
-      : "";
-
-    let color;
-
-    let Icon;
-
-    if (data.volumeTrend === "up") {
-      color = "#00c805";
-      Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-    } else if (data.volumeTrend === "down") {
-      color = "#ff5000";
-      Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
-    } else {
-      Icon = <RemoveSharpIcon sx={{ color }} />;
-    }
-
-    return (
-      <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
-        {Icon}
-        <Box ml={0.5} style={overflow}>
-          <Typography variant="body" mr={1} title={volume}>
-            {volume}
-          </Typography>
-          <span style={{ color }} title={volumeChange}>
-            {volumeChange}
-          </span>
-          <Typography
-            display="block"
-            variant="caption"
-            title={volumeValue}
-            sx={overflow}
-          >
-            {volumeValue}
-          </Typography>
-        </Box>
-      </Box>
-    );
+  if (!simpul.isNumber(data.volumeTotal)) return;
+  const volume = simpul.numberstring(data.volumeTotal);
+  const volumeChange = data.volume
+    ? `(${simpul.numberstring(data.volume, ["+"])})`
+    : "";
+  const volumeValue = data.vwapValue
+    ? `Notional Value ${
+        simpul.numberstring(data.vwapValue, ["$"]).split(".00")[0]
+      }`
+    : data.volumeValue
+    ? `Notional Value ${
+        simpul.numberstring(data.volumeValue, ["$"]).split(".00")[0]
+      }`
+    : "";
+  let color;
+  let Icon;
+  if (data.sma10VolumeTrend[0] === 1) {
+    color = "#00c805";
+    Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
+  } else if (data.sma10VolumeTrend[0] === -1) {
+    color = "#ff5000";
+    Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
+  } else {
+    Icon = <RemoveSharpIcon sx={{ color }} />;
   }
-}
-
-function DataCardRating({ data = {} }) {
-  let rating = data.rating;
-
-  if (simpul.isNumber(rating)) {
-    rating = simpul.numberstring(rating);
-
-    let color, Icon;
-
-    if (data.ratingTrend === "up") {
-      color = "#00c805";
-      Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-    } else if (data.ratingTrend === "down") {
-      color = "#ff5000";
-      Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
-    } else {
-      Icon = <RemoveSharpIcon sx={{ color }} />;
-    }
-
-    return (
-      <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
-        {Icon}
-        <Box ml={0.5} style={overflow}>
-          <Typography variant="body" mr={1} title={rating}>
-            {rating} Rating
-          </Typography>
-        </Box>
+  return (
+    <Box mt={2} sx={{ display: "flex", flexDirection: "row" }}>
+      {Icon}
+      <Box ml={0.5} style={overflow}>
+        <Typography variant="body" mr={1} title={volume}>
+          {volume}
+        </Typography>
+        <span style={{ color }} title={volumeChange}>
+          {volumeChange}
+        </span>
+        <Typography
+          display="block"
+          variant="caption"
+          title={volumeValue}
+          sx={overflow}
+        >
+          {volumeValue}
+        </Typography>
       </Box>
-    );
-  }
+    </Box>
+  );
 }
 
 function DataCardDate({ data = {} }) {
-  if (data.dateString) {
-    const label = `Last updated ${data.dateString}.`;
-    return (
-      <Typography
-        display="block"
-        variant="overline"
-        mt={2}
-        sx={{ lineHeight: 1.5, fontSize: "0.6rem" }}
-        title={label}
-      >
-        {label}
-      </Typography>
-    );
-  }
+  if (!data.dateString) return;
+  const label = `Last updated ${data.dateString}.`;
+  return (
+    <Typography
+      display="block"
+      variant="overline"
+      mt={2}
+      sx={{ lineHeight: 1.5, fontSize: "0.6rem" }}
+      title={label}
+    >
+      {label}
+    </Typography>
+  );
 }
