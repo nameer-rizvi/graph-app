@@ -796,9 +796,9 @@
     "@types/lodash" "*"
 
 "@types/lodash@*":
-  version "4.17.13"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.13.tgz#786e2d67cfd95e32862143abe7463a7f90c300eb"
-  integrity sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==
+  version "4.17.16"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.16.tgz#94ae78fab4a38d73086e962d0b65c30d816bfb0a"
+  integrity sha512-HX7Em5NYQAXKW+1T+FiuG27NGwzJfCX3s1GjOa7ujxZa52kjJLOr4FUxT+giF6Tgxv1e+/czV/iTtBw27WTU9g==
 
 "@types/parse-json@^4.0.0":
   version "4.0.2"
@@ -2892,6 +2892,13 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
+pricehistory@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/pricehistory/-/pricehistory-0.0.2.tgz#0afab2e0c176510f6817bb4e1fa6e9c8df82eaf7"
+  integrity sha512-z9V5Bdb6Tz/OjG6Yp8PftE2qALyJkqYNeBC6CnjcKnekcF2MUjmXsv9SP2/bgK9QSusCy3/tGjrTM7qsCyQW2A==
+  dependencies:
+    simpul "^1.2.4"
+
 prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
@@ -3180,10 +3187,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-simpul@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.2.2.tgz#c6f7f8d6d235ad64723987ec8cd59e7c2835c8fa"
-  integrity sha512-nF6bUv5LokEeNdkRvzZEY0cuBKyfJWayludCylwbU3jzmaLd6mNR0dwBKiiB5HpN6P9RI/a/60jCFwkV1YTeiA==
+simpul@^1.2.4:
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.2.4.tgz#4db44edcae0dbf0c58077c843838150629bb087e"
+  integrity sha512-rjknlWk8ec/rPCYvmmVSmYFXcaudt3GttUw6fuexO8OuXFVw0l+jVlgOuDLAaWnazLR/kBQVXTaDUIvWtt3KhA==
   dependencies:
     "@types/he" "^1.2.3"
     "@types/lodash.clonedeep" "^4.5.9"

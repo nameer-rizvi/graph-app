@@ -1,13 +1,11 @@
 import * as utils from "../utils";
-import { autocomplete } from "./autocomplete";
-import simpul from "simpul";
+import { autocomplete, replaceSeriesKey } from "./autocomplete";
+import pricehistory from "pricehistory";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
 const seriesKeyCache = {};
 
 export async function wsj(symbol, timeframe) {
-  const leverage = +symbol?.split(" ")[1]?.trim();
-
   symbol = utils.cleanSymbol(symbol);
 
   if (symbol === "BTC.X") {
@@ -16,7 +14,18 @@ export async function wsj(symbol, timeframe) {
     symbol = "ETHUSD";
   }
 
-  const url = "https://api.wsj.net/api/michelangelo/timeseries/history?";
+  const urlString = "https://api.wsj.net/api/michelangelo/timeseries/history";
+
+  const url = new URL(urlString);
+
+  const seriesKey = seriesKeyCache[symbol] || `STOCK/US//${symbol}`;
+
+  const option = {
+    headers: {
+      Accept: "application/json",
+      "Dylan2010.EntitlementToken": "57494d5ed7ad44af85bc59a51dd87c90",
+    },
+  };
 
   const step = {
     day: "PT5M",
@@ -40,16 +49,7 @@ export async function wsj(symbol, timeframe) {
     year50: "P50Y",
   }[timeframe || "day"];
 
-  const seriesKey = seriesKeyCache[symbol] || `STOCK/US//${symbol}`;
-
-  const option = {
-    headers: {
-      Accept: "application/json",
-      "Dylan2010.EntitlementToken": "57494d5ed7ad44af85bc59a51dd87c90",
-    },
-  };
-
-  const params = {
+  url.search = new URLSearchParams({
     ckey: "57494d5ed7",
     json: JSON.stringify({
       EntitlementToken: option.headers["Dylan2010.EntitlementToken"],
@@ -84,22 +84,18 @@ export async function wsj(symbol, timeframe) {
         },
       ],
     }),
-  };
+  });
 
-  let response = await fetch(url + new URLSearchParams(params), option);
+  let response = await fetch(url, option);
 
   let json = await response.json();
 
   if (json.error?.startsWith("Unknown instrument")) {
-    let seriesKey2 = await autocomplete(symbol.replace(".X", ""));
-
+    const seriesKey2 = await autocomplete(symbol.replace(".X", ""));
     if (seriesKey2) {
-      params.json = params.json.replace(seriesKey, seriesKey2);
-
-      response = await fetch(url + new URLSearchParams(params), option);
-
+      replaceSeriesKey(url, seriesKey, seriesKey2);
+      response = await fetch(url, option);
       json = await response.json();
-
       if (!json.error) seriesKeyCache[symbol] = seriesKey2;
     }
   }
@@ -117,7 +113,7 @@ export async function wsj(symbol, timeframe) {
     series: [],
     timeframe: timeframe,
     basePrice: json.Series[0].ExtraData.find((i) => {
-      return i.Name === "PriorOpen";
+      return i.Name === "PriorClose" || i.Name === "PriorOpen";
     })?.Value,
     isBitcoin: json.Series[0].Ticker === "BTCUSD",
     isEthereum: json.Series[0].Ticker === "ETHUSD",
@@ -126,76 +122,32 @@ export async function wsj(symbol, timeframe) {
   data.isCrypto = data.isBitcoin || data.isEthereum;
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
-    let candle = {};
-
-    let tickIndex = i;
-
+    const candle = {};
+    const tickIndex = i;
     candle.datetime = json.TimeInfo.Ticks[tickIndex];
-
     candle.open = json.Series[0].DataPoints[i][0];
-
     candle.high = json.Series[0].DataPoints[i][1];
-
     candle.low = json.Series[0].DataPoints[i][2];
-
     candle.close = json.Series[0].DataPoints[i][3];
-
     candle.volume = json.Series[1].DataPoints[i][0];
-
     data.series.push(candle);
   }
 
-  const pricehistory = simpul.pricehistory(data.series, {
-    leverage: leverage,
+  data.series = pricehistory(data.series, {
+    // leverage: +symbol?.trim().split(" ")[1]?.trim(),
     price: true,
-    vwap: true,
-    trend: true,
-    macd: true,
-    sma: true,
-    volumefill: true,
-    anchor: true,
-    color: true,
-    periods: [5, 10, 20, 50],
-    scales: [
-      "volume",
-      "vwapdisc",
-      "priceRangeDiff",
-      "sma20Signal",
-      "sma50Signal",
-    ],
+    // vwap: true,
+    // trend: true,
+    // macd: true,
+    // sma: true,
+    // volumefill: true,
+    // anchor: true,
+    // color: true,
+    // periods: [5, 10, 20, 50],
+    // normalize: ["volume", "priceRangeDiff", "sma20Signal", "sma50Signal"],
   });
 
-  data.series = pricehistory.candles;
-
-  for (let i = 0; i < data.series.length; i++) {
-    const values = [
-      data.series[i].sma5ColorVolumeGreen,
-      data.series[i].sma10ColorsGreen,
-    ];
-    const sma = ["year10", "year20", "year50"].includes(timeframe)
-      ? "sma20"
-      : "sma50";
-    const signal = ["year10", "year20", "year50"]
-      ? data.series[i][`${sma}SignalScale`]
-      : data.series[i][`${sma}SignalScale`];
-    values.push(signal);
-    data.series[i].rating = simpul.math.mean(values.filter(simpul.isNumber));
-    if (data.series[i].rating > data.series[i - 1]?.rating) {
-      data.series[i].ratingTrend = "up";
-    } else if (data.series[i].rating < data.series[i - 1]?.rating) {
-      data.series[i].ratingTrend = "down";
-    }
-    data.series[i][`${sma}SignalHigh`] =
-      simpul.math.change.percent(
-        data.series[i][sma],
-        data.series[i].priceHigh,
-      ) * 100;
-    data.series[i][`${sma}SignalLow`] =
-      simpul.math.change.percent(data.series[i][sma], data.series[i].priceLow) *
-      100;
-  }
-
-  data.last = pricehistory.curr;
+  data.last = data.series[data.series.length - 1];
 
   if (timeframe === "day") correctChartDatetimeEnd(data);
 

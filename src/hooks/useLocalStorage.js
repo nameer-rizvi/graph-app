@@ -3,12 +3,15 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 export function useLocalStorage(key, defaultValue, option = {}) {
-  const query =
-    simpul.support.window && new URLSearchParams(window.location.search);
+  let query, param, store;
 
-  const param = simpul.support.window && option.isParam && query.get(key);
+  if (simpul.support.inWindow("location")) {
+    query = new URLSearchParams(window.location.search);
 
-  const store = simpul.support.window && JSON.parse(localStorage.getItem(key));
+    param = option.isParam && query.get(key);
+
+    store = JSON.parse(localStorage.getItem(key));
+  }
 
   const initialValue = param || store || defaultValue;
 
@@ -17,18 +20,15 @@ export function useLocalStorage(key, defaultValue, option = {}) {
   const router = useRouter();
 
   function update(newValue) {
-    if (simpul.support.window) {
+    if (simpul.support.inWindow("location")) {
       if (option.isParam) {
         query.set(key, newValue);
-
         router.push([window.location.pathname, query].join("?"), undefined, {
           shallow: true,
         });
       }
-
       localStorage.setItem(key, JSON.stringify(newValue));
     }
-
     setValue(newValue);
   }
 

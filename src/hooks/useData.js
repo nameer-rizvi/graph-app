@@ -1,7 +1,7 @@
 import { useCSR } from "./useCSR";
 import { useLocalStorage } from "./useLocalStorage";
-import useAsyncFetch from "async-fetch";
 import { getPoll, changeFavicon } from "../utils";
+import useAsyncFetch from "async-fetch";
 import { useEffect } from "react";
 import simpul from "simpul";
 
@@ -19,12 +19,10 @@ export function useData() {
   const request = useAsyncFetch("/api/data", {
     params: { symbol: symbol.value, timeframe: timeframe.value },
     deps: [symbol.value, timeframe.value],
-    ignoreRequest: !symbol.value,
+    ignoreRequest: !symbol.value?.length,
     onSuccess: data.update,
-    cachetime: poll / 2,
     poll: poll,
     ignoreCleanup: true,
-    timeout: 60000,
   });
 
   useEffect(() => {
@@ -38,14 +36,14 @@ export function useData() {
   }, [data.value?.symbol, data.value?.last?.priceClose]);
 
   useEffect(() => {
-    if (data.value?.last?.priceChange > 0) {
+    if (data.value?.last?.priceChangeCumulative > 0) {
       changeFavicon("favicon_blue_circle");
-    } else if (data.value?.last?.priceChange < 0) {
+    } else if (data.value?.last?.priceChangeCumulative < 0) {
       changeFavicon("favicon_red_circle");
-    } else if (data.value?.last?.priceChange === 0) {
+    } else if (data.value?.last?.priceChangeCumulative === 0) {
       changeFavicon("favicon_white_circle");
     } else changeFavicon("favicon");
-  }, [data.value?.last?.priceChange]);
+  }, [data.value?.last?.priceChangeCumulative]);
 
   return {
     ...csr,
