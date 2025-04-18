@@ -32,12 +32,14 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Momentum: Green vs. Red",
+      title: "Green Wave: Long, Short",
       min: 0,
       max: 100,
       seriesConfigs: [
-        ["sma10ColorsGreen", "Green Candles", "#2e7d32", []],
-        ["sma10ColorsRed", "Red Candles", "#c62828", []],
+        ["sma10ColorsGreen", "Green Candles (Long)", "#2e7d32", []],
+        // ["sma10ColorsRed", "Red Candles", "#c62828", []],
+        ["sma5ColorVolumeGreen", "Green Candles (Short)", "#1b5e20", []],
+        // ["sma5ColorVolumeRed", "Red Candles", "#880e4f", []],
         ["anchor50", "Anchor", "#212121"],
       ],
     },

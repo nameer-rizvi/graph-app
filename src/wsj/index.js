@@ -143,7 +143,7 @@ export async function wsj(symbol, timeframe) {
     sma: true,
     trend: true,
     color: true,
-    periods: [10, 20, 50],
+    periods: [5, 10, 20, 50],
     anchor: [0, 50, 100],
     normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
   });
