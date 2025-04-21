@@ -10,10 +10,14 @@ export async function wsj(symbol, timeframe) {
 
   symbol = utils.cleanSymbol(symbol);
 
+  let isCrypto = false;
+
   if (symbol === "BTC.X") {
     symbol = "BTCUSD";
+    isCrypto = true;
   } else if (symbol === "ETH.X") {
     symbol = "ETHUSD";
+    isCrypto = true;
   }
 
   const urlString = "https://api.wsj.net/api/michelangelo/timeseries/history";
@@ -37,7 +41,7 @@ export async function wsj(symbol, timeframe) {
     year5: "P7D",
     year10: "P14D",
     year20: "P1M",
-    year50: "P3M",
+    year50: "P2M",
   }[timeframe || "day"];
 
   const timeframe2 = {
