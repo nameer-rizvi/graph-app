@@ -1,9 +1,9 @@
 import { useCSR } from "./useCSR";
 import { useLocalStorage } from "./useLocalStorage";
-import { getPoll, changeFavicon } from "../utils";
 import useAsyncFetch from "async-fetch";
 import { useEffect } from "react";
 import simpul from "simpul";
+import { changeFavicon } from "../utils";
 
 export function useData() {
   const csr = useCSR();
@@ -14,14 +14,11 @@ export function useData() {
 
   const data = useLocalStorage("data", {});
 
-  const poll = getPoll();
-
   const request = useAsyncFetch("/api/data", {
     params: { symbol: symbol.value, timeframe: timeframe.value },
     deps: [symbol.value, timeframe.value],
     ignoreRequest: !symbol.value?.length,
     onSuccess: data.update,
-    poll: poll,
     ignoreCleanup: true,
   });
 
