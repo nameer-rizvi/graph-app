@@ -32,18 +32,6 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Green Wave: Long, Short",
-      min: 0,
-      max: 100,
-      seriesConfigs: [
-        ["sma10ColorsGreen", "Green Candles (Long)", "#2e7d32", []],
-        // ["sma10ColorsRed", "Red Candles", "#c62828", []],
-        ["sma5ColorVolumeGreen", "Green Candles (Short)", "#1b5e20", []],
-        // ["sma5ColorVolumeRed", "Red Candles", "#880e4f", []],
-        ["anchor50", "Anchor", "#212121"],
-      ],
-    },
-    {
       title: "Oscillator: SMA Signal (Close)",
       seriesConfigs: [
         [
@@ -89,6 +77,25 @@ export const Charts = () =>
           isTimeframesNot(sma20Timeframes),
         ],
         ["anchor0", "Anchor", "#212121"],
+      ],
+    },
+    {
+      title: "Phase: Accumulation vs. Distribution",
+      seriesConfigs: [
+        ["signalA", "Distribution", "#33691e", []],
+        ["signalB", "Accumulation", "#880e4f", []],
+      ],
+    },
+    {
+      title: "Frequency: Green, Red [SMA10]",
+      min: 0,
+      max: 100,
+      seriesConfigs: [
+        ["sma10ColorsRed", "Red Candles", "#c62828", []],
+        ["sma10ColorsGreen", "Green Candles (Long)", "#2e7d32", []],
+        ["sma5ColorVolumeGreen", "Green Candle Volume (Short)", "#1b2429", []],
+        // ["sma5ColorVolumeRed", "Red CandleVolume", "#880e4f", []],
+        ["anchor50", "Anchor", "#212121"],
       ],
     },
   ].map((config, index) => <Chart key={config.title || index} {...config} />);

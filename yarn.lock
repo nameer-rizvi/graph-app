@@ -2892,10 +2892,10 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-pricehistory@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/pricehistory/-/pricehistory-0.0.3.tgz#1309cd64b8a8ac42d8048bcecdd91a741c9d5b6a"
-  integrity sha512-2ffqz09LlRcbudWUGCWtcuaJThV0j47KO75Koip5CFDY+WnulEOXUOE3/YS8LucPVh1SXIrqRolEsIJc4t9awA==
+pricehistory@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/pricehistory/-/pricehistory-0.0.4.tgz#9a4358cac54a6dd9e5c5edc393f98ab4bb9f0127"
+  integrity sha512-k8KpLeKuqhEakiGINPxlHRrW9SkQ0YJ+HpYJXjOT6G+snIRbE5EARaRh8KWD3z6PHvF9H9czp81EhhGRkdA9iQ==
   dependencies:
     simpul "^1.2.4"
 

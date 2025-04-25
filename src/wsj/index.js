@@ -150,7 +150,12 @@ export async function wsj(symbol, timeframe) {
     periods: [5, 10, 20, 50],
     anchor: [0, 50, 100],
     normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
+    signalize: true,
   });
+
+  for (let i = 0; i < data.series.length; i++) {
+    // ...
+  }
 
   data.last = data.series[data.series.length - 1];
 
