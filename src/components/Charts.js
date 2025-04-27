@@ -80,7 +80,7 @@ export const Charts = () =>
       ],
     },
     {
-      title: "Phase: Accumulation vs. Distribution",
+      title: "Phase: Accumulation/Distribution",
       seriesConfigs: [
         ["signalA", "Distribution", "#33691e", []],
         ["signalB", "Accumulation", "#880e4f", []],
