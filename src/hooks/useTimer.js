@@ -15,7 +15,7 @@ export function useTimer(option = {}) {
   }, []);
 
   useEffect(() => {
-    if (timeLeft === 0) {
+    if (isMarketOpen && timeLeft === 0) {
       setTimeout(() => {
         option.callback?.();
       }, option.delay || 1000);
