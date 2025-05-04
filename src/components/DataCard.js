@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { DataContext } from "../contexts";
 import { Paper } from "./Paper";
+import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
 import { DataCardTimer } from "./DataCardTimer";
@@ -17,7 +19,7 @@ export function DataCard() {
 
   return (
     <Paper>
-      <BusinessIcon sx={{ marginTop: 0.5 }} />
+      <DataCardIcon {...data.data} />
       <Box ml={2} sx={{ overflow: "hidden" }}>
         <DataCardTitle title={data.data.symbol} />
         <DataCardSubtitle subtitle={data.data.name} />
@@ -28,6 +30,16 @@ export function DataCard() {
       </Box>
     </Paper>
   );
+}
+
+function DataCardIcon({ isCrypto, isCurrency }) {
+  if (isCrypto) {
+    return <CurrencyBitcoinIcon sx={{ marginTop: 0.5 }} />;
+  } else if (isCurrency) {
+    return <AttachMoneyIcon sx={{ marginTop: 0.5 }} />;
+  } else {
+    return <BusinessIcon sx={{ marginTop: 0.5 }} />;
+  }
 }
 
 function DataCardTitle({ title }) {
@@ -112,10 +124,10 @@ function DataCardVolume({ data = {} }) {
     : "";
   let color;
   let Icon;
-  if (data.sma10VolumeTrend[0] === 1) {
+  if (data.sma10VolumeTrend?.[0] === 1) {
     color = "#00c805";
     Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-  } else if (data.sma10VolumeTrend[0] === -1) {
+  } else if (data.sma10VolumeTrend?.[0] === -1) {
     color = "#ff5000";
     Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
   } else {

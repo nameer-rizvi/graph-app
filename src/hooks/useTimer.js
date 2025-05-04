@@ -30,8 +30,8 @@ function getProgress(timeLeft) {
   return 100 - (timeLeft / 300) * 100;
 }
 
-function getIsMarketOpen({ isCrypto }) {
-  if (isCrypto) return true;
+function getIsMarketOpen({ isCurrency }) {
+  if (isCurrency) return true;
   const date = new Date();
   const day = date.getDay();
   const hour = date.getHours();

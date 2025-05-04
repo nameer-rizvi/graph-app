@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 
 export function DataCardTimer({ data = {} }) {
   const [timer, progress, isMarketOpen] = useTimer({
-    isCrypto: data.data.isCrypto,
+    isCurrency: data.data.isCurrency,
     callback: data.sendRequest,
     delay: 5000,
   });

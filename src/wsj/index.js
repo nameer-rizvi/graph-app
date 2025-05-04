@@ -5,20 +5,8 @@ import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
 const seriesKeyCache = {};
 
-export async function wsj(symbol, timeframe) {
-  const leverage = +symbol?.trim().split(" ")[1]?.trim();
-
-  symbol = utils.cleanSymbol(symbol);
-
-  let isCrypto = false;
-
-  if (symbol === "BTC.X") {
-    symbol = "BTCUSD";
-    isCrypto = true;
-  } else if (symbol === "ETH.X") {
-    symbol = "ETHUSD";
-    isCrypto = true;
-  }
+export async function wsj(_symbol, timeframe) {
+  const symbol = utils.cleanSymbol(_symbol);
 
   const urlString = "https://api.wsj.net/api/michelangelo/timeseries/history";
 
@@ -97,7 +85,7 @@ export async function wsj(symbol, timeframe) {
   let json = await response.json();
 
   if (json.error?.startsWith("Unknown instrument")) {
-    const seriesKey2 = await autocomplete(symbol.replace(".X", ""));
+    const seriesKey2 = await autocomplete(symbol);
     if (seriesKey2) {
       replaceSeriesKey(url, seriesKey, seriesKey2);
       response = await fetch(url, option);
@@ -113,7 +101,12 @@ export async function wsj(symbol, timeframe) {
   const data = {
     djId: json.Series[0].DjId,
     symbol: json.Series[0].Ticker,
+    symbol2: json.Series[0].Ticker.replace("USD", ""),
     name: json.Series[0].CommonName,
+    name2: json.Series[0].CommonName.toLowerCase()
+      .replace(/CoinDesk/gi, "")
+      .trim()
+      .split(" ")[0],
     type: json.Series[0].InstrumentType,
     country: json.Series[0].CountryCode,
     series: [],
@@ -121,11 +114,9 @@ export async function wsj(symbol, timeframe) {
     basePrice: json.Series[0].ExtraData.find((i) => {
       return i.Name === "PriorClose" || i.Name === "PriorOpen";
     })?.Value,
-    isBitcoin: json.Series[0].Ticker === "BTCUSD",
-    isEthereum: json.Series[0].Ticker === "ETHUSD",
+    isCurrency: json.Series[0].Ticker.endsWith("USD"),
+    isCrypto: json.Series[0].InstrumentType === "CryptoCurrency",
   };
-
-  data.isCrypto = data.isBitcoin || data.isEthereum;
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
     const candle = {};
@@ -140,7 +131,7 @@ export async function wsj(symbol, timeframe) {
   }
 
   data.series = pricehistory(data.series, {
-    leverage: leverage,
+    leverage: +_symbol?.trim().split(" ")[1]?.trim(),
     price: true,
     volumeFill: true,
     vwap: true,

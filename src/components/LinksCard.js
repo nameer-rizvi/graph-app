@@ -9,8 +9,11 @@ import Link from "@mui/material/Link";
 
 export function LinksCard() {
   const data = useContext(DataContext);
+
   const symbol = data.data?.symbol;
+
   const p = getFinvizTimeframe(data);
+
   if (data.render && symbol) {
     return (
       <Paper>
@@ -19,50 +22,38 @@ export function LinksCard() {
           <LinksCardTitle title="Quick Links" />
           <LinksCardLinks
             links={
-              data.data.isBitcoin
+              data.data.isCrypto
                 ? [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/crypto_charts.ashx?t=BTCUSD&p=${p}`,
+                      href: `https://finviz.com/crypto_charts.ashx?t=${data.data.symbol}&p=${p}`,
                     },
                     {
                       label: "Robinhood",
-                      href: "https://robinhood.com/crypto/BTC",
+                      href: `https://robinhood.com/crypto/${data.data.symbol2}`,
+                    },
+                    {
+                      label: "Coinbase",
+                      href: `https://www.coinbase.com/price/${data.data.name2}`,
                     },
                     {
                       label: "Stocktwits",
-                      href: "https://stocktwits.com/symbol/BTC.X",
+                      href: `https://stocktwits.com/symbol/${data.data.symbol2}.X`,
                     },
                     {
                       label: "Reddit",
-                      href: "https://www.reddit.com/r/Bitcoin/",
-                    },
-                    {
-                      label: "Liquidation Heatmap",
-                      href: `https://www.coinglass.com/pro/futures/LiquidationHeatMapNew`,
-                    },
-                    {
-                      label: "Power Law",
-                      href: "https://charts.bitbo.io/long-term-power-law/",
+                      href: `https://www.reddit.com/r/${data.data.name2}`,
                     },
                   ]
-                : data.data.isEthereum
+                : data.data.isCurrency
                 ? [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/crypto_charts.ashx?t=ETHUSD&p=${p}`,
-                    },
-                    {
-                      label: "Robinhood",
-                      href: "https://robinhood.com/crypto/ETH",
+                      href: `https://finviz.com/forex_charts.ashx?t=${data.data.symbol}&p=${p}`,
                     },
                     {
                       label: "Stocktwits",
-                      href: "https://stocktwits.com/symbol/ETH.X",
-                    },
-                    {
-                      label: "Reddit",
-                      href: "https://www.reddit.com/r/Ethereum/",
+                      href: `https://stocktwits.com/symbol/${data.data.symbol}`,
                     },
                   ]
                 : [
@@ -73,10 +64,6 @@ export function LinksCard() {
                     {
                       label: "IBorrowDesk",
                       href: `https://iborrowdesk.com/report/${symbol}`,
-                    },
-                    {
-                      label: "Naked Short Report",
-                      href: `https://www.nakedshortreport.com/company/${symbol}`,
                     },
                     {
                       label: "Robinhood",
@@ -119,6 +106,13 @@ function getFinvizTimeframe(data = {}) {
     return "m";
   } else if (["year10", "year5"].includes(data.timeframe?.value)) {
     return "w";
+  } else if (
+    data.data.isCurrency &&
+    ["week2", "week"].includes(data.timeframe?.value)
+  ) {
+    return "h";
+  } else if (data.data.isCurrency && data.timeframe?.value === "day") {
+    return "i5";
   } else {
     return "d";
   }
