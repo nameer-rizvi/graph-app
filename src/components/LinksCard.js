@@ -108,7 +108,7 @@ function LinksCardLinks({ links = [] }) {
 }
 
 function getFinvizT(data = {}) {
-  return data.data.symbol.replace(".", "-");
+  return data.data.symbol?.replace(".", "-");
 }
 
 function getFinvizP(data = {}) {
@@ -134,12 +134,12 @@ function getFinvizP(data = {}) {
 }
 
 function getCryptoSymbol(data = {}) {
-  return data.data.symbol.replace("USD", "");
+  return data.data.symbol?.replace("USD", "");
 }
 
 function getCryptoName(data = {}) {
   return data.data.name
-    .toLowerCase()
+    ?.toLowerCase()
     .replace(/CoinDesk/gi, "")
     .trim()
     .split(" ")[0];
