@@ -101,21 +101,18 @@ export async function wsj(_symbol, timeframe) {
   const data = {
     djId: json.Series[0].DjId,
     symbol: json.Series[0].Ticker,
-    symbol2: json.Series[0].Ticker.replace("USD", ""),
     name: json.Series[0].CommonName,
-    name2: json.Series[0].CommonName.toLowerCase()
-      .replace(/CoinDesk/gi, "")
-      .trim()
-      .split(" ")[0],
     type: json.Series[0].InstrumentType,
     country: json.Series[0].CountryCode,
     series: [],
+    step: step,
     timeframe: timeframe,
     basePrice: json.Series[0].ExtraData.find((i) => {
       return i.Name === "PriorClose" || i.Name === "PriorOpen";
     })?.Value,
-    isCurrency: json.Series[0].Ticker.endsWith("USD"),
-    isCrypto: json.Series[0].InstrumentType === "CryptoCurrency",
+    isCurrency:
+      json.Series[0].InstrumentType.toLowerCase().includes("currency"),
+    isCrypto: json.Series[0].InstrumentType.toLowerCase() === "cryptocurrency",
   };
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {

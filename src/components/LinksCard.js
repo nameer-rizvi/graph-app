@@ -12,7 +12,13 @@ export function LinksCard() {
 
   const symbol = data.data?.symbol;
 
-  const p = getFinvizTimeframe(data);
+  const t = getFinvizT(data);
+
+  const p = getFinvizP(data);
+
+  const c = getCryptoSymbol(data);
+
+  const n = getCryptoName(data);
 
   if (data.render && symbol) {
     return (
@@ -26,30 +32,30 @@ export function LinksCard() {
                 ? [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/crypto_charts.ashx?t=${data.data.symbol}&p=${p}`,
+                      href: `https://finviz.com/crypto_charts.ashx?t=${t}&p=${p}`,
                     },
                     {
                       label: "Robinhood",
-                      href: `https://robinhood.com/crypto/${data.data.symbol2}`,
+                      href: `https://robinhood.com/crypto/${c}`,
                     },
                     {
                       label: "Coinbase",
-                      href: `https://www.coinbase.com/price/${data.data.name2}`,
+                      href: `https://www.coinbase.com/price/${n}`,
                     },
                     {
                       label: "Stocktwits",
-                      href: `https://stocktwits.com/symbol/${data.data.symbol2}.X`,
+                      href: `https://stocktwits.com/symbol/${c}.X`,
                     },
                     {
                       label: "Reddit",
-                      href: `https://www.reddit.com/r/${data.data.name2}`,
+                      href: `https://www.reddit.com/r/${n}`,
                     },
                   ]
                 : data.data.isCurrency
                 ? [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/forex_charts.ashx?t=${data.data.symbol}&p=${p}`,
+                      href: `https://finviz.com/forex_charts.ashx?t=${t}&p=${p}`,
                     },
                     {
                       label: "Stocktwits",
@@ -59,7 +65,7 @@ export function LinksCard() {
                 : [
                     {
                       label: "Finviz",
-                      href: `https://finviz.com/quote.ashx?t=${symbol}&p=${p}`,
+                      href: `https://finviz.com/quote.ashx?t=${t}&p=${p}`,
                     },
                     {
                       label: "IBorrowDesk",
@@ -101,19 +107,40 @@ function LinksCardLinks({ links = [] }) {
   ));
 }
 
-function getFinvizTimeframe(data = {}) {
-  if (["year50", "year20"].includes(data.timeframe?.value)) {
-    return "m";
-  } else if (["year10", "year5"].includes(data.timeframe?.value)) {
-    return "w";
-  } else if (
-    data.data.isCurrency &&
-    ["week2", "week"].includes(data.timeframe?.value)
-  ) {
-    return "h";
-  } else if (data.data.isCurrency && data.timeframe?.value === "day") {
+function getFinvizT(data = {}) {
+  return data.data.symbol.replace(".", "-");
+}
+
+function getFinvizP(data = {}) {
+  if (data.data.step === "PT5M" && data.data.isCurrency) {
     return "i5";
+  } else if (data.data.step === "PT15M" && data.data.isCurrency) {
+    return "i15";
+  } else if (data.data.step === "PT30M" && data.data.isCurrency) {
+    return "i30";
+  } else if (data.data.step === "P1D") {
+    return "d";
+  } else if (data.data.step === "P7D") {
+    return "w";
+  } else if (data.data.step === "P14D") {
+    return "w";
+  } else if (data.data.step === "P1M") {
+    return "m";
+  } else if (data.data.step === "P2M") {
+    return "m";
   } else {
     return "d";
   }
+}
+
+function getCryptoSymbol(data = {}) {
+  return data.data.symbol.replace("USD", "");
+}
+
+function getCryptoName(data = {}) {
+  return data.data.name
+    .toLowerCase()
+    .replace(/CoinDesk/gi, "")
+    .trim()
+    .split(" ")[0];
 }

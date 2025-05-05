@@ -1,10 +1,16 @@
-export function cleanSymbol(symbol) {
-  if (!symbol?.trim()) throw new Error("Symbol is required");
+import simpul from "simpul";
 
-  symbol =
-    symbol.toUpperCase().trim().split(" ")[0]?.replace(".X", "USD") || "";
+export function cleanSymbol(dirty) {
+  if (!simpul.isStringValid(dirty)) throw new Error("Symbol is required");
 
-  const currencies = [
+  const clean = simpul
+    .trim(dirty, " ")
+    .split(" ")[0]
+    .toUpperCase()
+    .replace("-", ".")
+    .replace(".X", "USD");
+
+  const cryptocurrencies = [
     "BTC",
     "ETH",
     "USDT",
@@ -24,7 +30,7 @@ export function cleanSymbol(symbol) {
     "TRUMP",
   ];
 
-  if (currencies.includes(symbol)) return `${symbol}USD`;
+  if (cryptocurrencies.includes(clean)) return `${clean}USD`;
 
-  return symbol;
+  return clean;
 }
