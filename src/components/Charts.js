@@ -82,8 +82,15 @@ export const Charts = () =>
     {
       title: "Phase: Accumulation/Distribution",
       seriesConfigs: [
-        ["signalA", "Distribution", "#33691e", []],
-        ["signalB", "Accumulation", "#880e4f", []],
+        ["signalAN", "Distribution", "#33691e", []],
+        ["signalBN", "Accumulation", "#880e4f", []],
+      ],
+    },
+    {
+      title: "Pressure: Buying/Selling",
+      seriesConfigs: [
+        ["signalC", "Selling", "#33691e", []],
+        ["signalD", "Buying", "#880e4f", []],
       ],
     },
     {
@@ -91,8 +98,8 @@ export const Charts = () =>
       min: 0,
       max: 100,
       seriesConfigs: [
-        ["sma10ColorsRed", "Red Candles", "#c62828", []],
-        ["sma10ColorsGreen", "Green Candles (Long)", "#2e7d32", []],
+        ["sma10ColorsGreen", "Green Candles (Long)", "#33691e", []],
+        ["sma10ColorsRed", "Red Candles", "#880e4f", []],
         ["sma5ColorVolumeGreen", "Green Candle Volume (Short)", "#1b2429", []],
         // ["sma5ColorVolumeRed", "Red CandleVolume", "#880e4f", []],
         ["anchor50", "Anchor", "#212121"],

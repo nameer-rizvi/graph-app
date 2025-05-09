@@ -2,6 +2,7 @@ import * as utils from "../utils";
 import { autocomplete, replaceSeriesKey } from "./autocomplete";
 import pricehistory from "pricehistory";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
+import simpul from "simpul";
 
 const seriesKeyCache = {};
 
@@ -137,13 +138,19 @@ export async function wsj(_symbol, timeframe) {
     color: true,
     periods: [5, 10, 20, 50],
     anchor: [0, 50, 100],
-    normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
+    normalize: [
+      "volume",
+      "sma1VwapValue",
+      "priceRangeDiff",
+      "signalA",
+      "signalB",
+      "signalC",
+      "signalD",
+    ],
     signalize: true,
   });
 
-  for (let i = 0; i < data.series.length; i++) {
-    // ...
-  }
+  // for (let i = 0; i < data.series.length; i++) {}
 
   data.last = data.series[data.series.length - 1];
 
