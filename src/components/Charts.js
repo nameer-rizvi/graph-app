@@ -82,8 +82,8 @@ export const Charts = () =>
     {
       title: "Phase: Accumulation/Distribution",
       seriesConfigs: [
-        ["signalAN", "Distribution", "#33691e", []],
-        ["signalBN", "Accumulation", "#880e4f", []],
+        ["signalA", "Distribution", "#33691e", []],
+        ["signalB", "Accumulation", "#880e4f", []],
       ],
     },
     {

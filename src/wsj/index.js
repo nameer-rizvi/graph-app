@@ -138,15 +138,7 @@ export async function wsj(_symbol, timeframe) {
     color: true,
     periods: [5, 10, 20, 50],
     anchor: [0, 50, 100],
-    normalize: [
-      "volume",
-      "sma1VwapValue",
-      "priceRangeDiff",
-      "signalA",
-      "signalB",
-      "signalC",
-      "signalD",
-    ],
+    normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
     signalize: true,
   });
 
