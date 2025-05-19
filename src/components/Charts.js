@@ -21,16 +21,16 @@ export const Charts = () =>
         ],
       ],
     },
-    {
-      title: "Trade: Volume, Value, Volatility",
-      min: 0,
-      max: 100,
-      seriesConfigs: [
-        ["volumeN", "Volume", "#0d47a1", []],
-        ["sma1VwapValueN", "Value", "#1a237e", []],
-        ["priceRangeDiffN", "Volatility", "#1b2429", []],
-      ],
-    },
+    // {
+    //   title: "Trade: Volume, Value, Volatility",
+    //   min: 0,
+    //   max: 100,
+    //   seriesConfigs: [
+    //     ["volumeN", "Volume", "#0d47a1", []],
+    //     ["sma1VwapValueN", "Value", "#1a237e", []],
+    //     ["priceRangeDiffN", "Volatility", "#1b2429", []],
+    //   ],
+    // },
     {
       title: "Oscillator: SMA Signal (Close)",
       seriesConfigs: [
