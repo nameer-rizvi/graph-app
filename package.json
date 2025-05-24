@@ -20,11 +20,11 @@
     "async-fetch": "^0.3.7",
     "next": "^15.0.0",
     "next-transpile-modules": "^10.0.1",
-    "pricehistory": "^0.0.5",
+    "pricehistory": "^0.0.6",
     "react": "^18",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^18",
-    "simpul": "^1.2.5"
+    "simpul": "^1.2.6"
   },
   "devDependencies": {
     "eslint": "^8",

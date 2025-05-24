@@ -2892,12 +2892,12 @@ prelude-ls@^1.2.1:
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
   integrity sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
 
-pricehistory@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/pricehistory/-/pricehistory-0.0.5.tgz#b0cd48ab9633ed3fcb57afeb0be0bb204402b632"
-  integrity sha512-djDuZXIKiPaBrJ8JC0s7rcjzY2uWP3MpbAToLZhfeLBCf/HuRgEWmsTT5BLI+k+EfAQOCqC5KsL+rbZeXHhW8w==
+pricehistory@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/pricehistory/-/pricehistory-0.0.6.tgz#693773902c3d45705dce73e988cac2ecc6e6b726"
+  integrity sha512-5ffAX7VpJ5C7+WV+BQ3OliqMMGgJUXzYAYZ35VEB+uwKL2Py4HuqnVZN9sGhEUMotNeYGMrdR5rI01pxQGjWtw==
   dependencies:
-    simpul "^1.2.5"
+    simpul "^1.2.6"
 
 prop-types@^15.6.2, prop-types@^15.8.1:
   version "15.8.1"
@@ -3187,10 +3187,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
-simpul@^1.2.5:
-  version "1.2.5"
-  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.2.5.tgz#68c9d3fa5ffa7c0ae6b9b5a8c3f786232f3ac201"
-  integrity sha512-v1VR56NWpN++3kBzdjBFMvdzc1YtrkrVs8SFMDJfsyzz5pZrFxnDe8DWC99Ja0KBJWpDMEENMVjhMkVTgACHxQ==
+simpul@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/simpul/-/simpul-1.2.6.tgz#70367b8181abd1b4a0adea927e8985190cd72a56"
+  integrity sha512-ZNBNMA+uJsWQm5clg3vMEREjBbfRyxzDVLnW55RVo4kPEnaz6GANPGUISdIwz5MD2chyi6wRw6h/S3vYhAWaLQ==
   dependencies:
     "@types/he" "^1.2.3"
     "@types/lodash.clonedeep" "^4.5.9"
