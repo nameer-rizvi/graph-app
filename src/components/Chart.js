@@ -3,6 +3,8 @@ import { useContext, useMemo } from "react";
 import { DataContext } from "../contexts";
 import simpul from "simpul";
 import Box from "@mui/material/Box";
+import CheckIcon from "@mui/icons-material/Check";
+import ToggleButton from "@mui/material/ToggleButton";
 import Typography from "@mui/material/Typography";
 
 const LineChart = dynamic(
@@ -64,38 +66,60 @@ export function Chart(props) {
   if (!data.render || !chart.dataset.length) return;
 
   return (
-    <Box mt={6} mb={4} sx={{ height: 200 }}>
-      <Typography variant="overline" display="block" gutterBottom>
-        {props.title}
-      </Typography>
-      <LineChart
-        skipAnimation
-        axisHighlight={{ x: "line", y: "line" }}
-        xAxis={[xAxis]}
-        yAxis={[
-          {
-            tickNumber: 5,
-            min: typeof props.min === "number" ? props.min : chart.min,
-            max: typeof props.max === "number" ? props.max : chart.max,
-          },
-        ]}
-        series={seriesConfigs.map((config) => ({
-          showMark: false,
-          dataKey: config[0],
-          label: config[1],
-          color: config[2],
-          valueFormatter: config[3]
-            ? (v) => simpul.numberstring(v, config[3])
-            : undefined,
-          highlightScope: {
-            highlighted: "series",
-            faded: "global",
-          },
-        }))}
-        dataset={chart.dataset}
-        legend={{ hidden: true }}
-        margin={{ top: 10, bottom: 50 }}
-      />
+    <Box mt={6} mb={4} sx={{ height: props.show ? 200 : 0 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+          cursor: "pointer",
+        }}
+        onClick={props.toggleShow}
+        gutterBottom
+      >
+        <ToggleButton
+          value="check"
+          size="small"
+          selected={props.show}
+          sx={{ height: 10, width: 10 }}
+        >
+          <CheckIcon sx={{ height: 8, width: 8 }} />
+        </ToggleButton>
+        <Typography variant="overline" display="block">
+          {props.title}
+        </Typography>
+      </Box>
+      {props.show ? (
+        <LineChart
+          skipAnimation
+          axisHighlight={{ x: "line", y: "line" }}
+          xAxis={[xAxis]}
+          yAxis={[
+            {
+              tickNumber: 5,
+              min: typeof props.min === "number" ? props.min : chart.min,
+              max: typeof props.max === "number" ? props.max : chart.max,
+            },
+          ]}
+          series={seriesConfigs.map((config) => ({
+            showMark: false,
+            dataKey: config[0],
+            label: config[1],
+            color: config[2],
+            valueFormatter: config[3]
+              ? (v) => simpul.numberstring(v, config[3])
+              : undefined,
+            highlightScope: {
+              highlighted: "series",
+              faded: "global",
+            },
+          }))}
+          dataset={chart.dataset}
+          legend={{ hidden: true }}
+          margin={{ top: 10, bottom: 50 }}
+          // grid={{ vertical: true, horizontal: true }}
+        />
+      ) : null}
     </Box>
   );
 }
