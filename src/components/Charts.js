@@ -12,6 +12,13 @@ function isTimeframesNot(timeframes) {
   return (data) => !timeframes.includes(data?.timeframe?.value);
 }
 
+function injection(configs = []) {
+  return configs.map((c) => {
+    const defaultConfig = defaultConfigs.find((d) => c.title === d.title);
+    return { ...c, seriesConfigs: defaultConfig.seriesConfigs };
+  });
+}
+
 const defaultConfigs = [
   {
     show: true,
@@ -142,7 +149,7 @@ export function Charts() {
     defaultConfigs,
   );
 
-  const [configs, setConfigs] = useState(value || defaultValue);
+  const [configs, setConfigs] = useState(injection(value || defaultValue));
 
   function toggleShow(config, index) {
     return () => {
