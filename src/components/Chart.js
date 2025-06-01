@@ -73,6 +73,7 @@ export function Chart(props) {
           alignItems: "center",
           gap: 1,
           cursor: "pointer",
+          width: "fit-content",
         }}
         onClick={props.toggleShow}
         gutterBottom
