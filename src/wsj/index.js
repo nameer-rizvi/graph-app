@@ -13,7 +13,10 @@ export async function wsj(_symbol, timeframe) {
 
   const url = new URL(urlString);
 
-  const seriesKey = seriesKeyCache[symbol] || `STOCK/US//${symbol}`;
+  const seriesKey =
+    symbol === "BTCUSD"
+      ? "CRYPTOCURRENCY/US/KRAKEN/BTCUSD"
+      : seriesKeyCache[symbol] || `STOCK/US//${symbol}`;
 
   const option = {
     headers: {

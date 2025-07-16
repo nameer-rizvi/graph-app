@@ -15,7 +15,7 @@ function isTimeframesNot(timeframes) {
 function injection(configs = []) {
   return configs.map((c) => {
     const defaultConfig = defaultConfigs.find((d) => c.title === d.title);
-    return { ...c, seriesConfigs: defaultConfig.seriesConfigs };
+    return { ...c, seriesConfigs: defaultConfig?.seriesConfigs || [] };
   });
 }
 
