@@ -35,15 +35,20 @@ export function Charts2({ data, axis }) {
 function useDataset(data, axis) {
   const [dataset, setDataset] = useState([]);
   useEffect(() => {
-    if (data.length <= DATA_LIMIT) {
-      setDataset(parsePoints(data, axis));
-    } else {
-      const step = Math.max(1, Math.floor(data.length / DATA_LIMIT));
+    const startRange = Math.max(0, Math.min(100, axis.range?.[0] || 0));
+    const endRange = Math.max(0, Math.min(100, axis.range?.[1] || 100));
+    const startIndex = Math.floor((startRange / 100) * data.length);
+    const endIndex = Math.ceil((endRange / 100) * data.length);
+    const sliced = data.slice(startIndex, endIndex);
+    if (sliced.length <= DATA_LIMIT) {
+      setDataset(parsePoints(sliced, axis));
+    } else if (sliced.length) {
+      const step = Math.max(1, Math.floor(sliced.length / DATA_LIMIT));
       const arr = [];
-      for (let i = 0; i < data.length; i += step) arr.push(data[i]);
-      const lastA = JSON.stringify(data[data.length - 1]);
+      for (let i = 0; i < sliced.length; i += step) arr.push(sliced[i]);
+      const lastA = JSON.stringify(sliced[sliced.length - 1]);
       const lastB = JSON.stringify(arr[arr.length - 1]);
-      if (lastA !== lastB) arr.push(data[data.length - 1]);
+      if (lastA !== lastB) arr.push(sliced[sliced.length - 1]);
       setDataset(parsePoints(arr, axis));
     }
   }, [data, axis]);

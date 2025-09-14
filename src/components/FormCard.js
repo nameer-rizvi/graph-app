@@ -8,6 +8,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { capitalize } from "simpul";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import Slider from "@mui/material/Slider";
 
 export function FormCard(props) {
   if (!props.data.length || !props.axis.options.length) return;
@@ -19,6 +20,7 @@ export function FormCard(props) {
         <FormCardTitle {...props} />
         <FormCardXAxis {...props} />
         <FormCardYAxis {...props} />
+        <FormCardRange {...props} />
       </Box>
     </Paper>
   );
@@ -90,6 +92,24 @@ function FormCardYAxis({ setAxis, axis }) {
           </MenuItem>
         ))}
       </Select>
+    </FormControl>
+  );
+}
+
+function FormCardRange({ setAxis, axis }) {
+  function handleChange(event) {
+    setAxis((curr) => ({ ...curr, range: event.target.value }));
+  }
+  return (
+    <FormControl
+      fullWidth
+      sx={{ marginTop: 1, marginBottom: 1, paddingLeft: 2, paddingRight: 2 }}
+    >
+      <Slider
+        value={axis.range?.length ? axis.range : [0, 100]}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+      />
     </FormControl>
   );
 }

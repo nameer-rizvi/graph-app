@@ -4,7 +4,13 @@ import { Container, Sidebar2, Main, Charts2 } from "../components";
 function Json() {
   const [data, setData] = useState([]);
 
-  const [axis, setAxis] = useState({ filename: "", x: "", y: [], options: [] });
+  const [axis, setAxis] = useState({
+    filename: "",
+    x: "",
+    y: [],
+    range: [],
+    options: [],
+  });
 
   return (
     <Container>
