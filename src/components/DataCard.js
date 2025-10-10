@@ -5,7 +5,6 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
-import { DataCardTimer } from "./DataCardTimer";
 import Typography from "@mui/material/Typography";
 import simpul from "simpul";
 import ArrowDropUpSharpIcon from "@mui/icons-material/ArrowDropUpSharp";
@@ -26,7 +25,7 @@ export function DataCard() {
         <DataCardPrice data={data.data.last} />
         <DataCardVolume data={data.data.last} />
         <DataCardDate data={data.data.last} />
-        <DataCardTimer data={data} />
+        {/*<DataCardTimer data={data} />*/}
       </Box>
     </Paper>
   );
