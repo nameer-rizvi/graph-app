@@ -48,6 +48,13 @@ const defaultConfigs = [
     title: "Oscillator: SMA Signal (Close)",
     seriesConfigs: [
       [
+        "sma20SignalPriceCloseSma",
+        "SMA(20) SMA",
+        "#b0bec5",
+        [],
+        isTimeframes(sma20Timeframes),
+      ],
+      [
         "sma20SignalPriceClose",
         "SMA(20) Signal",
         "#78909c",
@@ -67,6 +74,13 @@ const defaultConfigs = [
         "#880e4f",
         [],
         isTimeframes(sma20Timeframes),
+      ],
+      [
+        "sma50SignalPriceCloseSma",
+        "SMA(50) SMA",
+        "#b0bec5",
+        [],
+        isTimeframesNot(sma20Timeframes),
       ],
       [
         "sma50SignalPriceClose",
