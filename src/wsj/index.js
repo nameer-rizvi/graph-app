@@ -150,20 +150,8 @@ export async function wsj(_symbol, timeframe) {
   const sma = 5;
   for (let i = 0; i < data.series.length; i++) {
     const period = data.series.slice(i - (sma - 1), i + 1);
-    const sma50SignalPrices = period
-      .map((i) => [
-        i.sma50SignalPriceHigh,
-        i.sma50SignalPriceLow,
-        i.sma50SignalPriceClose,
-      ])
-      .flat();
-    const sma20SignalPrices = period
-      .map((i) => [
-        i.sma20SignalPriceHigh,
-        i.sma20SignalPriceLow,
-        i.sma20SignalPriceClose,
-      ])
-      .flat();
+    const sma50SignalPrices = period.map((i) => i.sma50SignalPriceMean);
+    const sma20SignalPrices = period.map((i) => i.sma20SignalPriceMean);
     const sma50SignalPriceCloseSma = simpul.math.mean(sma50SignalPrices);
     const sma20SignalPriceCloseSma = simpul.math.mean(sma20SignalPrices);
     data.series[i].sma50SignalPriceCloseSma = sma50SignalPriceCloseSma;
