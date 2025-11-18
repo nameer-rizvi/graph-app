@@ -134,7 +134,7 @@ export async function wsj(_symbol, timeframe) {
   data.series = pricehistory(data.series, {
     leverage: +_symbol?.trim().split(" ")[1]?.trim(),
     price: true,
-    volumeFill: true,
+    volumeFill: false,
     vwap: true,
     sma: true,
     trend: true,

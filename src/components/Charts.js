@@ -98,7 +98,7 @@ const defaultConfigs = [
       ],
       [
         "sma50SignalPriceLow",
-        "SMA(50) SignalLow",
+        "SMA(50) Signal Low",
         "#880e4f",
         [],
         isTimeframesNot(sma20Timeframes),
