@@ -62,6 +62,13 @@ export function LinksCard() {
                       href: `https://stocktwits.com/symbol/${data.data.symbol}`,
                     },
                   ]
+                : data.data.isFutures
+                ? [
+                    {
+                      label: "Finviz",
+                      href: `https://finviz.com/futures_charts.ashx?t=${t}&p=${p}`,
+                    },
+                  ]
                 : [
                     {
                       label: "Finviz",
@@ -108,15 +115,20 @@ function LinksCardLinks({ links = [] }) {
 }
 
 function getFinvizT(data = {}) {
-  return data.data.symbol?.replace(".", "-");
+  if (data.data.future) {
+    return data.data.future.finviz;
+  } else {
+    return data.data.symbol?.replace(".", "-");
+  }
 }
 
 function getFinvizP(data = {}) {
-  if (data.data.step === "PT5M" && data.data.isCurrency) {
+  const isShortTimeframe = data.data.isCurrency || data.data.isFutures;
+  if (data.data.step === "PT5M" && isShortTimeframe) {
     return "i5";
-  } else if (data.data.step === "PT15M" && data.data.isCurrency) {
+  } else if (data.data.step === "PT15M" && isShortTimeframe) {
     return "i15";
-  } else if (data.data.step === "PT30M" && data.data.isCurrency) {
+  } else if (data.data.step === "PT30M" && isShortTimeframe) {
     return "i30";
   } else if (data.data.step === "P1D") {
     return "d";

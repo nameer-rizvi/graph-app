@@ -1,0 +1,302 @@
+[
+  {
+    "type": "index",
+    "code": "dow",
+    "finviz": "YM",
+    "wsj": "YM"
+  },
+  {
+    "type": "index",
+    "code": "spy",
+    "finviz": "ES",
+    "wsj": "ES"
+  },
+  {
+    "type": "index",
+    "code": "nasdaq",
+    "finviz": "NQ",
+    "wsj": "NQ"
+  },
+  {
+    "type": "index",
+    "code": "russell",
+    "finviz": "ER2",
+    "wsj": ""
+  },
+  {
+    "type": "index",
+    "code": "nikkei",
+    "finviz": "NKD",
+    "wsj": "NIY"
+  },
+  {
+    "type": "index",
+    "code": "euro",
+    "finviz": "EX",
+    "wsj": "FESX"
+  },
+  {
+    "type": "index",
+    "code": "dax",
+    "finviz": "DY",
+    "wsj": "DAX"
+  },
+  {
+    "type": "index",
+    "code": "vix",
+    "finviz": "VX",
+    "wsj": "VX"
+  },
+  {
+    "type": "energy",
+    "code": "crude-wti",
+    "finviz": "CL",
+    "wsj": "CL"
+  },
+  {
+    "type": "energy",
+    "code": "crude-brent",
+    "finviz": "QA",
+    "wsj": "BRN"
+  },
+  {
+    "type": "energy",
+    "code": "gas",
+    "finviz": "RB",
+    "wsj": "RB"
+  },
+  {
+    "type": "energy",
+    "code": "heat",
+    "finviz": "HO",
+    "wsj": "HO"
+  },
+  {
+    "type": "energy",
+    "code": "natural",
+    "finviz": "NG",
+    "wsj": "NG"
+  },
+  {
+    "type": "energy",
+    "code": "ethanol",
+    "finviz": "ZK",
+    "wsj": "ETHANOL"
+  },
+  {
+    "type": "bond",
+    "code": "30y",
+    "finviz": "ZB",
+    "wsj": "US"
+  },
+  {
+    "type": "bond",
+    "code": "10y",
+    "finviz": "ZN",
+    "wsj": "TMUBMUSD10Y"
+  },
+  {
+    "type": "bond",
+    "code": "5y",
+    "finviz": "ZF",
+    "wsj": "TMUBMUSD05Y"
+  },
+  {
+    "type": "bond",
+    "code": "2y",
+    "finviz": "ZT",
+    "wsj": "TMUBMUSD02Y"
+  },
+  {
+    "type": "soft",
+    "code": "cocoa",
+    "finviz": "CC",
+    "wsj": "CC"
+  },
+  {
+    "type": "soft",
+    "code": "cotton",
+    "finviz": "CT",
+    "wsj": "CT"
+  },
+  {
+    "type": "soft",
+    "code": "orange",
+    "finviz": "JO",
+    "wsj": "OJ"
+  },
+  {
+    "type": "soft",
+    "code": "coffee",
+    "finviz": "KC",
+    "wsj": "KC"
+  },
+  {
+    "type": "soft",
+    "code": "lumber",
+    "finviz": "LB",
+    "wsj": "LB"
+  },
+  {
+    "type": "soft",
+    "code": "sugar",
+    "finviz": "SB",
+    "wsj": "SB"
+  },
+  {
+    "type": "metal",
+    "code": "gold",
+    "finviz": "GC",
+    "wsj": "GC"
+  },
+  {
+    "type": "metal",
+    "code": "silver",
+    "finviz": "SI",
+    "wsj": "SI"
+  },
+  {
+    "type": "metal",
+    "code": "platinum",
+    "finviz": "PL",
+    "wsj": "PL"
+  },
+  {
+    "type": "metal",
+    "code": "copper",
+    "finviz": "HG",
+    "wsj": "HG"
+  },
+  {
+    "type": "metal",
+    "code": "palladium",
+    "finviz": "PA",
+    "wsj": "PA"
+  },
+  {
+    "type": "meat",
+    "code": "cattle",
+    "finviz": "LC",
+    "wsj": "LC"
+  },
+  {
+    "type": "meat",
+    "code": "feeder",
+    "finviz": "FC",
+    "wsj": "FC"
+  },
+  {
+    "type": "meat",
+    "code": "hog",
+    "finviz": "LH",
+    "wsj": "LH"
+  },
+  {
+    "type": "grain",
+    "code": "corn",
+    "finviz": "ZC",
+    "wsj": "C"
+  },
+  {
+    "type": "grain",
+    "code": "soy-oil",
+    "finviz": "ZL",
+    "wsj": "BO"
+  },
+  {
+    "type": "grain",
+    "code": "soy-meal",
+    "finviz": "ZM",
+    "wsj": "SM"
+  },
+  {
+    "type": "grain",
+    "code": "oat",
+    "finviz": "ZO",
+    "wsj": "O"
+  },
+  {
+    "type": "grain",
+    "code": "rice",
+    "finviz": "ZR",
+    "wsj": "RR"
+  },
+  {
+    "type": "grain",
+    "code": "soybean",
+    "finviz": "ZS",
+    "wsj": "S"
+  },
+  {
+    "type": "grain",
+    "code": "wheat",
+    "finviz": "ZW",
+    "wsj": "W"
+  },
+  {
+    "type": "grain",
+    "code": "canola",
+    "finviz": "RS",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "usd",
+    "finviz": "DX",
+    "wsj": "DX"
+  },
+  {
+    "type": "currency",
+    "code": "eur",
+    "finviz": "6E",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "jpy",
+    "finviz": "6J",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "gbp",
+    "finviz": "6B",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "cad",
+    "finviz": "6C",
+    "wsj": "CD"
+  },
+  {
+    "type": "currency",
+    "code": "chf",
+    "finviz": "6S",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "aud",
+    "finviz": "6A",
+    "wsj": "AD"
+  },
+  {
+    "type": "currency",
+    "code": "nzd",
+    "finviz": "6N",
+    "wsj": ""
+  },
+  {
+    "type": "currency",
+    "code": "bitcoin",
+    "finviz": "BTC",
+    "wsj": "BTC"
+  },
+  {
+    "type": "currency",
+    "code": "btc",
+    "finviz": "BTC",
+    "wsj": "BTC"
+  }
+]

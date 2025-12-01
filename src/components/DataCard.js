@@ -3,6 +3,7 @@ import { DataContext } from "../contexts";
 import { Paper } from "./Paper";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import FactoryIcon from "@mui/icons-material/Factory";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -31,11 +32,13 @@ export function DataCard() {
   );
 }
 
-function DataCardIcon({ isCrypto, isCurrency }) {
+function DataCardIcon({ isCrypto, isCurrency, isFutures }) {
   if (isCrypto) {
     return <CurrencyBitcoinIcon sx={{ marginTop: 0.5 }} />;
   } else if (isCurrency) {
     return <AttachMoneyIcon sx={{ marginTop: 0.5 }} />;
+  } else if (isFutures) {
+    return <FactoryIcon sx={{ marginTop: 0.5 }} />;
   } else {
     return <BusinessIcon sx={{ marginTop: 0.5 }} />;
   }

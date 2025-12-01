@@ -1,5 +1,6 @@
 import * as utils from "../utils";
 import { autocomplete, replaceSeriesKey } from "./autocomplete";
+import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 import simpul from "simpul";
@@ -117,7 +118,12 @@ export async function wsj(_symbol, timeframe) {
     isCurrency:
       json.Series[0].InstrumentType.toLowerCase().includes("currency"),
     isCrypto: json.Series[0].InstrumentType.toLowerCase() === "cryptocurrency",
+    isFutures: json.Series[0].InstrumentType.toLowerCase() === "future",
   };
+
+  if (data.isFutures) {
+    data.future = futures.find((f) => f.wsj === symbol.replace("00", ""));
+  }
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
     const candle = {};
@@ -147,7 +153,7 @@ export async function wsj(_symbol, timeframe) {
     signalize: true,
   });
 
-  const sma = 5;
+  const sma = 10;
   for (let i = 0; i < data.series.length; i++) {
     const period = data.series.slice(i - (sma - 1), i + 1);
     const sma50SignalPrices = period.map((i) => i.sma50SignalPriceMean);

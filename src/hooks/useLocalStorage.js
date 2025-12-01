@@ -27,7 +27,10 @@ export function useLocalStorage(key, defaultValue, option = {}) {
           shallow: true,
         });
       }
-      localStorage.setItem(key, JSON.stringify(newValue));
+      const newValueString = JSON.stringify(newValue);
+      if (newValueString.length + key.length < 4718592) {
+        localStorage.setItem(key, newValueString);
+      }
     }
     setValue(newValue);
   }
