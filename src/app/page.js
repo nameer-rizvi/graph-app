@@ -1,7 +1,11 @@
+import { Typography } from "@mui/material";
+
 export default function Home() {
   return (
-    <div>
-      <main>HOME</main>
-    </div>
+    <main>
+      <Typography variant="h4">
+        If this is white and Roboto → it works.
+      </Typography>
+    </main>
   );
 }

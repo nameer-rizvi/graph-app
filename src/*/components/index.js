@@ -3,7 +3,6 @@ export * from "./Charts";
 export * from "./Charts2";
 export * from "./Container";
 export * from "./FixedHeader";
-export * from "./HTMLHead";
 export * from "./Main";
 export * from "./Sidebar";
 export * from "./Sidebar2";
