@@ -4,7 +4,10 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "../styles/theme";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Header } from "../components";
 import { Analytics } from "@vercel/analytics/next";
+
+const APP_NAME = "Graph App";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -14,7 +17,7 @@ const roboto = Roboto({
 });
 
 export const metadata = {
-  title: "Graph App",
+  title: APP_NAME,
   description: "Data visualizer for stocks.",
   icons: { icon: "/favicon.ico" },
 };
@@ -30,7 +33,10 @@ export default function RootLayout({ children }) {
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
-            <CssBaseline>{children}</CssBaseline>
+            <CssBaseline>
+              <Header APP_NAME={APP_NAME} />
+              {children}
+            </CssBaseline>
           </ThemeProvider>
         </AppRouterCacheProvider>
         <Analytics />
