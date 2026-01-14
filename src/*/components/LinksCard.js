@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import { Paper } from "./Paper";
 import LinkIcon from "@mui/icons-material/Link";
 import Box from "@mui/material/Box";

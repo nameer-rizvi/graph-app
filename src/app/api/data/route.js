@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { wsj } from "../../../wsj";
 
-export async function GET(request, ctx) {
+export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
 

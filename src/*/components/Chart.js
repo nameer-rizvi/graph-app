@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { useContext, useMemo } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import simpul from "simpul";
 import Box from "@mui/material/Box";
 import CheckIcon from "@mui/icons-material/Check";

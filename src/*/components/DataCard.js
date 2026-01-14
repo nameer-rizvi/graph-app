@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import { Paper } from "./Paper";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";

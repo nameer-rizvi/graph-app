@@ -20,15 +20,15 @@ export function useDataStore(key, defaultValue, option = {}) {
   const router = useRouter();
 
   function update(newValue) {
-    if (simpul.isEnvWindowProperty("location")) {
-      if (option.isParam === true) {
-        params.set(key, newValue);
+    if (simpul.isEnvWindowProperty("location") && option.isParam === true) {
+      params.set(key, newValue);
 
-        const href = [window.location.pathname, params].join("?");
+      const href = [window.location.pathname, params].join("?");
 
-        router.push(href, undefined, { shallow: true });
-      }
+      router.push(href, undefined, { shallow: true });
+    }
 
+    if (simpul.isEnvWindowProperty("localStorage")) {
       try {
         localStorage.setItem(key, JSON.stringify(newValue));
       } catch (e) {

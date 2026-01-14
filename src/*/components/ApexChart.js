@@ -1,6 +1,6 @@
 "use client";
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import simpul from "simpul";
 import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
