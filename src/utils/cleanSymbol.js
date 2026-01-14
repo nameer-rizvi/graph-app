@@ -2,39 +2,36 @@ import simpul from "simpul";
 import futures from "../wsj/futures.json";
 
 export function cleanSymbol(dirty) {
-  if (!simpul.isStringValid(dirty)) throw new Error("Symbol is required");
+  if (!simpul.isStringNonEmpty(dirty)) return;
 
-  const clean = simpul
-    .trim(dirty, " ")
-    .split(" ")[0]
-    .toUpperCase()
-    .replace("-", ".")
-    .replace(".X", "USD");
+  const clean = simpul.trim(dirty, " ").split(" ")[0].toUpperCase();
 
   const cryptocurrencies = [
+    "ADA",
+    "BCH",
+    "BONK",
     "BTC",
+    "DAI",
+    "DOGE",
+    "DOT",
     "ETH",
+    "LINK",
+    "ONDO",
+    "SHIB",
+    "SOL",
+    "SUI",
+    "TRUMP",
+    "TRX",
+    "USDC",
     "USDT",
     "XRP",
-    "SOL",
-    "USDC",
-    "DOGE",
-    "ADA",
-    "TRX",
-    "SUI",
-    "LINK",
-    "SHIB",
-    "BCH",
-    "DOT",
-    "DAI",
-    "ONDO",
-    "TRUMP",
   ];
 
   if (cryptocurrencies.includes(clean)) return `${clean}USD`;
 
   if (clean.startsWith("/")) {
     const future = futures.find((f) => f.code === clean.slice(1).toLowerCase());
+
     if (future?.wsj) {
       return future.wsj + "00";
     } else {

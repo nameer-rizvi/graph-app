@@ -78,12 +78,11 @@ function SearchStatus({ data = {} }) {
     lineHeight: 1.25,
   };
 
-  const label =
-    data.pending === true
-      ? "Loading..."
-      : data.error?.response
-      ? data.error.response.substring(data.error.response.indexOf(":") + 1)
-      : "";
+  const label = data.pending
+    ? "Loading..."
+    : data.error?.response
+    ? data.error.response.substring(data.error.response.indexOf(":") + 1)
+    : "";
 
   return (
     <Box height="24px" my={1}>

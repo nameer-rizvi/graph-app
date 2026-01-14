@@ -9,18 +9,20 @@ export function useDataStore(key, defaultValue, option = {}) {
     params = new URLSearchParams(window.location.search);
 
     paramsValue = params.get(key);
+  }
 
+  if (simpul.isEnvWindowProperty("localStorage")) {
     localStoreValue = JSON.parse(localStorage.getItem(key));
   }
 
   const initialValue = paramsValue || localStoreValue || defaultValue;
 
-  const [value, setValue] = useState(initialValue);
-
   const router = useRouter();
 
+  const [value, setValue] = useState(initialValue);
+
   function update(newValue) {
-    if (simpul.isEnvWindowProperty("location") && option.isParam === true) {
+    if (option.isParam === true) {
       params.set(key, newValue);
 
       const href = [window.location.pathname, params].join("?");
@@ -28,13 +30,11 @@ export function useDataStore(key, defaultValue, option = {}) {
       router.push(href, undefined, { shallow: true });
     }
 
-    if (simpul.isEnvWindowProperty("localStorage")) {
-      try {
-        localStorage.setItem(key, JSON.stringify(newValue));
-      } catch (e) {
-        console.error(e);
-        localStorage.removeItem(key); // Reset state so stale data doesn't resurface.
-      }
+    try {
+      localStorage.setItem(key, JSON.stringify(newValue));
+    } catch (e) {
+      console.error(e);
+      localStorage.removeItem(key); // Reset state so stale data doesn't resurface.
     }
 
     setValue(newValue);

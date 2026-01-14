@@ -1,7 +1,7 @@
 import simpul from "simpul";
 
 export function changeFavicon(newFavicon) {
-  if (simpul.support.document) {
+  if (simpul.isEnvDocument) {
     let link = document.querySelector('link[rel="icon"]');
 
     if (!link) {
