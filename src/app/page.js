@@ -1,11 +1,5 @@
-import { Typography } from "@mui/material";
+import { DataProvider } from "../providers";
 
 export default function Home() {
-  return (
-    <main>
-      <Typography variant="h4">
-        If this is white and Roboto → it works.
-      </Typography>
-    </main>
-  );
+  return <DataProvider>HOME COMPONENT</DataProvider>;
 }
