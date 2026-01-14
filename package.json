@@ -6,28 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@fontsource/roboto": "^5.0.12",
-    "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.15",
-    "@mui/x-charts": "^7.3.0",
-    "@vercel/analytics": "^1.2.2",
-    "apexcharts": "^4.3.0",
-    "async-fetch": "^0.3.7",
-    "next": "^15.0.0",
-    "next-transpile-modules": "^10.0.1",
-    "pricehistory": "^0.0.6",
-    "react": "^18",
-    "react-apexcharts": "^1.7.0",
-    "react-dom": "^18",
-    "simpul": "^1.2.6"
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "devDependencies": {
-    "eslint": "^8",
-    "eslint-config-next": "14.2.2"
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.1"
   }
 }
