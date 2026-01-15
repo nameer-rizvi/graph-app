@@ -159,7 +159,10 @@ function DataCardVolume({ data = {} }) {
 
 function DataCardDate({ data = {} }) {
   if (!data.dateString) return;
-  const label = `Last updated ${data.dateString}.`;
+  const updatedAt = new Date(data.dateString)
+    .toLocaleString()
+    .replace(":00 ", " ");
+  const label = `Last updated ${updatedAt}.`;
   return (
     <Typography
       display="block"

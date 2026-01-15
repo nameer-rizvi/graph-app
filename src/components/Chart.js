@@ -17,13 +17,13 @@ export function Chart({ seriesConfigs, show, toggleShow, title, ...rest }) {
   configs.reverse();
 
   const chart = useMemo(() => {
-    let dataset = [];
+    const dataset = [];
     let min, max;
     let index = 0;
-    for (let tick of data.data?.series || []) {
-      let point = { index: index++ };
-      for (let config of configs) {
-        let v = tick[config[0]];
+    for (const tick of data.data?.series || []) {
+      const point = { index: index++ };
+      for (const config of configs) {
+        const v = tick[config[0]];
         if (simpul.isNumber(v)) {
           if (min === undefined || v < min) min = v;
           if (max === undefined || v > max) max = v;
@@ -40,24 +40,21 @@ export function Chart({ seriesConfigs, show, toggleShow, title, ...rest }) {
 
   if (!data.isReady || !chart.dataset.length) return;
 
-  const xAxis =
-    data.timeframe.value === "week" || data.timeframe.value === "week2"
-      ? {
-          dataKey: "index",
-          scaleType: "linear",
-          valueFormatter: (v) => {
-            let d = new Date(chart.dataset[v]?.datetime);
-            return simpul.dateString(d, "MM/DD, hh:mm A");
-          },
-        }
-      : {
-          dataKey: "datetime",
-          scaleType: "time",
-          valueFormatter: (v) =>
-            data.timeframe.value === "day"
-              ? simpul.dateString(v, "hh:mm A")
-              : new Date(v).toLocaleDateString(),
-        };
+  const xAxis = data.timeframe.value.startsWith("week")
+    ? {
+        dataKey: "index",
+        scaleType: "linear",
+        valueFormatter: (v) =>
+          simpul.dateString(chart.dataset[v]?.datetime, "MM/DD, hh:mm A"),
+      }
+    : {
+        dataKey: "datetime",
+        scaleType: "time",
+        valueFormatter: (v) =>
+          data.timeframe.value === "day"
+            ? simpul.dateString(v, "hh:mm A")
+            : new Date(v).toLocaleDateString(),
+      };
 
   return (
     <Box mt={7} mb={4} sx={{ height: show ? 180 : 0 }}>

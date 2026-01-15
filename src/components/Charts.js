@@ -2,16 +2,6 @@ import { useDataStore } from "../hooks";
 import { useState } from "react";
 import { Chart } from "./Chart";
 
-const sma20Timeframes = ["year10", "year20", "year50"];
-
-function isTimeframes(timeframes) {
-  return (data) => timeframes.includes(data?.timeframe?.value);
-}
-
-function isTimeframesNot(timeframes) {
-  return (data) => !timeframes.includes(data?.timeframe?.value);
-}
-
 function initialize(configs = []) {
   return configs.map((c) => {
     const defaultConfig = defaultConfigs.find((d) => c.title === d.title);

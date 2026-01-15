@@ -174,7 +174,7 @@ export async function wsj(_symbol, timeframe) {
 
   data.last = data.series[data.series.length - 1];
 
-  correctChartDatetimeEnd(data);
+  if (timeframe === "day") correctChartDatetimeEnd(data);
 
   return data;
 }
