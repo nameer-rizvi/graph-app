@@ -17,10 +17,12 @@
     "@mui/material-nextjs": "^7.3.7",
     "@mui/x-charts": "^8.25.0",
     "@vercel/analytics": "^1.6.1",
+    "apexcharts": "^5.3.6",
     "async-fetch": "^0.3.8",
     "next": "16.1.1",
     "pricehistory": "^0.0.8",
     "react": "19.2.3",
+    "react-apexcharts": "^1.9.0",
     "react-dom": "19.2.3",
     "simpul": "^1.2.7"
   },
