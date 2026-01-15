@@ -1,4 +1,6 @@
+"use client";
 import { useState } from "react";
+import { DataProvider } from "../providers";
 import {
   Container,
   Sidebar,
@@ -10,19 +12,18 @@ import {
   ViewToggle,
 } from "../components";
 
-function Home() {
+export default function Home() {
   const [view, setView] = useState(true);
-
   return (
     <Container>
-      <Sidebar />
-      <FixedHeader>
-        <TimeframeSelect />
-      </FixedHeader>
-      <Main>{view ? <Charts /> : <ApexChart />}</Main>
+      <DataProvider>
+        <Sidebar />
+        <FixedHeader>
+          <TimeframeSelect />
+        </FixedHeader>
+        <Main>{view ? <Charts /> : <ApexChart />}</Main>
+      </DataProvider>
       <ViewToggle onClick={() => setView(!view)} />
     </Container>
   );
 }
-
-export default Home;

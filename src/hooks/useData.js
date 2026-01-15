@@ -1,30 +1,37 @@
-import { useCSR } from "./useCSR";
-import { useLocalStorage } from "./useLocalStorage";
+import simpul from "simpul";
+import { useIsMounted } from "./useIsMounted";
+import { useDataStore } from "./useDataStore";
 import useAsyncFetch from "async-fetch";
 import { useEffect } from "react";
-import simpul from "simpul";
 import { changeFavicon } from "../utils";
 
 export function useData() {
-  const csr = useCSR();
+  const isMounted = useIsMounted();
 
-  const symbol = useLocalStorage("symbol", "", { isParam: true });
+  const symbol = useDataStore("symbol", "", { isParam: true });
 
-  const timeframe = useLocalStorage("timeframe", "day", { isParam: true });
+  const timeframe = useDataStore("timeframe", "year", { isParam: true });
 
-  const data = useLocalStorage("data", {});
+  const data = useDataStore("data", {});
 
   const request = useAsyncFetch("/api/data", {
-    params: { symbol: symbol.value, timeframe: timeframe.value },
-    deps: [symbol.value, timeframe.value],
-    ignoreRequest: !symbol.value?.length,
+    query: { symbol: symbol.value, timeframe: timeframe.value },
+    ignoreRequest: !simpul.isStringNonEmpty(symbol.value),
     onSuccess: data.update,
     ignoreCleanup: true,
+    auto: false,
   });
+
+  const isReady =
+    isMounted && simpul.isStringNonEmpty((request.data || data.value)?.symbol);
+
+  useEffect(() => {
+    request.sendRequest();
+  }, [symbol.value, timeframe.value]);
 
   useEffect(() => {
     const symbolTitle = data.value?.symbol?.toUpperCase();
-    const priceClose = simpul.numberstring(data.value?.last?.priceClose, ["$"]);
+    const priceClose = simpul.numberString(data.value?.last?.priceClose, ["$"]);
     if (symbolTitle && priceClose) {
       document.title = [symbolTitle, priceClose].join(" - ");
     } else if (symbolTitle) {
@@ -43,7 +50,7 @@ export function useData() {
   }, [data.value?.last?.priceChangeCumulative]);
 
   return {
-    ...csr,
+    isReady,
     symbol,
     timeframe,
     ...request,

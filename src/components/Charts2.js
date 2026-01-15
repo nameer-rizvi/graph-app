@@ -1,14 +1,7 @@
-import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import { isNumber, isDate, capitalize } from "simpul";
+import { isNumber, isDate, capitalize, numberString } from "simpul";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import simpul from "simpul";
-
-const LineChart = dynamic(
-  () => import("@mui/x-charts/LineChart").then((mod) => mod.LineChart),
-  { ssr: false },
-);
+import { LineChart } from "@mui/x-charts/LineChart";
 
 const DATA_LIMIT = 500;
 
@@ -19,14 +12,12 @@ export function Charts2({ data, axis }) {
 
   return (
     <Box mt={2} mb={4} sx={{ height: 500 }}>
-      <ChartTitle axis={axis} />
       <LineChart
         axisHighlight={{ x: "line", y: "line" }}
-        xAxis={[getXAxis(axis, dataset)]}
+        xAxis={[getXAxis(axis)]}
         series={getSeries(axis)}
-        margin={{ top: 10, bottom: 50, left: 75 }}
-        legend={{ hidden: true }}
         dataset={dataset}
+        margin={{ bottom: 0, left: 0, right: 0 }}
       />
     </Box>
   );
@@ -75,19 +66,7 @@ function parsePoints(data = [], axis) {
   return arr;
 }
 
-function ChartTitle({ axis }) {
-  const strings = [];
-  if (axis.x) strings.push(`X: ${axis.x}`);
-  if (axis.y.length) strings.push(`Y: ${axis.y.join(", ")}`);
-  return (
-    <Typography variant="overline" display="block" gutterBottom>
-      {strings.join(", ")}
-    </Typography>
-  );
-}
-
-function getXAxis(axis, dataset) {
-  const point = dataset.find((i) => i[axis.x]);
+function getXAxis(axis) {
   const isDatetime = axis.x.includes("date") || axis.x.includes("time");
   return {
     dataKey: axis.x,
@@ -103,7 +82,7 @@ function getSeries(axis) {
     showMark: false,
     dataKey: y,
     label: capitalize(y),
-    valueFormatter: (v) => simpul.numberstring(v),
+    valueFormatter: (v) => numberString(v, []),
     highlightScope: {
       highlighted: "series",
       faded: "global",

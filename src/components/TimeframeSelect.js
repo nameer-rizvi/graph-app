@@ -1,5 +1,6 @@
+"use client";
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -8,6 +9,8 @@ import Radio from "@mui/material/Radio";
 
 export function TimeframeSelect() {
   const data = useContext(DataContext);
+
+  if (!data.isReady) return;
 
   function updateTimeframe(e) {
     data.timeframe.update(e.target.value);
@@ -24,30 +27,29 @@ export function TimeframeSelect() {
     { label: "Year [50]", value: "year50" },
   ];
 
-  if (data.render && data.data?.symbol)
-    return (
-      <FormControl sx={{ flexDirection: "row", alignItems: "center" }}>
-        <FormLabel id="radio-buttons-group-label" sx={{ marginRight: 3 }}>
-          Timeframe
-        </FormLabel>
-        <RadioGroup
-          row
-          aria-labelledby="radio-buttons-group-label"
-          name="row-radio-buttons-group"
-          onChange={updateTimeframe}
-          value={data.timeframe.value || data.timeframe.defaultValue}
-          sx={{ flexWrap: "unset", overflowX: "scroll" }}
-        >
-          {timeframes.map((t) => (
-            <FormControlLabel
-              key={t.value}
-              value={t.value}
-              label={t.label}
-              control={<Radio />}
-              sx={{ minWidth: "max-content" }}
-            />
-          ))}
-        </RadioGroup>
-      </FormControl>
-    );
+  return (
+    <FormControl sx={{ flexDirection: "row", alignItems: "center" }}>
+      <FormLabel id="radio-buttons-group-label" sx={{ marginRight: 3 }}>
+        Timeframe
+      </FormLabel>
+      <RadioGroup
+        row
+        aria-labelledby="radio-buttons-group-label"
+        name="row-radio-buttons-group"
+        onChange={updateTimeframe}
+        value={data.timeframe.value || data.timeframe.defaultValue}
+        sx={{ flexWrap: "unset", overflowX: "scroll" }}
+      >
+        {timeframes.map((t) => (
+          <FormControlLabel
+            key={t.value}
+            value={t.value}
+            label={t.label}
+            control={<Radio />}
+            sx={{ minWidth: "max-content" }}
+          />
+        ))}
+      </RadioGroup>
+    </FormControl>
+  );
 }

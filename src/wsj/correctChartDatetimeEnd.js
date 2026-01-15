@@ -1,7 +1,7 @@
 export function correctChartDatetimeEnd(data) {
   const curr = EST(new Date());
 
-  const last = EST(data.last.dateObject);
+  const last = EST(data.last.date);
 
   const isDate = curr.getDate() === last.getDate();
 
@@ -12,7 +12,7 @@ export function correctChartDatetimeEnd(data) {
 
     const date = new Date(`${last.toDateString()} ${time} EST`);
 
-    data.series.push({ dateObject: date });
+    data.series.push({ date });
   }
 }
 

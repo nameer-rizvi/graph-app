@@ -1,5 +1,6 @@
+"use client";
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import { Paper } from "./Paper";
 import LinkIcon from "@mui/icons-material/Link";
 import Box from "@mui/material/Box";
@@ -10,89 +11,89 @@ import Link from "@mui/material/Link";
 export function LinksCard() {
   const data = useContext(DataContext);
 
-  const symbol = data.data?.symbol;
+  if (!data.isReady) return;
 
-  const t = getFinvizT(data);
+  const symbol = data.data.symbol || "";
+
+  const t = getFinvizT(data, symbol);
 
   const p = getFinvizP(data);
 
-  const c = getCryptoSymbol(data);
+  const c = symbol.replace("USD", "");
 
   const n = getCryptoName(data);
 
-  if (data.render && symbol) {
-    return (
-      <Paper>
-        <LinkIcon sx={{ marginTop: 0.5 }} />
-        <Box ml={2}>
-          <LinksCardTitle title="Quick Links" />
-          <LinksCardLinks
-            links={
-              data.data.isCrypto
-                ? [
-                    {
-                      label: "Finviz",
-                      href: `https://finviz.com/crypto_charts.ashx?t=${t}&p=${p}`,
-                    },
-                    {
-                      label: "Robinhood",
-                      href: `https://robinhood.com/crypto/${c}`,
-                    },
-                    {
-                      label: "Coinbase",
-                      href: `https://www.coinbase.com/price/${n}`,
-                    },
-                    {
-                      label: "Stocktwits",
-                      href: `https://stocktwits.com/symbol/${c}.X`,
-                    },
-                    {
-                      label: "Reddit",
-                      href: `https://www.reddit.com/r/${n}`,
-                    },
-                  ]
-                : data.data.isCurrency
-                ? [
-                    {
-                      label: "Finviz",
-                      href: `https://finviz.com/forex_charts.ashx?t=${t}&p=${p}`,
-                    },
-                    {
-                      label: "Stocktwits",
-                      href: `https://stocktwits.com/symbol/${data.data.symbol}`,
-                    },
-                  ]
-                : data.data.isFutures
-                ? [
-                    {
-                      label: "Finviz",
-                      href: `https://finviz.com/futures_charts.ashx?t=${t}&p=${p}`,
-                    },
-                  ]
-                : [
-                    {
-                      label: "Finviz",
-                      href: `https://finviz.com/quote.ashx?t=${t}&p=${p}`,
-                    },
-                    {
-                      label: "IBorrowDesk",
-                      href: `https://iborrowdesk.com/report/${symbol}`,
-                    },
-                    {
-                      label: "Robinhood",
-                      href: `https://robinhood.com/stocks/${symbol}`,
-                    },
-                    {
-                      label: "Stocktwits",
-                      href: `https://stocktwits.com/symbol/${symbol}`,
-                    },
-                  ]
-            }
-          />
-        </Box>
-      </Paper>
-    );
-  }
+  return (
+    <Paper>
+      <LinkIcon sx={{ marginTop: 0.5 }} />
+      <Box ml={2}>
+        <LinksCardTitle title="Quick Links" />
+        <LinksCardLinks
+          links={
+            data.data.isCrypto
+              ? [
+                  {
+                    label: "Finviz",
+                    href: `https://finviz.com/crypto_charts.ashx?t=${t}&p=${p}`,
+                  },
+                  {
+                    label: "Robinhood",
+                    href: `https://robinhood.com/crypto/${c}`,
+                  },
+                  {
+                    label: "Coinbase",
+                    href: `https://www.coinbase.com/price/${n}`,
+                  },
+                  {
+                    label: "Stocktwits",
+                    href: `https://stocktwits.com/symbol/${c}.X`,
+                  },
+                  {
+                    label: "Reddit",
+                    href: `https://www.reddit.com/r/${n}`,
+                  },
+                ]
+              : data.data.isCurrency
+              ? [
+                  {
+                    label: "Finviz",
+                    href: `https://finviz.com/forex_charts.ashx?t=${t}&p=${p}`,
+                  },
+                  {
+                    label: "Stocktwits",
+                    href: `https://stocktwits.com/symbol/${symbol}`,
+                  },
+                ]
+              : data.data.isFutures
+              ? [
+                  {
+                    label: "Finviz",
+                    href: `https://finviz.com/futures_charts.ashx?t=${t}&p=${p}`,
+                  },
+                ]
+              : [
+                  {
+                    label: "Finviz",
+                    href: `https://finviz.com/quote.ashx?t=${t}&p=${p}`,
+                  },
+                  {
+                    label: "IBorrowDesk",
+                    href: `https://iborrowdesk.com/report/${symbol}`,
+                  },
+                  {
+                    label: "Robinhood",
+                    href: `https://robinhood.com/stocks/${symbol}`,
+                  },
+                  {
+                    label: "Stocktwits",
+                    href: `https://stocktwits.com/symbol/${symbol}`,
+                  },
+                ]
+          }
+        />
+      </Box>
+    </Paper>
+  );
 }
 
 function LinksCardTitle({ title }) {
@@ -114,11 +115,11 @@ function LinksCardLinks({ links = [] }) {
   ));
 }
 
-function getFinvizT(data = {}) {
+function getFinvizT(data = {}, symbol) {
   if (data.data.future) {
     return data.data.future.finviz;
   } else {
-    return data.data.symbol?.replace(".", "-");
+    return symbol.replace(".", "-");
   }
 }
 
@@ -143,10 +144,6 @@ function getFinvizP(data = {}) {
   } else {
     return "d";
   }
-}
-
-function getCryptoSymbol(data = {}) {
-  return data.data.symbol?.replace("USD", "");
 }
 
 function getCryptoName(data = {}) {

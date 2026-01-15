@@ -1,7 +1,10 @@
+"use client";
+import { createContext } from "react";
 import { useData } from "../hooks";
-import { DataContext } from "../contexts";
+
+export const DataContext = createContext({});
 
 export function DataProvider(props) {
   const data = useData();
-  return <DataContext.Provider value={data} {...props} />;
+  return <DataContext.Provider {...props} value={data} />;
 }

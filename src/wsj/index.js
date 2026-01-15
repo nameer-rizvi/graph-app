@@ -1,14 +1,16 @@
 import * as utils from "../utils";
-import { autocomplete, replaceSeriesKey } from "./autocomplete";
+import { autocomplete } from "./autocomplete";
 import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
+import { requiredKeys } from "./requiredKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
-import simpul from "simpul";
 
 const seriesKeyCache = {};
 
 export async function wsj(_symbol, timeframe) {
   const symbol = utils.cleanSymbol(_symbol);
+
+  if (!symbol) throw new Error("Symbol is required");
 
   const urlString = "https://api.wsj.net/api/michelangelo/timeseries/history";
 
@@ -35,7 +37,7 @@ export async function wsj(_symbol, timeframe) {
     year10: "P14D",
     year20: "P1M",
     year50: "P2M",
-  }[timeframe || "day"];
+  }[timeframe || "year"];
 
   const timeframe2 = {
     day: "D1",
@@ -46,7 +48,7 @@ export async function wsj(_symbol, timeframe) {
     year10: "P10Y",
     year20: "P20Y",
     year50: "P50Y",
-  }[timeframe || "day"];
+  }[timeframe || "year"];
 
   url.search = new URLSearchParams({
     ckey: "57494d5ed7",
@@ -89,19 +91,23 @@ export async function wsj(_symbol, timeframe) {
 
   let json = await response.json();
 
-  if (json.error?.startsWith("Unknown instrument")) {
+  if (json.error?.toLowerCase().includes("unknown instrument")) {
     const seriesKey2 = await autocomplete(symbol);
     if (seriesKey2) {
-      replaceSeriesKey(url, seriesKey, seriesKey2);
+      let urlSearchParamJson = url.searchParams.get("json");
+      urlSearchParamJson = urlSearchParamJson.replace(seriesKey, seriesKey2);
+      url.searchParams.set("json", urlSearchParamJson);
       response = await fetch(url, option);
       json = await response.json();
       if (!json.error) seriesKeyCache[symbol] = seriesKey2;
+    } else {
+      throw new Error("Symbol not supported.");
     }
   }
 
   if (json.error) throw new Error(json.error);
 
-  if (!json.Series) return;
+  if (!json.Series) throw new Error("Series does not exist.");
 
   const data = {
     djId: json.Series[0].DjId,
@@ -119,6 +125,8 @@ export async function wsj(_symbol, timeframe) {
       json.Series[0].InstrumentType.toLowerCase().includes("currency"),
     isCrypto: json.Series[0].InstrumentType.toLowerCase() === "cryptocurrency",
     isFutures: json.Series[0].InstrumentType.toLowerCase() === "future",
+    volume: 0,
+    volumeValue: 0,
   };
 
   if (data.isFutures) {
@@ -126,45 +134,49 @@ export async function wsj(_symbol, timeframe) {
   }
 
   for (let i = 0; i < (json.TimeInfo.Ticks || []).length; i++) {
-    const candle = {};
-    const tickIndex = i;
-    candle.datetime = json.TimeInfo.Ticks[tickIndex];
-    candle.open = json.Series[0].DataPoints[i][0];
-    candle.high = json.Series[0].DataPoints[i][1];
-    candle.low = json.Series[0].DataPoints[i][2];
-    candle.close = json.Series[0].DataPoints[i][3];
-    candle.volume = json.Series[1].DataPoints[i][0];
-    data.series.push(candle);
+    data.series.push({
+      datetime: json.TimeInfo.Ticks[i],
+      open: json.Series[0].DataPoints[i][0],
+      high: json.Series[0].DataPoints[i][1],
+      low: json.Series[0].DataPoints[i][2],
+      close: json.Series[0].DataPoints[i][3],
+      volume: json.Series[1].DataPoints[i][0],
+    });
   }
+
+  const isSma20 = ["year10", "year20", "year50"].includes(timeframe);
 
   data.series = pricehistory(data.series, {
-    leverage: +_symbol?.trim().split(" ")[1]?.trim(),
+    leverage: +_symbol?.trim().split(" ")[1]?.trim() || undefined,
+    basePrice: data.basePrice,
     price: true,
-    volumeFill: false,
-    vwap: true,
-    sma: true,
     trend: true,
-    color: true,
-    macd: true,
-    rsi: true,
-    periods: [5, 10, 20, 50],
+    vwap: true,
+    phase: true,
+    pressure: true,
+    normalize: ["volume", "volumeValue", "priceRangeDiff"],
     anchor: [0, 50, 100],
-    normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
-    signalize: true,
+    sma: isSma20 ? [20, 10] : [50, 10],
+    signal: [
+      [
+        isSma20 ? "sma20PriceMean" : "sma50PriceMean",
+        "priceHigh",
+        "priceLow",
+        "priceClose",
+        "priceMean",
+      ],
+    ],
   });
 
-  const sma = 10;
-  for (let i = 0; i < data.series.length; i++) {
-    const period = data.series.slice(i - (sma - 1), i + 1);
-    const sma50SignalPrices = period.map((i) => i.sma50SignalPriceMean);
-    const sma20SignalPrices = period.map((i) => i.sma20SignalPriceMean);
-    const sma50SignalPriceCloseSma = simpul.math.mean(sma50SignalPrices);
-    const sma20SignalPriceCloseSma = simpul.math.mean(sma20SignalPrices);
-    data.series[i].sma50SignalPriceCloseSma = sma50SignalPriceCloseSma;
-    data.series[i].sma20SignalPriceCloseSma = sma20SignalPriceCloseSma;
-  }
+  data.last = { ...data.series[data.series.length - 1] };
 
-  data.last = data.series[data.series.length - 1];
+  for (const candle of data.series) {
+    data.volume += candle.volume || 0;
+    data.volumeValue += candle.volumeValue || 0;
+    for (const key in candle) {
+      if (!requiredKeys.includes(key)) delete candle[key];
+    }
+  }
 
   if (timeframe === "day") correctChartDatetimeEnd(data);
 

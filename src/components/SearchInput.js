@@ -1,5 +1,6 @@
+"use client";
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
 import Box from "@mui/material/Box";
 import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -13,8 +14,6 @@ export function SearchInput() {
   function updateSymbol(e) {
     if (e.key === "Enter") data.symbol.update(e.target.value);
   }
-
-  if (!data.render) return;
 
   return (
     <Box width="100%">
@@ -59,8 +58,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "100%",
   color: "inherit",
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
+    padding: theme.spacing(1, 1, 1, 0), // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -89,7 +87,7 @@ function SearchStatus({ data = {} }) {
   return (
     <Box height="24px" my={1}>
       <Typography variant="caption" sx={sx}>
-        {simpul.capitalize(label)}
+        {simpul.trimBoundary(simpul.capitalize(label))}
       </Typography>
     </Box>
   );

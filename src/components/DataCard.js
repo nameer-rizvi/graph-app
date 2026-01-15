@@ -1,5 +1,7 @@
+"use client";
 import { useContext } from "react";
-import { DataContext } from "../contexts";
+import { DataContext } from "../providers";
+import simpul from "simpul";
 import { Paper } from "./Paper";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -7,7 +9,6 @@ import FactoryIcon from "@mui/icons-material/Factory";
 import BusinessIcon from "@mui/icons-material/Business";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import simpul from "simpul";
 import ArrowDropUpSharpIcon from "@mui/icons-material/ArrowDropUpSharp";
 import ArrowDropDownSharpIcon from "@mui/icons-material/ArrowDropDownSharp";
 import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
@@ -15,7 +16,7 @@ import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
 export function DataCard() {
   const data = useContext(DataContext);
 
-  if (!data.render || !data.data.symbol?.length) return;
+  if (!data.isReady) return;
 
   return (
     <Paper>
@@ -24,9 +25,8 @@ export function DataCard() {
         <DataCardTitle title={data.data.symbol} />
         <DataCardSubtitle subtitle={data.data.name} />
         <DataCardPrice data={data.data.last} />
-        <DataCardVolume data={data.data.last} />
+        <DataCardVolume data={data.data} />
         <DataCardDate data={data.data.last} />
-        {/*<DataCardTimer data={data} />*/}
       </Box>
     </Paper>
   );
@@ -73,9 +73,12 @@ function DataCardSubtitle({ subtitle }) {
 
 function DataCardPrice({ data = {} }) {
   if (!simpul.isNumber(data.priceClose)) return;
-  const price = simpul.numberstring(data.priceClose, ["$"]);
+  const price =
+    data.priceClose >= 1
+      ? simpul.numberString(data.priceClose, ["$"])
+      : "$" + data.priceClose;
   const priceChange = data.priceChangeCumulative
-    ? `(${simpul.numberstring(data.priceChangeCumulative, ["+", "%"])})`
+    ? `(${simpul.numberString(data.priceChangeCumulative, ["+", "%"])})`
     : "";
   let color;
   let Icon;
@@ -110,26 +113,22 @@ const overflow = {
 };
 
 function DataCardVolume({ data = {} }) {
-  if (!simpul.isNumber(data.volumeTotal)) return;
-  const volume = simpul.numberstring(data.volumeTotal);
-  const volumeChange = data.volume
-    ? `(${simpul.numberstring(data.volume, ["+"])})`
+  if (!simpul.isNumber(data.volume) || data.volume === 0) return;
+  const volume = simpul.numberString(data.volume);
+  const volumeChange = data.last.volume
+    ? `(${simpul.numberString(data.last.volume, ["+"])})`
     : "";
-  const volumeValue = data.vwapValue
+  const volumeValue = data.volumeValue
     ? `Notional Value ${
-        simpul.numberstring(data.vwapValue, ["$"]).split(".00")[0]
-      }`
-    : data.volumeValue
-    ? `Notional Value ${
-        simpul.numberstring(data.volumeValue, ["$"]).split(".00")[0]
+        simpul.numberString(data.volumeValue, ["$"]).split(".00")[0]
       }`
     : "";
   let color;
   let Icon;
-  if (data.sma10VolumeTrend?.[0] === 1) {
+  if (data.last.sma10VolumeTrend?.[0] === 1) {
     color = "#00c805";
     Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-  } else if (data.sma10VolumeTrend?.[0] === -1) {
+  } else if (data.last.sma10VolumeTrend?.[0] === -1) {
     color = "#ff5000";
     Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
   } else {
@@ -160,7 +159,8 @@ function DataCardVolume({ data = {} }) {
 
 function DataCardDate({ data = {} }) {
   if (!data.dateString) return;
-  const label = `Last updated ${data.dateString}.`;
+  const updatedAt = new Date(data.date).toLocaleString().replace(":00 ", " ");
+  const label = `Last updated ${updatedAt}.`;
   return (
     <Typography
       display="block"
