@@ -73,7 +73,10 @@ function DataCardSubtitle({ subtitle }) {
 
 function DataCardPrice({ data = {} }) {
   if (!simpul.isNumber(data.priceClose)) return;
-  const price = simpul.numberString(data.priceClose, ["$"]);
+  const price =
+    data.priceClose >= 1
+      ? simpul.numberString(data.priceClose, ["$"])
+      : "$" + data.priceClose;
   const priceChange = data.priceChangeCumulative
     ? `(${simpul.numberString(data.priceChangeCumulative, ["+", "%"])})`
     : "";
@@ -145,7 +148,7 @@ function DataCardVolume({ data = {} }) {
           display="block"
           variant="caption"
           title={volumeValue}
-          sx={{ ...overflow, letterSpacing: 0.7 }}
+          sx={overflow}
         >
           {volumeValue}
         </Typography>
@@ -162,7 +165,7 @@ function DataCardDate({ data = {} }) {
       display="block"
       variant="overline"
       mt={2}
-      sx={{ lineHeight: 1.5, letterSpacing: 1, fontSize: "0.6rem" }}
+      sx={{ lineHeight: 1.5, fontSize: "0.6rem" }}
       title={label}
     >
       {label}

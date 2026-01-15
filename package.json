@@ -15,6 +15,7 @@
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
     "@mui/material-nextjs": "^7.3.7",
+    "@mui/x-charts": "^8.25.0",
     "@vercel/analytics": "^1.6.1",
     "async-fetch": "^0.3.8",
     "next": "16.1.1",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.1.1"
+    "eslint-config-next": "16.1.1",
+    "typescript": "^5.9.3"
   }
 }

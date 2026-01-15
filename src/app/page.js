@@ -7,6 +7,7 @@ import {
   FixedHeader,
   TimeframeSelect,
   Main,
+  Charts,
   ViewToggle,
 } from "../components";
 
@@ -19,7 +20,7 @@ export default function Home() {
         <FixedHeader>
           <TimeframeSelect />
         </FixedHeader>
-        <Main>{view ? "<Charts />" : "<ApexChart />"}</Main>
+        <Main>{view ? <Charts /> : "<ApexChart />"}</Main>
       </DataProvider>
       <ViewToggle onClick={() => setView(!view)} />
     </Container>

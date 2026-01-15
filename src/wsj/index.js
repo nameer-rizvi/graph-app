@@ -2,6 +2,7 @@ import * as utils from "../utils";
 import { autocomplete } from "./autocomplete";
 import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
+import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
 const seriesKeyCache = {};
 
@@ -142,16 +143,28 @@ export async function wsj(_symbol, timeframe) {
     });
   }
 
+  const isSma20 = ["year10", "year20", "year50"].includes(timeframe);
+
   data.series = pricehistory(data.series, {
     leverage: +_symbol?.trim().split(" ")[1]?.trim() || undefined,
     basePrice: data.basePrice,
     price: true,
-    sma: [10],
     trend: true,
-    // vwap: true,
-    // anchor: [0, 50, 100],
-    // normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
-    // signalize: true,
+    vwap: true,
+    phase: true,
+    pressure: true,
+    normalize: ["volume", "volumeValue", "priceRangeDiff"],
+    anchor: [0, 50, 100],
+    sma: isSma20 ? [20, 10] : [50, 10],
+    signal: [
+      [
+        isSma20 ? "sma20PriceMean" : "sma50PriceMean",
+        "priceHigh",
+        "priceLow",
+        "priceClose",
+        "priceMean",
+      ],
+    ],
   });
 
   for (const candle of data.series) {
@@ -160,6 +173,8 @@ export async function wsj(_symbol, timeframe) {
   }
 
   data.last = data.series[data.series.length - 1];
+
+  correctChartDatetimeEnd(data);
 
   return data;
 }
