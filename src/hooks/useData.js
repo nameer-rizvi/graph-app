@@ -21,6 +21,9 @@ export function useData() {
     ignoreCleanup: true,
   });
 
+  const isReady =
+    isMounted && simpul.isStringNonEmpty((request.data || data.value)?.symbol);
+
   useEffect(() => {
     request.sendRequest();
   }, [symbol.value, timeframe.value]);
@@ -46,7 +49,7 @@ export function useData() {
   }, [data.value?.last?.priceChangeCumulative]);
 
   return {
-    isMounted,
+    isReady,
     symbol,
     timeframe,
     ...request,

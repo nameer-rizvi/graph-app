@@ -11,9 +11,9 @@ import Link from "@mui/material/Link";
 export function LinksCard() {
   const data = useContext(DataContext);
 
-  const symbol = data.data?.symbol || "";
+  if (!data.isReady) return;
 
-  if (!data.isMounted || !symbol) return;
+  const symbol = data.data.symbol || "";
 
   const t = getFinvizT(data, symbol);
 

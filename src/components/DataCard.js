@@ -16,7 +16,7 @@ import RemoveSharpIcon from "@mui/icons-material/RemoveSharp";
 export function DataCard() {
   const data = useContext(DataContext);
 
-  if (!data.isMounted || !simpul.isStringNonEmpty(data.data.symbol)) return;
+  if (!data.isReady) return;
 
   return (
     <Paper>
