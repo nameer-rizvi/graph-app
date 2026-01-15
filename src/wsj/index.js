@@ -2,6 +2,7 @@ import * as utils from "../utils";
 import { autocomplete } from "./autocomplete";
 import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
+import { requiredKeys } from "./requiredKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
 const seriesKeyCache = {};
@@ -167,12 +168,15 @@ export async function wsj(_symbol, timeframe) {
     ],
   });
 
+  data.last = { ...data.series[data.series.length - 1] };
+
   for (const candle of data.series) {
     data.volume += candle.volume || 0;
     data.volumeValue += candle.volumeValue || 0;
+    for (const key in candle) {
+      if (!requiredKeys.includes(key)) delete candle[key];
+    }
   }
-
-  data.last = data.series[data.series.length - 1];
 
   if (timeframe === "day") correctChartDatetimeEnd(data);
 

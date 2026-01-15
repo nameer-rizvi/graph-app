@@ -12,7 +12,6 @@ import Slider from "@mui/material/Slider";
 
 export function FormCard(props) {
   if (!props.data.length || !props.axis.options.length) return;
-
   return (
     <Paper>
       <SsidChartIcon sx={{ marginTop: 0.5 }} />
@@ -43,6 +42,7 @@ function FormCardXAxis({ setAxis, axis }) {
       x: event.target.value,
     }));
   }
+  const options = [...new Set(axis.options)].sort();
   return (
     <FormControl fullWidth sx={{ marginTop: 1, marginBottom: 1 }}>
       <InputLabel id="select-x-label">X-Axis</InputLabel>
@@ -53,7 +53,7 @@ function FormCardXAxis({ setAxis, axis }) {
         label="X-Axis"
         onChange={handleChange}
       >
-        {axis.options.map((o) => (
+        {options.sort().map((o) => (
           <MenuItem key={o} value={o}>
             {capitalize(o)}
           </MenuItem>
@@ -71,6 +71,7 @@ function FormCardYAxis({ setAxis, axis }) {
       x: event.target.value.includes(curr.x) ? "" : curr.x,
     }));
   }
+  const options = [...new Set(axis.options)].sort();
   return (
     <FormControl fullWidth sx={{ marginTop: 1, marginBottom: 1 }}>
       <InputLabel id="select-y-label">Y-Axis</InputLabel>
@@ -82,7 +83,7 @@ function FormCardYAxis({ setAxis, axis }) {
         onChange={handleChange}
         input={<OutlinedInput label="Y" />}
       >
-        {axis.options.map((o) => (
+        {options.sort().map((o) => (
           <MenuItem
             key={o}
             value={o}

@@ -36,7 +36,7 @@ export function Chart({ seriesConfigs, show, toggleShow, title, ...rest }) {
     if (simpul.isNumber(rest.min)) min = rest.min;
     if (simpul.isNumber(rest.max)) max = rest.max;
     return { dataset, min, max };
-  }, [configs, data.data?.series]);
+  }, [configs, data.data?.series, rest.min, rest.max]);
 
   if (!data.isReady || !chart.dataset.length) return;
 
@@ -116,7 +116,7 @@ function ChartLineChart({ xAxis, min, max, configs, dataset }) {
         },
       }))}
       dataset={dataset}
-      margin={{ top: 15, bottom: 0, left: 0 }}
+      margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
       // grid={{ vertical: true, horizontal: true }}
     />
   );
