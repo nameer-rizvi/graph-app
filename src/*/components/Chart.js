@@ -1,3 +1,4 @@
+"use client";
 import dynamic from "next/dynamic";
 import { useContext, useMemo } from "react";
 import { DataContext } from "../providers";

@@ -1,3 +1,4 @@
+"use client";
 import { useContext } from "react";
 import { DataContext } from "../providers";
 import FormControl from "@mui/material/FormControl";

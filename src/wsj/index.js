@@ -35,7 +35,7 @@ export async function wsj(_symbol, timeframe) {
     year10: "P14D",
     year20: "P1M",
     year50: "P2M",
-  }[timeframe || "day"];
+  }[timeframe || "year"];
 
   const timeframe2 = {
     day: "D1",
@@ -46,7 +46,7 @@ export async function wsj(_symbol, timeframe) {
     year10: "P10Y",
     year20: "P20Y",
     year50: "P50Y",
-  }[timeframe || "day"];
+  }[timeframe || "year"];
 
   url.search = new URLSearchParams({
     ckey: "57494d5ed7",
@@ -123,6 +123,8 @@ export async function wsj(_symbol, timeframe) {
       json.Series[0].InstrumentType.toLowerCase().includes("currency"),
     isCrypto: json.Series[0].InstrumentType.toLowerCase() === "cryptocurrency",
     isFutures: json.Series[0].InstrumentType.toLowerCase() === "future",
+    volume: 0,
+    volumeValue: 0,
   };
 
   if (data.isFutures) {
@@ -141,11 +143,12 @@ export async function wsj(_symbol, timeframe) {
   }
 
   data.series = pricehistory(data.series, {
-    leverage: +_symbol?.trim().split(" ")[1]?.trim(),
+    leverage: +_symbol?.trim().split(" ")[1]?.trim() || undefined,
+    basePrice: data.basePrice,
     price: true,
+    sma: [10],
+    trend: true,
     // vwap: true,
-    // sma: true,
-    // trend: true,
     // color: true,
     // macd: true,
     // rsi: true,
@@ -154,6 +157,11 @@ export async function wsj(_symbol, timeframe) {
     // normalize: ["volume", "sma1VwapValue", "priceRangeDiff"],
     // signalize: true,
   });
+
+  for (const candle of data.series) {
+    data.volume += candle.volume || 0;
+    data.volumeValue += candle.volumeValue || 0;
+  }
 
   data.last = data.series[data.series.length - 1];
 

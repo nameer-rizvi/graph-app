@@ -1,10 +1,13 @@
 import simpul from "simpul";
+import { useIsMounted } from "./useIsMounted";
 import { useDataStore } from "./useDataStore";
 import useAsyncFetch from "async-fetch";
 import { useEffect } from "react";
 import { changeFavicon } from "../utils";
 
 export function useData() {
+  const isMounted = useIsMounted();
+
   const symbol = useDataStore("symbol", "", { isParam: true });
 
   const timeframe = useDataStore("timeframe", "day", { isParam: true });
@@ -33,7 +36,6 @@ export function useData() {
   }, [data.value?.symbol, data.value?.last?.priceClose]);
 
   useEffect(() => {
-    console.log(data.value?.last);
     if (data.value?.last?.priceChangeCumulative > 0) {
       changeFavicon("favicon_blue_circle");
     } else if (data.value?.last?.priceChangeCumulative < 0) {
@@ -44,6 +46,7 @@ export function useData() {
   }, [data.value?.last?.priceChangeCumulative]);
 
   return {
+    isMounted,
     symbol,
     timeframe,
     ...request,
