@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { DataContext } from "../providers";
 import simpul from "simpul";
 import Box from "@mui/material/Box";
-import Chart from "react-apexcharts";
+import dynamic from "next/dynamic";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export function ApexChart() {
   const data = useContext(DataContext);

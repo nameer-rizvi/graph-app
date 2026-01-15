@@ -19,6 +19,7 @@ export function useData() {
     ignoreRequest: !simpul.isStringNonEmpty(symbol.value),
     onSuccess: data.update,
     ignoreCleanup: true,
+    auto: false,
   });
 
   const isReady =
