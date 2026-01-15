@@ -97,10 +97,11 @@ function ChartLineChart({ xAxis, min, max, configs, dataset }) {
       skipAnimation
       hideLegend
       axisHighlight={{ x: "line", y: "line" }}
-      xAxis={[xAxis]}
-      yAxis={[{ tickNumber: 5, min, max }]}
+      xAxis={[{ tickNumber: 8, ...xAxis }]}
+      yAxis={[{ tickNumber: 4, min, max }]}
       series={configs.map((config) => ({
         showMark: false,
+        connectNulls: true,
         dataKey: config[0],
         label: config[1],
         color: config[2],

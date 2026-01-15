@@ -1,5 +1,6 @@
 export const requiredKeys = [
   "date",
+  "priceOpen",
   "priceClose",
   "priceHigh",
   "priceLow",
