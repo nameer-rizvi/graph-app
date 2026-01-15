@@ -7,7 +7,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 export function RefreshButton() {
   const data = useContext(DataContext);
 
-  if (data.isMounted && data.data.last)
+  if (data.isMounted && data.data.last) {
     return (
       <Button
         variant="outlined"
@@ -18,4 +18,5 @@ export function RefreshButton() {
         Refresh Data
       </Button>
     );
+  }
 }

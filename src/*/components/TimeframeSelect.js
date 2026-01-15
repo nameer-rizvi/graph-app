@@ -25,7 +25,7 @@ export function TimeframeSelect() {
     { label: "Year [50]", value: "year50" },
   ];
 
-  if (data.render && data.data?.symbol)
+  if (data.isMounted && data.data?.symbol)
     return (
       <FormControl sx={{ flexDirection: "row", alignItems: "center" }}>
         <FormLabel id="radio-buttons-group-label" sx={{ marginRight: 3 }}>

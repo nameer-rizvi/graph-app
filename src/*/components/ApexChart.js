@@ -9,7 +9,7 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 export function ApexChart() {
   const data = useContext(DataContext);
 
-  if (!data.render) return;
+  if (!data.isMounted) return;
 
   const filename = `${data.data.timeframe.toUpperCase()}-${data.data.symbol}`;
 

@@ -64,7 +64,7 @@ export function Chart(props) {
               : new Date(v).toLocaleDateString(),
         };
 
-  if (!data.render || !chart.dataset.length) return;
+  if (!data.isMounted || !chart.dataset.length) return;
 
   return (
     <Box mt={6} mb={4} sx={{ height: props.show ? 200 : 0 }}>

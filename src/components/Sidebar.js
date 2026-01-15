@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { SearchInput } from "./SearchInput";
 import { DataCard } from "./DataCard";
 import { LinksCard } from "./LinksCard";
-// import { RefreshButton } from "./RefreshButton";
+import { RefreshButton } from "./RefreshButton";
 
 export function Sidebar() {
   return (
@@ -21,7 +21,9 @@ export function Sidebar() {
       <Toolbar sx={{ mt: 2 }}>
         <LinksCard />
       </Toolbar>
-      <SidebarContainerButton>{/*<RefreshButton />*/}</SidebarContainerButton>
+      <SidebarContainerButton>
+        <RefreshButton />
+      </SidebarContainerButton>
     </SidebarContainer>
   );
 }
