@@ -10,7 +10,7 @@ export function useData() {
 
   const symbol = useDataStore("symbol", "", { isParam: true });
 
-  const timeframe = useDataStore("timeframe", "day", { isParam: true });
+  const timeframe = useDataStore("timeframe", "year", { isParam: true });
 
   const data = useDataStore("data", {});
 

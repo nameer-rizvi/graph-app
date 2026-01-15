@@ -145,7 +145,7 @@ function DataCardVolume({ data = {} }) {
           display="block"
           variant="caption"
           title={volumeValue}
-          sx={overflow}
+          sx={{ ...overflow, letterSpacing: 0.7 }}
         >
           {volumeValue}
         </Typography>
