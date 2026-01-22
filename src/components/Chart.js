@@ -108,7 +108,7 @@ function ChartLineChart({ xAxis, min, max, configs, dataset }) {
         valueFormatter: config[3]
           ? (v) =>
               v < 1 && config[3][0] === "$"
-                ? `$${v}`
+                ? `$${v || " -"}`
                 : simpul.numberString(v, config[3])
           : undefined,
         highlightScope: {

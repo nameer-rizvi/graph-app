@@ -35,7 +35,7 @@ const defaultConfigs = [
   },
   {
     show: true,
-    title: "Oscillator: SMA Signal (Close)",
+    title: "Oscillator: Close, High, Low, Mean",
     seriesConfigs: [
       ["sma10SignalSma20PriceMeanToPriceMean", "SMA(20) SMA", "#b0bec5", []],
       ["signalSma20PriceMeanToPriceClose", "SMA(20) Signal", "#78909c", []],
