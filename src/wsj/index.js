@@ -4,7 +4,6 @@ import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
 import { requiredKeys } from "./requiredKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
-import simpul from "simpul";
 
 const seriesKeyCache = {};
 
