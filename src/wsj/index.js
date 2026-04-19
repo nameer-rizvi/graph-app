@@ -154,6 +154,7 @@ export async function wsj(_symbol, timeframe) {
     vwap: true,
     phase: true,
     pressure: true,
+    color: true,
     normalize: ["volume", "volumeValue", "priceRangeDiff"],
     anchor: [0, 50, 100],
     sma: isSma20 ? [20, 10] : [50, 10],

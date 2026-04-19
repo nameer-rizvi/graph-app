@@ -23,4 +23,6 @@ export const requiredKeys = [
   "phaseAccumulation",
   "pressureSelling",
   "pressureBuying",
+  "sma10ColorGreen",
+  "sma10ColorRed",
 ];

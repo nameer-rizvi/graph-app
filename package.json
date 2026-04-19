@@ -18,7 +18,7 @@
     "@mui/x-charts": "^8.25.0",
     "@vercel/analytics": "^1.6.1",
     "apexcharts": "^5.3.6",
-    "async-fetch": "^0.3.8",
+    "async-fetch": "^0.3.9",
     "next": "16.1.1",
     "pricehistory": "^0.0.8",
     "react": "19.2.3",

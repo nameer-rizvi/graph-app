@@ -1252,10 +1252,10 @@ ast-types-flow@^0.0.8:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.8.tgz#0a85e1c92695769ac13a428bb653e7538bea27d6"
   integrity sha512-OH/2E5Fg20h2aPrbe+QL8JZQFko0YZaF+j4mnQ7BGhfavO7OpSLa8a0y9sBwomHdSbkhTS8TQNayBfnW5DwbvQ==
 
-async-fetch@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.3.8.tgz#1e47f24556f6aeb4597bc5828dc2978de1a92e78"
-  integrity sha512-6PGgxCLNsmazX/9hW9CY7n0MSJrtPKnpmuvfFGnwFE6Ie+pJGrsV/PKBG2+HG0Qjihwil0bRrEBUxFVUuJSpfA==
+async-fetch@^0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/async-fetch/-/async-fetch-0.3.9.tgz#314968b8bb7d572527dbfc4b282091af62b95b66"
+  integrity sha512-+ShDC/5Lz/Cl2+R79OAWm7eAyYz2dC+BwWbTdZ8OD9gXySmhF6dF90L+eMraQI2kEx0JKi1fZzYAsZM90E/KcQ==
 
 available-typed-arrays@^1.0.7:
   version "1.0.7"

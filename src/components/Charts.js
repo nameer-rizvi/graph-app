@@ -64,6 +64,14 @@ const defaultConfigs = [
       ["pressureBuying", "Buying", "#880e4f", []],
     ],
   },
+  {
+    show: true,
+    title: "Wave: Green/Red",
+    seriesConfigs: [
+      ["sma10ColorGreen", "Green", "#33691e", []],
+      ["sma10ColorRed", "Red", "#880e4f", []],
+    ],
+  },
 ];
 
 export function Charts() {
