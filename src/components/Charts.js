@@ -4,7 +4,7 @@ import { Chart } from "./Chart";
 
 function initialize(configs = []) {
   return configs.map((c) => {
-    const defaultConfig = defaultConfigs.find((d) => c.title === d.title);
+    const defaultConfig = defaultConfigs.find((d) => c?.title === d?.title);
     return { ...c, seriesConfigs: defaultConfig?.seriesConfigs || [] };
   });
 }
