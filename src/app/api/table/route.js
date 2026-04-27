@@ -91,7 +91,7 @@ export async function GET(request) {
             symbol,
             name: data.name,
             date: seriesAcc[0].date.getTime(),
-            value: Math.round(seriesAcc[0].volume),
+            value: Math.round(seriesAcc[0].phaseAccumulation),
             type: "ACCUMULATION",
             change: simpul.math.change.percent(
               seriesAcc[0].priceClose,
