@@ -7,5 +7,7 @@ export * from "./FormCard";
 export * from "./Main";
 export * from "./Sidebar";
 export * from "./Sidebar2";
+export * from "./Sidebar3";
+export * from "./SignalTable";
 export * from "./TimeframeSelect";
 export * from "./ViewToggle";

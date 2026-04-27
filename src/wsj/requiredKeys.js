@@ -7,6 +7,7 @@ export const requiredKeys = [
   "vwap",
   "sma20PriceMean",
   "sma50PriceMean",
+  "volume",
   "volumeN",
   "volumeValueN",
   "priceRangeDiffN",

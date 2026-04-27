@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Container, Sidebar2, Main, Charts2 } from "../../components";
 
-function Json() {
+function JsonPage() {
   const [data, setData] = useState([]);
 
   const [axis, setAxis] = useState({
@@ -23,4 +23,4 @@ function Json() {
   );
 }
 
-export default Json;
+export default JsonPage;
