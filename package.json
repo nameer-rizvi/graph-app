@@ -19,6 +19,7 @@
     "@vercel/analytics": "^1.6.1",
     "apexcharts": "^5.3.6",
     "async-fetch": "^0.4.0",
+    "is-plain-object": "^5.0.0",
     "next": "16.1.1",
     "pricehistory": "^0.1.0",
     "react": "19.2.3",
