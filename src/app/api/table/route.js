@@ -3,7 +3,7 @@ import { wsj } from "../../../wsj";
 import simpul from "simpul";
 import { NextResponse } from "next/server";
 
-const LIMIT = 50;
+const LIMIT = 25;
 
 const IGNORE = ["short", "bear"];
 
