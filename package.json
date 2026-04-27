@@ -17,6 +17,7 @@
     "@mui/material-nextjs": "^7.3.7",
     "@mui/x-charts": "^8.25.0",
     "@vercel/analytics": "^1.6.1",
+    "@vercel/blob": "^2.3.3",
     "apexcharts": "^5.3.6",
     "async-fetch": "^0.4.0",
     "is-plain-object": "^5.0.0",
