@@ -3,7 +3,7 @@ import scrapefrom from "scrapefrom";
 import { wsj } from "../../../../wsj";
 import simpul from "simpul";
 
-const LIMIT = 25;
+const LIMIT = 10;
 const IGNORE = ["short", "bear"];
 const SCREENERS = ["etfs", "equities"];
 const TIMEFRAMES = ["weekly", "monthly"];
