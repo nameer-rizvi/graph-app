@@ -27,11 +27,18 @@ const columns = [
   },
   {
     title: "Date",
-    label: (row) => new Date(row.date).toLocaleDateString(),
+    label: (row, rows) =>
+      (rows.filter((r) => r.date === row.date).length >= 3 ? "⭐ " : "") +
+      new Date(row.date).toLocaleDateString(),
   },
   {
     title: "Value",
-    label: (row) => row.value.toLocaleString(),
+    label: (row) =>
+      ({
+        ACCUMULATION: "",
+        VOLUME: row.value >= 900000000 ? "⭐ " : "",
+        SMA_SMA: "",
+      }[row.type] + row.value.toLocaleString()),
   },
   {
     title: "Change",
@@ -86,14 +93,17 @@ export function SignalTable(query) {
                     key={row.symbol + column.title}
                     align={column.align}
                     sx={{ color: column.color?.(row) }}
-                    title={column.labelTitle?.(row) || column.label(row)}
+                    title={
+                      column.labelTitle?.(row) ||
+                      column.label(row, request.data)
+                    }
                   >
                     {column.link ? (
                       <Link href={column.link(row)} target="_blank">
-                        {column.label(row)}
+                        {column.label(row, request.data)}
                       </Link>
                     ) : (
-                      column.label(row)
+                      column.label(row, request.data)
                     )}
                   </TableCell>
                 ))}
