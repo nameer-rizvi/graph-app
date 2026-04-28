@@ -104,4 +104,6 @@ export function SignalTable(query) {
       </TableContainer>
     );
   }
+
+  return "No data found.";
 }
