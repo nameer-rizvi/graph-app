@@ -77,14 +77,14 @@ async function getData(screener, timeframe, today, prefix) {
       const signalAcc = data.series
         .filter((i) => i.phaseAccumulation > 0)
         .sort((a, b) => b.phaseAccumulation - a.phaseAccumulation)[0];
-      const signalSmaSma = data.series
-        .filter((i) => i.sma10SignalSma20PriceMeanToPriceMean < 0)
-        .sort((a, b) => {
-          return (
-            a.sma10SignalSma20PriceMeanToPriceMean -
-            b.sma10SignalSma20PriceMeanToPriceMean
-          );
-        })[0];
+      // const signalSmaSma = data.series
+      //   .filter((i) => i.sma10SignalSma20PriceMeanToPriceMean < 0)
+      //   .sort((a, b) => {
+      //     return (
+      //       a.sma10SignalSma20PriceMeanToPriceMean -
+      //       b.sma10SignalSma20PriceMeanToPriceMean
+      //     );
+      //   })[0];
       const rowVal = makeRow(
         symbol,
         data,
@@ -103,16 +103,16 @@ async function getData(screener, timeframe, today, prefix) {
         timeframeStep,
         today,
       );
-      const rowSmaSma = makeRow(
-        symbol,
-        data,
-        signalSmaSma,
-        "sma10SignalSma20PriceMeanToPriceMean",
-        "SMA_SMA",
-        timeframeStep,
-        today,
-      );
-      rows.push(rowVal, rowAcc, rowSmaSma);
+      // const rowSmaSma = makeRow(
+      //   symbol,
+      //   data,
+      //   signalSmaSma,
+      //   "sma10SignalSma20PriceMeanToPriceMean",
+      //   "SMA_SMA",
+      //   timeframeStep,
+      //   today,
+      // );
+      rows.push(rowVal, rowAcc);
     } catch {
       continue;
     }
