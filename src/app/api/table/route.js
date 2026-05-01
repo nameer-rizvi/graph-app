@@ -54,13 +54,13 @@ export async function GET(request) {
 }
 
 async function getData(screener, timeframe, today, prefix) {
-  const LIMIT = 20 * 2; // Finviz screener page size * pages.
+  const LIMIT = 20 * 1.5; // Finviz screener page size * pages.
   const IGNORE = ["short", "bear"];
   const screenerUrl = {
-    etfs: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_exchangetradedfund,etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
-    equities: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_stocksonly&o=-marketcap&v=411`,
-    "mid caps": `https://finviz.com/screener.ashx?f=ipodate_more10,ind_stocksonly,cap_mid&o=-marketcap&v=411`,
-    "small caps": `https://finviz.com/screener.ashx?f=ipodate_more5,ind_stocksonly,cap_small&o=-marketcap&v=411`,
+    etfs: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`, // o=-e.assetsundermanagement
+    equities: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_stocksonly&o=-averagevolume&v=411`, // o=-marketcap
+    "mid caps": `https://finviz.com/screener.ashx?f=ipodate_more10,ind_stocksonly,cap_mid&o=-averagevolume&v=411`, // o=-marketcap
+    "small caps": `https://finviz.com/screener.ashx?f=ipodate_more5,ind_stocksonly,cap_small&o=-averagevolume&v=411`, // o=-marketcap
   }[screener];
   const timeframeStep = { weekly: "year5", monthly: "year20" }[timeframe];
   const timeframeRange = { weekly: "year20", monthly: "year20" }[timeframe];
