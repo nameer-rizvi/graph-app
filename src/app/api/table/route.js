@@ -107,7 +107,7 @@ async function getData(screener, timeframe, today, prefix) {
         signalMacdTrend,
         "macdTrend",
         "MACD_TREND",
-        "timeframeStep",
+        timeframeStep,
         today,
       );
       rows.push(rowVal, rowAcc, rowMacdTrend);

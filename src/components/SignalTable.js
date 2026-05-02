@@ -94,7 +94,13 @@ export function SignalTable(query) {
           </TableHead>
           <TableBody>
             {request.data.map((row) => (
-              <TableRow key={row.symbol + row.type}>
+              <TableRow
+                key={row.symbol + row.type}
+                hover
+                role="link"
+                sx={{ cursor: "pointer" }}
+                onClick={() => openLink(columns, row)}
+              >
                 {columns.map((column) => (
                   <TableCell
                     key={row.symbol + column.title}
@@ -106,9 +112,7 @@ export function SignalTable(query) {
                     }
                   >
                     {column.link ? (
-                      <Link href={column.link(row)} target="_blank">
-                        {column.label(row, request.data)}
-                      </Link>
+                      <Link>{column.label(row, request.data)}</Link>
                     ) : (
                       column.label(row, request.data)
                     )}
@@ -123,4 +127,8 @@ export function SignalTable(query) {
   }
 
   return "No data found.";
+}
+
+function openLink(columns, row) {
+  return window.open(columns[0].link(row), "_blank", "noopener,noreferrer");
 }
