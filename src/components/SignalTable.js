@@ -21,24 +21,31 @@ const columns = [
     label: (row) =>
       ({
         ACCUMULATION: "Maximum accumulation",
-        VOLUME: "Maximum volume",
+        MACD_TREND: "Macd trend",
         SMA_SMA: "Minimum sma-sma signal",
+        VOLUME: "Maximum volume",
       }[row.type]),
   },
   {
     title: "Date",
     label: (row, rows) =>
-      (rows.filter((r) => r.date === row.date).length >= 3 ? "⭐ " : "") +
-      new Date(row.date).toLocaleDateString(),
+      (rows.filter((r) => r.date === row.date && r.type !== "MACD_TREND")
+        .length >= 3
+        ? "⭐ "
+        : "") + new Date(row.date).toLocaleDateString(),
   },
   {
     title: "Value",
     label: (row) =>
       ({
         ACCUMULATION: "",
-        VOLUME: row.value >= 900000000 ? "⭐ " : "",
+        MACD_TREND: "",
         SMA_SMA: "",
-      }[row.type] + row.value.toLocaleString()),
+        VOLUME: row.value >= 900000000 ? "⭐ " : "",
+      }[row.type] +
+      (simpul.isNumber(row.value)
+        ? row.value.toLocaleString()
+        : row.value.toUpperCase())),
   },
   {
     title: "Change",

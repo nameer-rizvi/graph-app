@@ -7,7 +7,7 @@ import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
 const seriesKeyCache = {};
 
-export async function wsj(_symbol, timeframe, _step, fetchOptions) {
+export async function wsj(_symbol, timeframe, _step, extras) {
   const symbol = utils.cleanSymbol(_symbol);
 
   if (!symbol) throw new Error("Symbol is required");
@@ -26,7 +26,6 @@ export async function wsj(_symbol, timeframe, _step, fetchOptions) {
       Accept: "application/json",
       "Dylan2010.EntitlementToken": "57494d5ed7ad44af85bc59a51dd87c90",
     },
-    ...fetchOptions,
   };
 
   const step = {
@@ -168,6 +167,7 @@ export async function wsj(_symbol, timeframe, _step, fetchOptions) {
         "priceMean",
       ],
     ],
+    ...extras,
   });
 
   data.last = { ...data.series[data.series.length - 1] };

@@ -26,4 +26,5 @@ export const requiredKeys = [
   "pressureBuying",
   "sma10ColorGreen",
   "sma10ColorRed",
+  "macdTrend",
 ];
