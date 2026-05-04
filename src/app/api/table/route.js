@@ -53,7 +53,7 @@ export async function GET(request) {
 }
 
 async function getData(screener, timeframe, today, prefix) {
-  const LIMIT = 20 * 1.5; // Finviz screener page size * pages.
+  const LIMIT = 20 * 1; // Finviz screener page size * pages.
   const IGNORE = ["short", "bear"];
   const screenerUrl = {
     etfs: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_exchangetradedfund,etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
