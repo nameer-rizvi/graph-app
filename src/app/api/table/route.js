@@ -55,9 +55,14 @@ export async function GET(request) {
 async function getData(screener, timeframe, today, prefix) {
   const LIMIT = 20 * 2; // Finviz screener page size * pages.
   const IGNORE = ["short", "bear"];
+  const screenerAgeFilter = {
+    daily: "ipodate_more1",
+    weekly: "ipodate_more5",
+    monthly: "ipodate_more10",
+  };
   const screenerUrl = {
-    etfs: `https://finviz.com/screener.ashx?f=ipodate_more5,ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`,
-    equities: `https://finviz.com/screener.ashx?f=ipodate_more5,ind_stocksonly&o=-averagevolume&v=411`,
+    etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`,
+    equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-averagevolume&v=411`,
   }[screener];
   const timeframePreset = {
     daily: "year",
