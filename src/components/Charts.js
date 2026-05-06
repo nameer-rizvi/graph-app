@@ -56,22 +56,6 @@ const defaultConfigs = [
       ["phaseAccumulation", "Accumulation", "#880e4f", []],
     ],
   },
-  {
-    show: true,
-    title: "Pressure: Buying/Selling",
-    seriesConfigs: [
-      ["pressureSelling", "Selling", "#33691e", []],
-      ["pressureBuying", "Buying", "#880e4f", []],
-    ],
-  },
-  {
-    show: true,
-    title: "Wave: Green/Red",
-    seriesConfigs: [
-      ["sma10ColorGreen", "Green", "#33691e", []],
-      ["sma10ColorRed", "Red", "#880e4f", []],
-    ],
-  },
 ];
 
 export function Charts() {
