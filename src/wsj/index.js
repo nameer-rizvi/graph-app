@@ -5,12 +5,18 @@ import pricehistory from "pricehistory";
 import { requiredKeys } from "./requiredKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 
-const seriesKeyCache = {};
+const seriesKeyCache = new Map();
 
-export async function wsj(_symbol, timeframe, _step, extras) {
+export async function wsj(_symbol, timeframe, extras) {
   const symbol = utils.cleanSymbol(_symbol);
 
-  if (!symbol) throw new Error("Symbol is required");
+  if (!symbol) {
+    throw new Error("Symbol is required");
+  }
+
+  if (seriesKeyCache.get(symbol) === null) {
+    throw new Error("Symbol is not supported");
+  }
 
   const urlString = "https://api.wsj.net/api/michelangelo/timeseries/history";
 
@@ -19,7 +25,7 @@ export async function wsj(_symbol, timeframe, _step, extras) {
   const seriesKey =
     symbol === "BTCUSD"
       ? "CRYPTOCURRENCY/US/KRAKEN/BTCUSD"
-      : seriesKeyCache[symbol] || `STOCK/US//${symbol}`;
+      : seriesKeyCache.get(symbol) || `STOCK/US//${symbol}`;
 
   const option = {
     headers: {
@@ -28,7 +34,7 @@ export async function wsj(_symbol, timeframe, _step, extras) {
     },
   };
 
-  const step = {
+  const step2 = {
     day: "PT5M",
     week: "PT15M",
     week2: "PT30M",
@@ -37,7 +43,7 @@ export async function wsj(_symbol, timeframe, _step, extras) {
     year10: "P14D",
     year20: "P1M",
     year50: "P2M",
-  }[_step || timeframe || "year"];
+  }[timeframe || "year"];
 
   const timeframe2 = {
     day: "D1",
@@ -54,7 +60,7 @@ export async function wsj(_symbol, timeframe, _step, extras) {
     ckey: "57494d5ed7",
     json: JSON.stringify({
       EntitlementToken: option.headers["Dylan2010.EntitlementToken"],
-      Step: step,
+      Step: step2,
       timeframe: timeframe2,
       ShowPreMarket: true,
       ShowAfterHours: true,
@@ -99,8 +105,14 @@ export async function wsj(_symbol, timeframe, _step, extras) {
       url.searchParams.set("json", urlSearchParamJson);
       response = await fetch(url, option);
       json = await response.json();
-      if (!json.error) seriesKeyCache[symbol] = seriesKey2;
+      if (!json.error) {
+        seriesKeyCache.set(symbol, seriesKey2);
+      } else {
+        seriesKeyCache.set(symbol, null);
+        throw new Error("Symbol not supported.");
+      }
     } else {
+      seriesKeyCache.set(symbol, null);
       throw new Error("Symbol not supported.");
     }
   }
@@ -116,7 +128,7 @@ export async function wsj(_symbol, timeframe, _step, extras) {
     type: json.Series[0].InstrumentType,
     country: json.Series[0].CountryCode,
     series: [],
-    step: step,
+    step: step2,
     timeframe: timeframe,
     basePrice: json.Series[0].ExtraData.find((i) => {
       return i.Name === "PriorClose" || i.Name === "PriorOpen";
@@ -147,14 +159,12 @@ export async function wsj(_symbol, timeframe, _step, extras) {
   const isSma20 = ["year10", "year20", "year50"].includes(timeframe);
 
   data.series = pricehistory(data.series, {
-    leverage: +_symbol?.trim().split(" ")[1]?.trim() || undefined,
     basePrice: data.basePrice,
+    leverage: +_symbol.trim().split(" ").slice(-1)[0].trim() || undefined,
     price: true,
     trend: true,
     vwap: true,
     phase: true,
-    pressure: true,
-    color: true,
     normalize: ["volume", "volumeValue", "priceRangeDiff"],
     anchor: [0, 50, 100],
     sma: isSma20 ? [20, 10] : [50, 10],
@@ -173,8 +183,8 @@ export async function wsj(_symbol, timeframe, _step, extras) {
   data.last = { ...data.series[data.series.length - 1] };
 
   for (const candle of data.series) {
-    data.volume += candle.volume || 0;
-    data.volumeValue += candle.volumeValue || 0;
+    data.volume += candle.volume ?? 0;
+    data.volumeValue += candle.volumeValue ?? 0;
     for (const key in candle) {
       if (!requiredKeys.includes(key)) delete candle[key];
     }

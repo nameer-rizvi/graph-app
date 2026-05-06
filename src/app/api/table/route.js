@@ -15,8 +15,8 @@ export async function GET(request) {
     const timeframe = searchParams.get("timeframe")?.toLowerCase() ?? "";
 
     const isValidRequest =
-      ["etfs", "equities", "mid caps", "small caps"].includes(screener) &&
-      ["weekly", "monthly"].includes(timeframe);
+      ["etfs", "equities"].includes(screener) &&
+      ["daily", "weekly", "monthly"].includes(timeframe);
 
     if (!isValidRequest) throw new Error("Invalid request.");
 
@@ -53,23 +53,31 @@ export async function GET(request) {
 }
 
 async function getData(screener, timeframe, today, prefix) {
-  const LIMIT = 20 * 1; // Finviz screener page size * pages.
+  const LIMIT = 20 * 2; // Finviz screener page size * pages.
   const IGNORE = ["short", "bear"];
   const screenerUrl = {
-    etfs: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_exchangetradedfund,etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
-    equities: `https://finviz.com/screener.ashx?f=ipodate_more15,ind_stocksonly&o=-marketcap&v=411`,
-    "mid caps": `https://finviz.com/screener.ashx?f=ipodate_more10,ind_stocksonly,cap_mid&o=-marketcap&v=411`,
-    "small caps": `https://finviz.com/screener.ashx?f=ipodate_more5,ind_stocksonly,cap_small&o=-marketcap&v=411`,
+    etfs: `https://finviz.com/screener.ashx?f=ipodate_more5,ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`,
+    equities: `https://finviz.com/screener.ashx?f=ipodate_more5,ind_stocksonly&o=-averagevolume&v=411`,
   }[screener];
-  const timeframeStep = { weekly: "year5", monthly: "year20" }[timeframe];
-  const timeframeRange = { weekly: "year20", monthly: "year20" }[timeframe];
+  const timeframePreset = {
+    daily: "year",
+    weekly: "year5",
+    monthly: "year20",
+  }[timeframe];
   const extract = "td.screener_tickers span";
   const response = await scrapefrom({ url: screenerUrl, extract });
   let rows = [];
   for (const symbol of response.result[extract].slice(0, LIMIT)) {
     try {
-      const data = await wsj(symbol, timeframeRange, timeframeStep, {
-        macd: true,
+      const data = await wsj(symbol, timeframePreset, {
+        price: false,
+        trend: false,
+        vwap: false,
+        phase: true,
+        normalize: [],
+        anchor: [],
+        sma: [],
+        signal: [],
       });
       if (IGNORE.some((i) => data.name.toLowerCase().includes(i))) continue;
       const signalVol = data.series
@@ -78,18 +86,13 @@ async function getData(screener, timeframe, today, prefix) {
       const signalAcc = data.series
         .filter((i) => i.phaseAccumulation > 0)
         .sort((a, b) => b.phaseAccumulation - a.phaseAccumulation)[0];
-      const signalMacdTrendIndex = data.series.findLastIndex((i) => {
-        return i.macdTrend?.[0] !== data.last.macdTrend?.[0];
-      });
-      const signalMacdTrend =
-        signalMacdTrendIndex !== -1 && data.series[signalMacdTrendIndex + 1];
       const rowVal = makeRow(
         symbol,
         data,
         signalVol,
         "volume",
         "VOLUME",
-        timeframeStep,
+        timeframePreset,
         today,
       );
       const rowAcc = makeRow(
@@ -98,22 +101,12 @@ async function getData(screener, timeframe, today, prefix) {
         signalAcc,
         "phaseAccumulation",
         "ACCUMULATION",
-        timeframeStep,
+        timeframePreset,
         today,
       );
-      const rowMacdTrend = makeRow(
-        symbol,
-        data,
-        signalMacdTrend,
-        "macdTrend",
-        "MACD_TREND",
-        timeframeStep,
-        today,
-      );
-      rows.push(rowVal, rowAcc, rowMacdTrend);
+      rows.push(rowVal, rowAcc);
     } catch (error) {
       if (process.env.NODE_ENV === "development") console.error(error);
-      continue;
     }
   }
   rows = rows.filter(Boolean).sort((a, b) => b.date - a.date);
@@ -126,7 +119,7 @@ async function getData(screener, timeframe, today, prefix) {
   return rows;
 }
 
-function makeRow(symbol, data, signal, valueKey, type, timeframeStep, today) {
+function makeRow(symbol, data, signal, valueKey, type, timeframePreset, today) {
   if (!signal) return;
   return {
     symbol,
@@ -137,11 +130,13 @@ function makeRow(symbol, data, signal, valueKey, type, timeframeStep, today) {
       : Math.round(signal[valueKey]),
     type: type,
     change: simpul.math.change.percent(signal.priceClose, data.last.priceClose),
-    timeframe: timeframeStep,
+    timeframe: timeframePreset,
     updated: today,
   };
 }
 
+// Signal Sma-Sma:
+//
 // const signalSmaSma = data.series
 //   .filter((i) => i.sma10SignalSma20PriceMeanToPriceMean < 0)
 //   .sort((a, b) => {
@@ -156,6 +151,23 @@ function makeRow(symbol, data, signal, valueKey, type, timeframeStep, today) {
 //   signalSmaSma,
 //   "sma10SignalSma20PriceMeanToPriceMean",
 //   "SMA_SMA",
+//   timeframeStep,
+//   today,
+// );
+//
+// Macd:
+//
+// const signalMacdTrendIndex = data.series.findLastIndex((i) => {
+//   return i.macdTrend?.[0] !== data.last.macdTrend?.[0];
+// });
+// const signalMacdTrend =
+//   signalMacdTrendIndex !== -1 && data.series[signalMacdTrendIndex + 1];
+// const rowMacdTrend = makeRow(
+//   symbol,
+//   data,
+//   signalMacdTrend,
+//   "macdTrend",
+//   "MACD_TREND",
 //   timeframeStep,
 //   today,
 // );

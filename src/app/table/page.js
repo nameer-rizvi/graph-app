@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Container, Sidebar3, Main, SignalTable } from "../../components";
 
 const OPTIONS = {
-  SCREENER: ["ETFs", "Equities", "Mid Caps", "Small Caps"],
-  TIMEFRAME: ["Monthly", "Weekly"],
+  SCREENER: ["ETFs", "Equities"],
+  TIMEFRAME: ["Daily", "Weekly", "Monthly"],
 };
 
 function TablePage() {
