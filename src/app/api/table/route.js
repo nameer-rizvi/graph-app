@@ -59,7 +59,7 @@ async function getData(screener, timeframe, today, prefix) {
     daily: "ipodate_more1",
     weekly: "ipodate_more5",
     monthly: "ipodate_more10",
-  };
+  }[timeframe];
   const screenerUrl = {
     etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`,
     equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-averagevolume&v=411`,
