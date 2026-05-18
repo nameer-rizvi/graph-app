@@ -1,13 +1,14 @@
-export const requiredKeys = [
+export const payloadKeys = [
+  "volumeTrend", // Used by data card
   "date",
   "priceOpen",
   "priceClose",
   "priceHigh",
   "priceLow",
-  "vwap",
   "sma20PriceMean",
   "sma50PriceMean",
-  "volume",
+  "sma100PriceMean",
+  "sma200PriceMean",
   "volumeN",
   "volumeValueN",
   "priceRangeDiffN",
@@ -22,9 +23,4 @@ export const requiredKeys = [
   "anchor0",
   "phaseDistribution",
   "phaseAccumulation",
-  "pressureSelling",
-  "pressureBuying",
-  "sma10ColorGreen",
-  "sma10ColorRed",
-  "macdTrend",
 ];

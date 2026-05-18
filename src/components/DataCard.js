@@ -125,10 +125,10 @@ function DataCardVolume({ data = {} }) {
     : "";
   let color;
   let Icon;
-  if (data.last.sma10VolumeTrend?.[0] === 1) {
+  if (data.last.volumeTrend?.[0] === 1) {
     color = "#00c805";
     Icon = <ArrowDropUpSharpIcon sx={{ color }} />;
-  } else if (data.last.sma10VolumeTrend?.[0] === -1) {
+  } else if (data.last.volumeTrend?.[0] === -1) {
     color = "#ff5000";
     Icon = <ArrowDropDownSharpIcon sx={{ color }} />;
   } else {

@@ -2,8 +2,9 @@ import * as utils from "../utils";
 import { autocomplete } from "./autocomplete";
 import futures from "../wsj/futures.json";
 import pricehistory from "pricehistory";
-import { requiredKeys } from "./requiredKeys";
+import { payloadKeys } from "./payloadKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
+import { math } from "@nameer/utils";
 
 const seriesKeyCache = new Map();
 
@@ -162,12 +163,10 @@ export async function wsj(_symbol, timeframe, extras) {
     basePrice: data.basePrice,
     leverage: +_symbol.trim().split(" ").slice(-1)[0].trim() || undefined,
     price: true,
-    trend: true,
-    vwap: true,
     phase: true,
+    anchor: [0],
+    sma: isSma20 ? [100, 20] : [200, 50],
     normalize: ["volume", "volumeValue", "priceRangeDiff"],
-    anchor: [0, 50, 100],
-    sma: isSma20 ? [20, 10] : [50, 10],
     signal: [
       [
         isSma20 ? "sma20PriceMean" : "sma50PriceMean",
@@ -182,11 +181,16 @@ export async function wsj(_symbol, timeframe, extras) {
 
   data.last = { ...data.series[data.series.length - 1] };
 
+  data.last.volumeTrend = math.change.symbol(
+    data.series[data.series.length - 2]?.volume,
+    data.last.volume,
+  );
+
   for (const candle of data.series) {
     data.volume += candle.volume ?? 0;
     data.volumeValue += candle.volumeValue ?? 0;
     for (const key in candle) {
-      if (!requiredKeys.includes(key)) delete candle[key];
+      if (!payloadKeys.includes(key)) delete candle[key];
     }
   }
 

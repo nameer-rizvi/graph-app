@@ -17,9 +17,10 @@ const defaultConfigs = [
       ["priceClose", "Close", "#78909c", ["$"]],
       ["priceHigh", "High", "#33691e", ["$"]],
       ["priceLow", "Low", "#880e4f", ["$"]],
-      ["vwap", "VWAP", "#311b92", ["$"]],
       ["sma20PriceMean", "SMA(20)", "#1b2429", ["$"]],
       ["sma50PriceMean", "SMA(50)", "#1b2429", ["$"]],
+      ["sma100PriceMean", "SMA(100)", "#4a148c", ["$"]],
+      ["sma200PriceMean", "SMA(200)", "#4a148c", ["$"]],
     ],
   },
   {
