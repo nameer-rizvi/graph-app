@@ -15,7 +15,7 @@ export async function GET(request) {
     const timeframe = searchParams.get("timeframe")?.toLowerCase() ?? "";
 
     const isValidRequest =
-      ["etfs", "equities"].includes(screener) &&
+      ["etfs", "equities", "large caps", "mid caps"].includes(screener) &&
       ["daily", "weekly", "monthly"].includes(timeframe);
 
     if (!isValidRequest) throw new Error("Invalid request.");
@@ -61,8 +61,10 @@ async function getData(screener, timeframe, today, prefix) {
     monthly: "ipodate_more10",
   }[timeframe];
   const screenerUrl = {
-    etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_exchangetradedfund,etf_tags_leverage&o=-averagevolume&v=411`,
-    equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-averagevolume&v=411`,
+    etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
+    equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-marketcap&v=411`,
+    "large caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_large&o=-marketcap&v=411`,
+    "mid caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_mid&o=-marketcap&v=411`,
   }[screener];
   const timeframePreset = {
     daily: "year",

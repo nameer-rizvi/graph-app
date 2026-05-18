@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Container, Sidebar3, Main, SignalTable } from "../../components";
 
 const OPTIONS = {
-  SCREENER: ["ETFs", "Equities"],
+  SCREENER: ["ETFs", "Equities", "Large Caps", "Mid Caps"],
   TIMEFRAME: ["Daily", "Weekly", "Monthly"],
 };
 
