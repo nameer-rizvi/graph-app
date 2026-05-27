@@ -12,7 +12,7 @@ function initialize(configs = []) {
 const defaultConfigs = [
   {
     show: true,
-    title: "Price: Close, High, Low, VWAP, SMA",
+    title: "Price: Close, High, Low, SMA(20/50), SMA(100/200)",
     seriesConfigs: [
       ["priceClose", "Close", "#78909c", ["$"]],
       ["priceHigh", "High", "#33691e", ["$"]],

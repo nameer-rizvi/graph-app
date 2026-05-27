@@ -27,13 +27,7 @@ export async function GET(request) {
     const { blobs } = await list({ prefix });
 
     if (!blobs.length) {
-      let rows;
-      try {
-        rows = await getData(screener, timeframe, today, prefix);
-      } catch (error) {
-        rows = [];
-        console.error(error);
-      }
+      const rows = await getData(screener, timeframe, today, prefix);
       return NextResponse.json(rows);
     }
 
@@ -59,77 +53,84 @@ export async function GET(request) {
 }
 
 async function getData(screener, timeframe, today, prefix) {
-  const LIMIT = 20 * 2; // Finviz screener page size * pages.
-  const IGNORE = ["short", "bear"];
-  const screenerAgeFilter = {
-    daily: "ipodate_more1",
-    weekly: "ipodate_more5",
-    monthly: "ipodate_more10",
-  }[timeframe];
-  const screenerUrl = {
-    etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
-    equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-marketcap&v=411`,
-    "large caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_large&o=-marketcap&v=411`,
-    "mid caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_mid&o=-marketcap&v=411`,
-  }[screener];
-  const timeframePreset = {
-    daily: "year",
-    weekly: "year5",
-    monthly: "year20",
-  }[timeframe];
-  const extract = "td.screener_tickers span";
-  const response = await scrapefrom({ url: screenerUrl, extract });
-  let rows = [];
-  for (const symbol of response.result[extract].slice(0, LIMIT)) {
-    try {
-      const data = await wsj(symbol, timeframePreset, {
-        price: false,
-        trend: false,
-        vwap: false,
-        phase: true,
-        normalize: [],
-        anchor: [],
-        sma: [],
-        signal: [],
-      });
-      if (IGNORE.some((i) => data.name.toLowerCase().includes(i))) continue;
-      const signalVol = data.series
-        .filter((i) => i.volume > 0)
-        .sort((a, b) => b.volume - a.volume)[0];
-      const signalAcc = data.series
-        .filter((i) => i.phaseAccumulation > 0)
-        .sort((a, b) => b.phaseAccumulation - a.phaseAccumulation)[0];
-      const rowVal = makeRow(
-        symbol,
-        data,
-        signalVol,
-        "volume",
-        "VOLUME",
-        timeframePreset,
-        today,
-      );
-      const rowAcc = makeRow(
-        symbol,
-        data,
-        signalAcc,
-        "phaseAccumulation",
-        "ACCUMULATION",
-        timeframePreset,
-        today,
-      );
-      rows.push(rowVal, rowAcc);
-    } catch (error) {
-      if (process.env.NODE_ENV === "development") console.error(error);
+  try {
+    const LIMIT = 20 * 2; // Finviz screener page size * pages.
+    const IGNORE = ["short", "bear"];
+    const screenerAgeFilter = {
+      daily: "ipodate_more1",
+      weekly: "ipodate_more5",
+      monthly: "ipodate_more10",
+    }[timeframe];
+    const screenerUrl = {
+      etfs: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},etf_tags_leverage&o=-e.assetsundermanagement&v=411`,
+      equities: `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly&o=-marketcap&v=411`,
+      "large caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_large&o=-marketcap&v=411`,
+      "mid caps": `https://finviz.com/screener.ashx?f=${screenerAgeFilter},ind_stocksonly,cap_mid&o=-marketcap&v=411`,
+    }[screener];
+    const timeframePreset = {
+      daily: "year",
+      weekly: "year5",
+      monthly: "year20",
+    }[timeframe];
+    const extract = "td.screener_tickers span";
+    const response = await scrapefrom({
+      url: screenerUrl,
+      extract,
+      use: "puppeteer",
+    });
+    let rows = [];
+    for (const symbol of response.result[extract].slice(0, LIMIT)) {
+      try {
+        const data = await wsj(symbol, timeframePreset, {
+          price: false,
+          phase: true,
+          normalize: [],
+          anchor: [],
+          sma: [],
+          signal: [],
+        });
+        if (IGNORE.some((i) => data.name.toLowerCase().includes(i))) continue;
+        const signalVol = data.series
+          .filter((i) => i.volume > 0)
+          .sort((a, b) => b.volume - a.volume)[0];
+        const signalAcc = data.series
+          .filter((i) => i.phaseAccumulation > 0)
+          .sort((a, b) => b.phaseAccumulation - a.phaseAccumulation)[0];
+        const rowVal = makeRow(
+          symbol,
+          data,
+          signalVol,
+          "volume",
+          "VOLUME",
+          timeframePreset,
+          today,
+        );
+        const rowAcc = makeRow(
+          symbol,
+          data,
+          signalAcc,
+          "phaseAccumulation",
+          "ACCUMULATION",
+          timeframePreset,
+          today,
+        );
+        rows.push(rowVal, rowAcc);
+      } catch (error) {
+        if (process.env.NODE_ENV === "development") console.error(error);
+      }
     }
+    rows = rows.filter(Boolean).sort((a, b) => b.date - a.date);
+    await put(`${prefix}.json`, JSON.stringify(rows), {
+      access: "private",
+      contentType: "application/json",
+      addRandomSuffix: false,
+      allowOverwrite: true,
+    });
+    return rows;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
-  rows = rows.filter(Boolean).sort((a, b) => b.date - a.date);
-  await put(`${prefix}.json`, JSON.stringify(rows), {
-    access: "private",
-    contentType: "application/json",
-    addRandomSuffix: false,
-    allowOverwrite: true,
-  });
-  return rows;
 }
 
 function makeRow(symbol, data, signal, valueKey, type, timeframePreset, today) {
