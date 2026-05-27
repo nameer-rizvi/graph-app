@@ -2,7 +2,17 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
-  serverExternalPackages: ["scrapefrom", "simpul", "is-plain-object"],
+  serverExternalPackages: [
+    "puppeteer",
+    "puppeteer-extra",
+    "puppeteer-extra-plugin",
+    "puppeteer-extra-plugin-stealth",
+    "merge-deep",
+    "clone-deep",
+    "is-plain-object",
+    "scrapefrom",
+    "simpul",
+  ],
 };
 
 export default nextConfig;
