@@ -24,30 +24,40 @@ export async function GET(request) {
 
     const prefix = `table/${screener}/${timeframe}`;
 
+    console.log(1, process.env.BLOB_READ_WRITE_TOKEN);
+
     const { blobs } = await list({ prefix });
+
+    console.log(2);
 
     if (!blobs.length) {
       const rows = await getData(screener, timeframe, today, prefix);
+      console.log(3);
       return NextResponse.json(rows);
     }
 
     const result = await get(blobs[0].pathname, { access: "private" });
+    console.log(4);
 
     if (result?.statusCode !== 200) {
       throw new Error("Failed to read blob.");
     }
 
+    console.log(5);
     const text = await new Response(result.stream).text();
 
     const rowsCached = JSON.parse(text) || [];
 
     if (rowsCached[0].updated !== today) {
+      console.log(6);
       const rows = await getData(screener, timeframe, today, prefix);
       return NextResponse.json(rows);
     }
 
+    console.log(7);
     return NextResponse.json(rowsCached);
   } catch (error) {
+    console.log(error);
     return NextResponse.json(error.message, { status: 400 });
   }
 }
