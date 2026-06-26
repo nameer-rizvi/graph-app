@@ -23,4 +23,17 @@ export const payloadKeys = [
   "anchor0",
   "phaseDistribution",
   "phaseAccumulation",
+  //
+  // "fibonacci0",
+  // "fibonacci236",
+  // "fibonacci382",
+  // "fibonacci5",
+  // "fibonacci618",
+  // "fibonacci786",
+  // "fibonacci1",
+  // "ema5",
+  // "ema8",
+  // "ema13",
+  "pressureBuying",
+  "pressureSelling",
 ];

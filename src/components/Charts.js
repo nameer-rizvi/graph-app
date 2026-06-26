@@ -21,6 +21,16 @@ const defaultConfigs = [
       ["sma50PriceMean", "SMA(50)", "#1b2429", ["$"]],
       ["sma100PriceMean", "SMA(100)", "#4a148c", ["$"]],
       ["sma200PriceMean", "SMA(200)", "#4a148c", ["$"]],
+      ["ema5", "EMA5", "#f57c00", ["$"]],
+      ["ema8", "EMA8", "#ef6c00", ["$"]],
+      ["ema13", "EMA13", "#e65100", ["$"]],
+      ["fibonacci0", "fibonacci 0", "#ffb74d", ["$"]],
+      ["fibonacci236", "fibonacci .236", "#ffa726", ["$"]],
+      ["fibonacci382", "fibonacci .382", "#ff9800", ["$"]],
+      ["fibonacci5", "fibonacci .5", "#fb8c00", ["$"]],
+      ["fibonacci618", "fibonacci .618", "#f57c00", ["$"]],
+      ["fibonacci786", "fibonacci .786", "#ef6c00", ["$"]],
+      ["fibonacci1", "fibonacci 1", "#e65100", ["$"]],
     ],
   },
   {
@@ -55,6 +65,14 @@ const defaultConfigs = [
     seriesConfigs: [
       ["phaseDistribution", "Distribution", "#33691e", []],
       ["phaseAccumulation", "Accumulation", "#880e4f", []],
+    ],
+  },
+  {
+    show: true,
+    title: "Pressure: Buying/Selling",
+    seriesConfigs: [
+      ["pressureBuying", "Buying", "#880e4f", []],
+      ["pressureSelling", "Selling", "#33691e", []],
     ],
   },
 ];
