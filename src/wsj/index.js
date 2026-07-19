@@ -1,10 +1,11 @@
 import * as utils from "../utils";
 import { autocomplete } from "./autocomplete";
-import futures from "../wsj/futures.json";
+import futures from "./futures.json";
 import pricehistory from "pricehistory";
 import { payloadKeys } from "./payloadKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 import { math } from "@nameer/utils";
+import { injectPriceLevels } from "./injectPriceLevels";
 
 const seriesKeyCache = new Map();
 
@@ -188,6 +189,8 @@ export async function wsj(_symbol, timeframe, extras) {
     data.series[data.series.length - 2]?.volume,
     data.last.volume,
   );
+
+  // injectPriceLevels(data.series);
 
   for (const candle of data.series) {
     data.volume += candle.volume ?? 0;
