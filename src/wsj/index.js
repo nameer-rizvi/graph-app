@@ -4,7 +4,7 @@ import futures from "./futures.json";
 import pricehistory from "pricehistory";
 import { payloadKeys } from "./payloadKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
-import { math } from "@nameer/utils";
+import { math, isNumber } from "@nameer/utils";
 import { injectPriceLevels } from "./injectPriceLevels";
 
 const seriesKeyCache = new Map();
@@ -192,12 +192,11 @@ export async function wsj(_symbol, timeframe, extras) {
 
   // injectPriceLevels(data.series);
 
-  for (const candle of data.series) {
-    data.volume += candle.volume ?? 0;
-    data.volumeValue += candle.volumeValue ?? 0;
-    for (const key in candle) {
-      if (!payloadKeys.includes(key)) delete candle[key];
-    }
+  for (let i = 0; i < data.series.length; i++) {
+    const curr = data.series[i] || {};
+    data.volume += curr.volume ?? 0;
+    data.volumeValue += curr.volumeValue ?? 0;
+    for (const key in curr) if (!payloadKeys.includes(key)) delete curr[key];
   }
 
   if (timeframe === "day") correctChartDatetimeEnd(data);
