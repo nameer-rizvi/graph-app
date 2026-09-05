@@ -6,6 +6,7 @@ import { payloadKeys } from "./payloadKeys";
 import { correctChartDatetimeEnd } from "./correctChartDatetimeEnd";
 import { math, isNumber } from "@nameer/utils";
 import { injectPriceLevels } from "./injectPriceLevels";
+import settings from "./settings.json";
 
 const seriesKeyCache = new Map();
 
@@ -165,8 +166,8 @@ export async function wsj(_symbol, timeframe, extras) {
     leverage: +_symbol.trim().split(" ").slice(-1)[0].trim() || undefined,
     price: true,
     phase: true,
-    // ema: true,
-    // fibonacci: true,
+    ema: settings.ema,
+    fibonacci: settings.fibonacci,
     pressure: true,
     anchor: [0],
     sma: isSma20 ? [100, 20] : [200, 50],
@@ -190,7 +191,7 @@ export async function wsj(_symbol, timeframe, extras) {
     data.last.volume,
   );
 
-  // injectPriceLevels(data.series);
+  if (settings.priceLevels) injectPriceLevels(data.series);
 
   for (let i = 0; i < data.series.length; i++) {
     const curr = data.series[i] || {};

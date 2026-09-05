@@ -1,3 +1,5 @@
+import settings from "./settings.json";
+
 export const payloadKeys = [
   "volumeTrend", // Used by data card
   "date",
@@ -25,22 +27,27 @@ export const payloadKeys = [
   "phaseAccumulation",
   "pressureBuying",
   "pressureSelling",
-  //
-  // "ema5",
-  // "ema8",
-  // "ema13",
-  // "fibonacci0",
-  // "fibonacci236",
-  // "fibonacci382",
-  // "fibonacci5",
-  // "fibonacci618",
-  // "fibonacci786",
-  // "fibonacci1",
-  // "volumePriceLevel",
-  // "phaseAccumulationPriceLevel",
-  // "phaseDistributionPriceLevel",
-  // "pressureBuyingPriceLevel",
-  // "pressureSellingPriceLevel",
-  // "volumeValuePriceLevel",
-  // "priceRangeDiffPriceLevel",
+  ...(settings.ema ? ["ema5", "ema8", "ema13"] : []),
+  ...(settings.fibonacci
+    ? [
+        "fibonacci0",
+        "fibonacci236",
+        "fibonacci382",
+        "fibonacci5",
+        "fibonacci618",
+        "fibonacci786",
+        "fibonacci1",
+      ]
+    : []),
+  ...(settings.priceLevels
+    ? [
+        "volumePriceLevel",
+        "phaseAccumulationPriceLevel",
+        "phaseDistributionPriceLevel",
+        "pressureBuyingPriceLevel",
+        "pressureSellingPriceLevel",
+        "volumeValuePriceLevel",
+        "priceRangeDiffPriceLevel",
+      ]
+    : []),
 ];
