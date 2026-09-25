@@ -82,6 +82,14 @@ const defaultConfigs = [
       ["pressureSelling", "Selling", "#33691e", []],
     ],
   },
+  // {
+  //   show: true,
+  //   title: "Color: Green/Red",
+  //   seriesConfigs: [
+  //     ["sma10ColorGreen", "Green", "#33691e", []],
+  //     ["sma10ColorRed", "Red", "#880e4f", []],
+  //   ],
+  // },
 ];
 
 export function Charts() {

@@ -1,5 +1,6 @@
 {
   "ema": false,
   "fibonacci": false,
-  "priceLevels": false
+  "priceLevels": false,
+  "color": false
 }

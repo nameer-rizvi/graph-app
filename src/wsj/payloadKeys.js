@@ -50,4 +50,5 @@ export const payloadKeys = [
         "priceRangeDiffPriceLevel",
       ]
     : []),
+  ...(settings.color ? ["sma10ColorGreen", "sma10ColorRed"] : []),
 ];
